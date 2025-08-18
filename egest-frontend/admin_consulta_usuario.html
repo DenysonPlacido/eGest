@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CondoSoft - Consultar Usuário</title>
+    <link rel="stylesheet" href="css/styleMenuAdmin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styleAdminForms.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">CondoSoft</div>
+        <ul class="menu">
+            <!-- Cadastros -->
+            <li>
+                <a href="#" class="menu-item" data-target="cadastros">
+                    <i class="fas fa-clipboard-list"></i> Cadastros
+                </a>
+                <ul class="submenu" id="cadastros">
+                    <!-- Usuário -->
+                    <li>
+                        <a href="#" class="menu-item" data-target="usuarios">
+                            <i class="fas fa-user"></i> Usuários
+                        </a>
+                        <ul class="submenu" id="usuarios">
+                            <li><a href="admin_novo_usuario.html">Novo Usuário</a></li>
+                            <li><a href="admin_consulta_usuario.html">Consultar Usuário</a></li>
+                        </ul>
+                    </li>
+                    <!-- Unidades -->
+                    <li>
+                        <a href="#" class="menu-item" data-target="unidades">
+                            <i class="fas fa-building"></i> Unidades
+                        </a>
+                        <ul class="submenu" id="unidades">
+                            <li><a href="#">Gerenciar Unidades</a></li>
+                            <li><a href="#">Histórico de Ocupação</a></li>
+                        </ul>
+                    </li>
+                    <!-- Fornecedores/Serviços -->
+                    <li>
+                        <a href="#" class="menu-item" data-target="fornecedores">
+                            <i class="fas fa-truck"></i> Fornecedores/Serviços
+                        </a>
+                        <ul class="submenu" id="fornecedores">
+                            <li><a href="#">Novo Fornecedor</a></li>
+                            <li><a href="#">Consultar Fornecedor</a></li>
+                        </ul>
+                    </li>
+                    <!-- Funcionários -->
+                    <li>
+                        <a href="#" class="menu-item" data-target="funcionarios">
+                            <i class="fas fa-users"></i> Funcionários
+                        </a>
+                        <ul class="submenu" id="funcionarios">
+                            <li><a href="#">Cadastro de Funcionários</a></li>
+                            <li><a href="#">Gerenciar Escala de Trabalho</a></li>
+                        </ul>
+                    </li>
+                    <!-- Visitantes -->
+                    <li>
+                        <a href="#" class="menu-item" data-target="visitantes">
+                            <i class="fas fa-id-badge"></i> Visitantes
+                        </a>
+                        <ul class="submenu" id="visitantes">
+                            <li><a href="#">Registro de Visitantes</a></li>
+                            <li><a href="#">Autorizações de Entrada</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <!-- Gestão Financeira -->
+            <li>
+                <a href="#" class="menu-item" data-target="gestao_financeira">
+                    <i class="fas fa-chart-line"></i> Gestão Financeira
+                </a>
+                <ul class="submenu" id="gestao_financeira">
+                    <li><a href="#">Emissão de Guias</a></li>
+                    <li><a href="#">Balancete Financeiro</a></li>
+                    <li><a href="#">Extratos</a></li>
+                    <li><a href="#">Solicitações de Pagamento</a></li>
+                    <li><a href="#">Transparência</a></li>
+                    <li><a href="#">Centro de Custos</a></li>
+                    <li><a href="#">Prestação de Contas</a></li>
+                    <li><a href="#">Análise de Custos</a></li>
+                </ul>
+            </li>
+            <!-- Estoque -->
+            <li>
+                <a href="#" class="menu-item" data-target="estoque">
+                    <i class="fas fa-warehouse"></i> Estoque
+                </a>
+                <ul class="submenu" id="estoque">
+                    <li><a href="#">Entrada de Mercadorias</a></li>
+                    <li><a href="#">Controle de Estoque</a></li>
+                </ul>
+            </li>
+            <!-- Ordem de Serviço -->
+            <li>
+                <a href="#" class="menu-item" data-target="ordem_servico">
+                    <i class="fas fa-tasks"></i> Ordem de Serviço
+                </a>
+                <ul class="submenu" id="ordem_servico">
+                    <li><a href="#">Nova Ordem de Serviço</a></li>
+                    <li><a href="#">Consultar Ordens de Serviço</a></li>
+                </ul>
+            </li>
+            <!-- Orçamentos -->
+            <li>
+                <a href="#" class="menu-item" data-target="orcamentos">
+                    <i class="fas fa-file-invoice-dollar"></i> Orçamentos
+                </a>
+                <ul class="submenu" id="orcamentos">
+                    <li><a href="#">Novo Orçamento</a></li>
+                    <li><a href="#">Consultar Orçamentos</a></li>
+                </ul>
+            </li>
+            <!-- Reservas -->
+            <li>
+                <a href="#" class="menu-item" data-target="reservas">
+                    <i class="fas fa-calendar-check"></i> Reservas
+                </a>
+                <ul class="submenu" id="reservas">
+                    <li><a href="#">Nova Reserva de Espaços Comuns</a></li>
+                    <li><a href="#">Consultar Reservas</a></li>
+                </ul>
+            </li>
+            <!-- Relatórios -->
+            <li>
+                <a href="#" class="menu-item" data-target="relatorios">
+                    <i class="fas fa-file-alt"></i> Relatórios
+                </a>
+                <ul class="submenu" id="relatorios">
+                    <li><a href="#">Relatórios Mensais</a></li>
+                    <li><a href="#">Relatórios Anuais</a></li>
+                    <li><a href="#">Relatórios Personalizados</a></li>
+                    <li><a href="#">Relatórios de Desempenho</a></li>
+                </ul>
+            </li>
+            <!-- Manutenção -->
+            <li>
+                <a href="#" class="menu-item" data-target="manutencao">
+                    <i class="fas fa-tools"></i> Manutenção
+                </a>
+                <ul class="submenu" id="manutencao">
+                    <li><a href="#">Manutenção Preventiva</a></li>
+                    <li><a href="#">Histórico de Manutenção</a></li>
+                </ul>
+            </li>
+            <!-- Segurança -->
+            <li>
+                <a href="#" class="menu-item" data-target="seguranca">
+                    <i class="fas fa-shield-alt"></i> Segurança
+                </a>
+                <ul class="submenu" id="seguranca">
+                    <li><a href="#">Controle de Acesso</a></li>
+                    <li><a href="#">Câmeras de Segurança</a></li>
+                    <li><a href="#">Registro de Ocorrências</a></li>
+                </ul>
+            </li>
+            <!-- Comunicação Interna -->
+            <li>
+                <a href="#" class="menu-item" data-target="comunicacao_interna">
+                    <i class="fas fa-comments"></i> Comunicação Interna
+                </a>
+                <ul class="submenu" id="comunicacao_interna">
+                    <li><a href="#">Mural Digital</a></li>
+                    <li><a href="#">Mensagens Internas</a></li>
+                </ul>
+            </li>
+            <!-- Eventos e Reuniões -->
+            <li>
+                <a href="#" class="menu-item" data-target="eventos_reunioes">
+                    <i class="fas fa-calendar-alt"></i> Eventos e Reuniões
+                </a>
+                <ul class="submenu" id="eventos_reunioes">
+                    <li><a href="#">Agenda de Reuniões</a></li>
+                    <li><a href="#">Eventos do Condomínio</a></li>
+                </ul>
+            </li>
+            <!-- Gestão de Documentos -->
+            <li>
+                <a href="#" class="menu-item" data-target="gestao_documentos">
+                    <i class="fas fa-folder-open"></i> Gestão de Documentos
+                </a>
+                <ul class="submenu" id="gestao_documentos">
+                    <li><a href="#">Arquivos Importantes</a></li>
+                    <li><a href="#">Documentos de Moradores</a></li>
+                </ul>
+            </li>
+            <!-- Gestão de Recursos e Sustentabilidade -->
+            <li>
+                <a href="#" class="menu-item" data-target="recursos_sustentabilidade">
+                    <i class="fas fa-leaf"></i> Gestão de Recursos e Sustentabilidade
+                </a>
+                <ul class="submenu" id="recursos_sustentabilidade">
+                    <li><a href="#">Consumo de Recursos</a></li>
+                    <li><a href="#">Sustentabilidade</a></li>
+                </ul>
+            </li>
+            <!-- Outras Opções -->
+            <li>
+                <a href="#" class="menu-item" data-target="outras_opcoes">
+                    <i class="fas fa-cogs"></i> Outras Opções
+                </a>
+                <ul class="submenu" id="outras_opcoes">
+                    <li><a href="#">Alvará de Funcionamento</a></li>
+                    <li><a href="#">Alvará dos Bombeiros</a></li>
+                    <li><a href="#">Alterar Senha</a></li>
+                </ul>
+            </li>
+            <!-- Avisos -->
+            <li>
+                <a href="#" class="menu-item" data-target="avisos">
+                    <i class="fas fa-bullhorn"></i> Avisos
+                </a>
+                <ul class="submenu" id="avisos">
+                    <li><a href="#">Novo Aviso</a></li>
+                    <li><a href="#">Consultar Avisos</a></li>
+                </ul>
+            </li>
+            <!-- Ajuda -->
+            <li>
+                <a href="#" class="menu-item" data-target="ajuda_admin">
+                    <i class="fas fa-question-circle"></i> Ajuda
+                </a>
+                <ul class="submenu" id="ajuda_admin">
+                    <li><a href="#">Suporte Técnico</a></li>
+                    <li><a href="#">Sobre o CondoSoft</a></li>
+                    <li><a href="#">Manual do Sistema</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="content">
+        <h1>Consultar Usuário</h1>
+        <form action="#" method="GET" class="form-usuario">
+            <label for="consulta_nome">Nome Completo:</label>
+            <input type="text" id="consulta_nome" name="consulta_nome">
+
+            <label for="consulta_email">Email:</label>
+            <input type="email" id="consulta_email" name="consulta_email">
+
+            <label for="consulta_cpf">CPF:</label>
+            <input type="text" id="consulta_cpf" name="consulta_cpf">
+
+            <button type="submit">Buscar</button>
+        </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código Usuário</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Tipo de Usuário</th>
+                        <th>Data de Cadastro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Exemplo de dados - substituir por dados dinâmicos do banco -->
+                    <tr>
+                        <td>00000000000</td>
+                        <td>ADMIN DO SISTEMA</td>
+                        <td>sys_admin@teste.com</td>
+                        <td>Colaborador</td>
+                        <td>01/01/2024</td>
+                    </tr>
+                    <tr>
+                        <td>01840257105</td>
+                        <td>Denyson</td>
+                        <td>denyson.placido@gmail.com</td>
+                        <td>Colaborador</td>
+                        <td>26/09/2024</td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+
+    <script src="js/scriptMenuAdmin.js"></script>
+</body>
+</html>

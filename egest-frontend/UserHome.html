@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CondoSoft - Dashboard do Morador</title>
+    <link rel="stylesheet" href="src/css/styleUserHome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>CondoSoft</h2>
+        <button class="dropdown-btn"><i class="fas fa-user"></i> Consultas Pessoais <i class="fas fa-caret-down"></i></button>
+        <div class="dropdown-container">
+            <a href="#">Meu Perfil</a>
+            <a href="#">Histórico de Pagamentos</a>
+            <a href="#">Solicitações Realizadas</a>
+        </div>
+        <button class="dropdown-btn"><i class="fas fa-dollar-sign"></i> Financeiro <i class="fas fa-caret-down"></i></button>
+        <div class="dropdown-container">
+            <a href="#">Emitir 2ª Via de Boleto</a>
+            <a href="#">Consultar Extratos</a>
+        </div>
+        <button class="dropdown-btn"><i class="fas fa-calendar-alt"></i> Reservas <i class="fas fa-caret-down"></i></button>
+        <div class="dropdown-container">
+            <a href="#">Nova Reserva de Espaços Comuns</a>
+            <a href="#">Minhas Reservas</a>
+        </div>
+        <button class="dropdown-btn"><i class="fas fa-shield-alt"></i> Segurança <i class="fas fa-caret-down"></i></button>
+        <div class="dropdown-container">
+            <a href="#">Câmeras de Segurança</a>
+            <a href="#">Meus Acessos</a>
+        </div>    
+        <button class="dropdown-btn"><i class="fas fa-bell"></i> Comunicação <i class="fas fa-caret-down"></i></button>
+        <div class="dropdown-container">
+            <a href="#">Avisos e Comunicados</a>
+            <a href="#">Enviar Solicitação ao Síndico</a>
+        </div>
+        <button class="dropdown-btn"><i class="fas fa-question-circle"></i> Ajuda <i class="fas fa-caret-down"></i></button>
+        <div class="dropdown-container">
+            <a href="#">Suporte Técnico</a>
+            <a href="#">Sobre o CondoSoft</a>
+            <a href="#">Manual do Morador</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <header>
+            <h1>Bem-vindo, [Nome do Morador]</h1>
+            <button onclick="logout()">Sair</button>
+        </header>
+        <div class="info-box">
+            <h2>Informações Rápidas</h2>
+            <p>Esta é a área principal onde o morador pode acessar suas informações e realizar operações.</p>
+        </div>
+    </div>
+
+    <script src="src/js/scriptUserHome.js"></script>
+</body>
+</html>

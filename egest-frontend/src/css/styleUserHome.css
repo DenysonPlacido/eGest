@@ -1,0 +1,122 @@
+﻿/* CSS específico para o morador_dashboard.html */
+
+/* Estilo para a barra lateral */
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    padding-top: 20px;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.sidebar h2 {
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.sidebar button, .sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    transition: 0.3s;
+}
+
+.sidebar button:hover, .sidebar a:hover {
+    background-color: #575757;
+}
+
+.sidebar .dropdown-container {
+    display: none;
+    background-color: #414141;
+    padding-left: 15px;
+}
+
+.sidebar .fa-caret-down {
+    float: right;
+    padding-right: 8px;
+}
+
+/* Estilo para o conteúdo principal */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    transition: margin-left 0.5s;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+header button {
+    font-size: 18px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Estilo para as caixas de informação */
+.info-box {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.info-box h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.info-box p {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Estilo para responsividade */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .sidebar .dropdown-container {
+        padding-left: 30px;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+
+    header {
+        flex-direction: column;
+    }
+
+    header button {
+        margin-top: 10px;
+    }
+}
