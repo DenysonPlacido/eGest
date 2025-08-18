@@ -59,24 +59,24 @@ function selectCondominium() {
 // }
 
 // 2º
-// // Função para validar e processar o login
-// function login() {
-//     var username = document.getElementById("username").value;
-//     var password = document.getElementById("password").value;
+// Função para validar e processar o login
+function login() {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
     
-//     if (username && password) {
-//         // Aqui seria feita a validação de login real com o backend
-//         // Como estamos apenas simulando, vamos direto para o redirecionamento
+    if (username && password) {
+        // Aqui seria feita a validação de login real com o backend
+        // Como estamos apenas simulando, vamos direto para o redirecionamento
         
-//         alert("Login realizado com sucesso!");
+        alert("Login realizado com sucesso!");
         
-//         // Redireciona para a página de admin após login bem-sucedido
-//         window.location.href = "admin_dashboard.html";
-//     } else {
-//         // Exibe um alerta se os campos de usuário ou senha estiverem vazios
-//         alert("Por favor, preencha todos os campos.");
-//     }
-// }
+        // Redireciona para a página de admin após login bem-sucedido
+        window.location.href = "admin_dashboard.html";
+    } else {
+        // Exibe um alerta se os campos de usuário ou senha estiverem vazios
+        alert("Por favor, preencha todos os campos.");
+    }
+}
 
 // // Função para validar e processar o login
 // function login() {
@@ -95,51 +95,51 @@ function selectCondominium() {
 //     }
 // }
 
-//para quando estiver pronto o servidor com BD
-function login() {
-  var cpf = document.getElementById("username").value;
-  var senha = document.getElementById("password").value;
+// //para quando estiver pronto o servidor com BD
+// function login() {
+//   var cpf = document.getElementById("username").value;
+//   var senha = document.getElementById("password").value;
 
-  if (cpf && senha) {
-      // Fazer requisição à API
-      fetch('http://127.0.0.1:5500/login', { // Ajustado para o endpoint correto
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ cpf, senha ,TIPO_USUARIO}),
-      })
-      .then(response => {
-          if (!response.ok) {
-              // Manuseio de status de erro
-              return response.json().then(data => {
-                  throw new Error(data.message || 'Erro ao realizar login.');
-              });
-          }
-          return response.json();
-      })
-      .then(data => {
-          // Verifique se o usuário foi autenticado com sucesso
-          if (data.user) {
-              alert("Login realizado com sucesso!");
-              // Redirecionar conforme o tipo de usuário
-              if (data.user.TIPO_USUARIO === 1) {
-                  window.location.href = "http://127.0.0.1:5500/CondoSoft_v1.4/wwwroot/user_dashboard.html";
-              } else if (data.user.TIPO_USUARIO === 2) {
-                  window.location.href = "http://127.0.0.1:5500/CondoSoft_v1.4/wwwroot/admin_dashboard.html";
-              }
-          } else {
-              alert('Erro: Usuário não encontrado.');
-          }
-      })
-      .catch(error => {
-          console.error('Erro:', error);
-          alert(error.message || 'Erro ao realizar login.');
-      });
-  } else {
-      alert("Por favor, preencha todos os campos.");
-  }
-}
+//   if (cpf && senha) {
+//       // Fazer requisição à API
+//       fetch('http://127.0.0.1:5500/login', { // Ajustado para o endpoint correto
+//           method: 'POST',
+//           headers: {
+//               'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify({ cpf, senha ,TIPO_USUARIO}),
+//       })
+//       .then(response => {
+//           if (!response.ok) {
+//               // Manuseio de status de erro
+//               return response.json().then(data => {
+//                   throw new Error(data.message || 'Erro ao realizar login.');
+//               });
+//           }
+//           return response.json();
+//       })
+//       .then(data => {
+//           // Verifique se o usuário foi autenticado com sucesso
+//           if (data.user) {
+//               alert("Login realizado com sucesso!");
+//               // Redirecionar conforme o tipo de usuário
+//               if (data.user.TIPO_USUARIO === 1) {
+//                   window.location.href = "http://127.0.0.1:5500/CondoSoft_v1.4/wwwroot/user_dashboard.html";
+//               } else if (data.user.TIPO_USUARIO === 2) {
+//                   window.location.href = "http://127.0.0.1:5500/CondoSoft_v1.4/wwwroot/admin_dashboard.html";
+//               }
+//           } else {
+//               alert('Erro: Usuário não encontrado.');
+//           }
+//       })
+//       .catch(error => {
+//           console.error('Erro:', error);
+//           alert(error.message || 'Erro ao realizar login.');
+//       });
+//   } else {
+//       alert("Por favor, preencha todos os campos.");
+//   }
+// }
 
   
 

@@ -10,7 +10,7 @@ document.querySelectorAll('.menu-item').forEach(item => {
         // Fecha todos os submenus
         document.querySelectorAll('.submenu').forEach(sub => {
             if (sub !== submenu) {
-                sub.style.maxHeight = null;
+                // sub.style.maxHeight = null;
             }
         });
 
