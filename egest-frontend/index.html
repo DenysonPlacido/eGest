@@ -1,25 +1,23 @@
-﻿<!-- /workspaces/eGest/egest-frontend/index.html -->
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor - Seleção de Empresas Conveniadas</title>
-    <link rel="stylesheet" href="src/css/styleIndexLogin.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor - Seleção de Empresas</title>
+  <link rel="stylesheet" href="src/css/styleIndexLogin.css">
 </head>
 <body>
-    <div class="container">
-        <div class="welcome-box">
-            <h1>Bem-vindo ao Gestor</h1>
-            <!-- <p>Por favor, selecione a Empresa:</p> -->
-            <label for="EmpreA-select">Por favor, selecione a Empresas:</label>
-                <select id="Empresa-select">
-                    <option value="Bahamas">Condomínio Bahamas</option>
-                </select>
-
-            <button id="select-btn">Selecionar</button>
-        </div>
+  <div class="container">
+    <div class="welcome-box">
+      <h1>Bem-vindo ao Gestor</h1>
+      <label for="Empresa-select">Selecione a Empresa:</label>
+      <select id="Empresa-select">
+        <option value="">-- Escolha uma opção --</option>
+        <!-- Opções serão carregadas via JS -->
+      </select>
+      <button id="select-btn">Selecionar</button>
     </div>
-    <script type="module" src="src/js/scriptIndexLogin.js"></script>
+  </div>
+  <script type="module" src="src/js/scriptIndexLogin.js"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@
 document.getElementById('select-btn').addEventListener('click', selectedEmpresa);
 
 function selectedEmpresa() {
-    const select = document.getElementById("condominium-select");
+    const select = document.getElementById("Empresa-select");
     const selectedEmp = select.value;
 
     if (selectedEmp) {
@@ -27,7 +27,7 @@ async function carregarEmpresas() {
         const response = await fetch("https://e-gest-back-end.vercel.app/api/empresas");
         const empresas = await response.json();
 
-        const select = document.getElementById("condominium-select");
+        const select = document.getElementById("Empresa-select");
         select.innerHTML = ''; // limpa opções
 
         empresas.forEach(emp => {
