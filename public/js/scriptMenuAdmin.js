@@ -1,4 +1,4 @@
-﻿// scriptMenuAdmin.js
+﻿// /workspaces/eGest/public/js/scriptMenuAdmin.js
 
 document.querySelectorAll('.menu-item').forEach(item => {
     item.addEventListener('click', function(e) {
@@ -32,18 +32,32 @@ document.querySelectorAll('.menu-item').forEach(item => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const menuItems = document.querySelectorAll('.menu-item');
 
-document.addEventListener("DOMContentLoaded", function() {
-    const menuItems = document.querySelectorAll('.menu-item');
+  menuItems.forEach(item => {
+    item.addEventListener('click', function (e) {
+      e.preventDefault();
 
-    menuItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const target = this.dataset.target;
-            const submenu = document.getElementById(target);
+      const targetId = this.dataset.target;
+      const submenu = document.getElementById(targetId);
 
-            if (submenu) {
-                submenu.classList.toggle('active');
-            }
-        });
+      if (!submenu) return;
+
+      const isOpen = submenu.style.maxHeight && submenu.style.maxHeight !== "0px";
+
+      // Fecha apenas submenus irmãos no mesmo nível
+      const parentLi = this.closest('li');
+      const siblingSubmenus = parentLi?.parentElement?.querySelectorAll('.submenu');
+
+      siblingSubmenus?.forEach(sub => {
+        if (sub !== submenu) {
+          sub.style.maxHeight = null;
+        }
+      });
+
+      // Alterna submenu clicado
+      submenu.style.maxHeight = isOpen ? null : submenu.scrollHeight + "px";
     });
+  });
 });
