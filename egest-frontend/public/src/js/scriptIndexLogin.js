@@ -1,4 +1,4 @@
-﻿// /workspaces/eGest/egest-frontend/src/js/scriptIndexLogin.js
+﻿// /workspaces/eGest/egest-frontend/public/src/js/scriptIndexLogin.js
 
 // ===========================
 // Seleção da empresa
