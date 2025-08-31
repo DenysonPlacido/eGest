@@ -1,15 +1,20 @@
-﻿/* Reset básico */
+﻿/* Fundo com gradiente */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     background: linear-gradient(135deg, #1f1c2c, #928dab);
+    color: #e0e0e0;
 }
 
 /* Cabeçalho discreto */
@@ -30,10 +35,10 @@ body {
     z-index: 100;
 }
 
-/* Menu lateral */
+/* Sidebar */
 .sidebar {
     width: 250px;
-    background-color: rgba(52, 73, 94, 0.9);
+    background-color: rgba(52, 73, 94, 0.95);
     color: white;
     display: flex;
     flex-direction: column;
@@ -41,9 +46,76 @@ body {
     height: 100%;
     overflow-y: auto;
     padding-top: 40px; /* empurra o menu para não ficar atrás do header */
+    backdrop-filter: blur(8px);
+    transition: width 0.3s;
 }
 
-/* Conteúdo principal */
+.sidebar:hover {
+    width: 280px;
+}
+
+.logo {
+    padding: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    background: rgba(44, 62, 80, 0.9);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Menu */
+.menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.menu > li {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 8px;
+}
+
+.menu a:hover {
+    background: rgba(26, 188, 156, 0.3);
+    padding-left: 30px;
+}
+
+.menu i {
+    margin-right: 10px;
+}
+
+/* Submenu */
+.submenu {
+    list-style-type: none;
+    padding-left: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.submenu a {
+    padding: 10px 20px;
+    background-color: rgba(44,62,80,0.8);
+    border-left: 3px solid transparent;
+    border-radius: 5px;
+}
+
+.submenu a:hover {
+    border-left: 3px solid #1abc9c;
+}
+
+/* Conteúdo central */
 .content {
     margin-left: 250px;
     padding: 60px 30px 30px 30px; /* espaço para o header */
@@ -71,7 +143,25 @@ body {
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
-/* Ajuste do menu */
+.welcome-box h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.welcome-box p {
+    font-size: 16px;
+    color: #ddd;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .sidebar { width: 60px; }
+    .sidebar:hover { width: 250px; }
+    .content { margin-left: 60px; padding: 20px; }
+}
+
+
 .menu a {
     display: flex;
     align-items: center;
