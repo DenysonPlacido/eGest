@@ -1,3 +1,4 @@
+// /workspaces/eGest/public/js/session.js
 // mostra informações do usuário e empresa
 document.getElementById('empresa-logada').textContent = `Empresa: ${localStorage.getItem('selectedEmp') || 'Não logada'}`;
 document.getElementById('usuario-logado').textContent = `Usuário: ${localStorage.getItem('username') || 'Desconhecido'}`;
