@@ -1,0 +1,58 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 250px;
+  right: 0;
+  height: 50px;
+  background: rgba(31, 28, 44, 0.95);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  backdrop-filter: blur(10px);
+  z-index: 100;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-header {
+  height: 30px;
+}
+
+.system-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.header-center {
+  display: flex;
+  gap: 15px;
+  font-size: 0.9rem;
+}
+
+.header-right {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.icon-btn:hover {
+  color: #1abc9c;
+}
+
+.logout:hover {
+  color: #e74c3c;
+}
