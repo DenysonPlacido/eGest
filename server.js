@@ -1,4 +1,4 @@
-// /workspaces/eGest/egest-frontend/server.js
+// /workspaces/eGest/server.js
 const express = require("express");
 const path = require("path");
 
