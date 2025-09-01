@@ -70,14 +70,26 @@ function renderizarMenus(menus) {
       `;
     }).join('');
 
-    li.innerHTML = `
-      <a href="#" class="menu-item" data-target="${menuId}">
-        <i class="fas ${menu.icone}"></i> ${menu.nome}
+    let acoesHTML = '';
+if (menu.acoes && menu.acoes.length > 0) {
+  acoesHTML = menu.acoes.map(acao => `
+    <li>
+      <a href="${acao.caminho}">
+        <i class="fas ${acao.icone || 'fa-angle-right'}"></i> ${acao.nome}
       </a>
-      <ul class="submenu" id="${menuId}">
-        ${submenuHTML}
-      </ul>
-    `;
+    </li>
+  `).join('');
+}
+
+li.innerHTML = `
+  <a href="#" class="menu-item" data-target="${menuId}">
+    <i class="fas ${menu.icone}"></i> ${menu.nome}
+  </a>
+  <ul class="submenu" id="${menuId}">
+    ${submenuHTML}
+    ${acoesHTML}
+  </ul>
+`;
 
     ul.appendChild(li);
   });
