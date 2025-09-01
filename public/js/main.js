@@ -1,4 +1,7 @@
+// /workspaces/eGest/public/js/main.js
+// ===========================
 // Carrega o header
+// ===========================
 fetch('header.html')
   .then(res => res.text())
   .then(html => {
@@ -6,39 +9,93 @@ fetch('header.html')
     initLogout();
   });
 
-// Carrega o menu
-fetch('menu.html')
-  .then(res => res.text())
-  .then(html => {
-    document.getElementById('menu-container').innerHTML = html;
+// ===========================
+// Carrega o menu dinâmico via API
+// ===========================
+document.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('Sessão expirada. Faça login novamente.');
+    window.location.href = 'login.html';
+    return;
+  }
 
-    // evento para trocar conteúdo principal
-    document.querySelectorAll('.menu-item').forEach(item => {
-      item.addEventListener('click', e => {
-        e.preventDefault();
-        const target = item.dataset.target;
-        loadContent(target);
+  fetch('https://e-gest-back-end.vercel.app/api/menus', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  .then(res => res.json())
+  .then(menus => renderizarMenus(menus))
+  .catch(err => {
+    console.error('Erro ao carregar menus:', err);
+    alert("Erro ao carregar menus.");
+  });
+});
+
+// ===========================
+// Renderiza menus recebidos da API
+// ===========================
+function renderizarMenus(menus) {
+  const menuContainer = document.getElementById('menu-container');
+  const ul = document.createElement('ul');
+  ul.classList.add('menu');
+
+  menus.forEach(menu => {
+    const submenuId = menu.nome.toLowerCase().replace(/\s+/g, '_');
+    const li = document.createElement('li');
+
+    li.innerHTML = `
+      <a href="#" class="menu-item" data-target="${submenuId}">
+        <i class="fas ${menu.icone}"></i> ${menu.nome}
+      </a>
+      <ul class="submenu" id="${submenuId}">
+        ${menu.submenus.map(sub => `<li><a href="${sub.caminho}">${sub.nome}</a></li>`).join('')}
+      </ul>
+    `;
+
+    ul.appendChild(li);
+  });
+
+  menuContainer.innerHTML = '';
+  menuContainer.appendChild(ul);
+
+  aplicarEventosMenu();
+}
+
+// ===========================
+// Aplica eventos de clique nos menus
+// ===========================
+function aplicarEventosMenu() {
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.dataset.target;
+      const submenu = document.getElementById(targetId);
+      if (!submenu) return;
+
+      const isOpen = submenu.style.maxHeight && submenu.style.maxHeight !== "0px";
+      const siblings = this.closest('li')?.parentElement?.querySelectorAll('.submenu');
+      siblings?.forEach(sib => {
+        if (sib !== submenu) sib.style.maxHeight = null;
       });
-    });
-
-    // evento para abrir/fechar submenus
-    document.querySelectorAll('.menu-item').forEach(item => {
-      item.addEventListener('click', function () {
-        const targetId = this.dataset.target;
-        const submenu = document.getElementById(targetId);
-        if (!submenu) return;
-
-        const isOpen = submenu.style.maxHeight && submenu.style.maxHeight !== "0px";
-        const siblings = this.closest('li')?.parentElement?.querySelectorAll('.submenu');
-        siblings?.forEach(sib => {
-          if (sib !== submenu) sib.style.maxHeight = null;
-        });
-        submenu.style.maxHeight = isOpen ? null : submenu.scrollHeight + "px";
-      });
+      submenu.style.maxHeight = isOpen ? null : submenu.scrollHeight + "px";
     });
   });
 
+  // Troca conteúdo principal
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', e => {
+      e.preventDefault();
+      const target = item.dataset.target;
+      loadContent(target);
+    });
+  });
+}
+
+// ===========================
 // Função para trocar conteúdo
+// ===========================
 function loadContent(target) {
   const content = document.getElementById('main-content');
   switch (target) {
@@ -50,7 +107,9 @@ function loadContent(target) {
   }
 }
 
+// ===========================
 // Botão sair
+// ===========================
 function initLogout() {
   const btnSair = document.getElementById('btn-sair');
   if (btnSair) {
