@@ -36,21 +36,46 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===========================
 // Renderiza menus recebidos da API
 // ===========================
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .replace(/\s+/g, '_') // espaços viram _
+    .replace(/[^\w\-]/g, '') // remove símbolos inválidos
+    .replace(/\_+/g, '_');
+}
+
 function renderizarMenus(menus) {
   const menuContainer = document.getElementById('menu-container');
   const ul = document.createElement('ul');
   ul.classList.add('menu');
 
   menus.forEach(menu => {
-    const submenuId = menu.nome.toLowerCase().replace(/\s+/g, '_');
+    const menuId = slugify(menu.nome);
     const li = document.createElement('li');
 
+    let submenuHTML = menu.submenus.map(sub => {
+      const subId = slugify(sub.nome);
+      return `
+        <li>
+          <a href="#" class="menu-item" data-target="${subId}">
+            <i class="fas ${sub.icone || 'fa-angle-right'}"></i> ${sub.nome}
+          </a>
+          <ul class="submenu" id="${subId}">
+            ${sub.acoes.map(acao => `
+              <li><a href="${acao.caminho}">${acao.nome}</a></li>
+            `).join('')}
+          </ul>
+        </li>
+      `;
+    }).join('');
+
     li.innerHTML = `
-      <a href="#" class="menu-item" data-target="${submenuId}">
+      <a href="#" class="menu-item" data-target="${menuId}">
         <i class="fas ${menu.icone}"></i> ${menu.nome}
       </a>
-      <ul class="submenu" id="${submenuId}">
-        ${menu.submenus.map(sub => `<li><a href="${sub.caminho}">${sub.nome}</a></li>`).join('')}
+      <ul class="submenu" id="${menuId}">
+        ${submenuHTML}
       </ul>
     `;
 
