@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function slugify(text) {
   return text
     .toLowerCase()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remove acentos
-    .replace(/\s+/g, '_') // espaços viram _
-    .replace(/[^\w\-]/g, '') // remove símbolos inválidos
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, '_')
+    .replace(/[^\w\-]/g, '')
     .replace(/\_+/g, '_');
 }
 
