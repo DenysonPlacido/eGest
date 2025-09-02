@@ -1,20 +1,42 @@
 // /workspaces/eGest/public/js/session.js
-// mostra informações do usuário e empresa
-document.getElementById('empresa-logada').textContent = `Empresa: ${localStorage.getItem('selectedEmp') || 'Não logada'}`;
-document.getElementById('usuario-logado').textContent = `Usuário: ${localStorage.getItem('username') || 'Desconhecido'}`;
 
-// relógio do sistema
+
+// Elementos do header
+const empresaEl = document.getElementById('empresa-logada');
+const usuarioEl = document.getElementById('usuario-logado');
+const horaEl = document.getElementById('hora-sistema');
+const sessaoEl = document.getElementById('tempo-sessao');
+
+// Mostra informações da empresa e usuário
+if (empresaEl) {
+  empresaEl.textContent = `Empresa: ${localStorage.getItem('selectedEmp') || 'Não logada'}`;
+}
+if (usuarioEl) {
+  usuarioEl.textContent = `Usuário: ${localStorage.getItem('username') || 'Desconhecido'}`;
+}
+
+// Relógio do sistema (formato pt-BR)
 setInterval(() => {
-  const now = new Date();
-  document.getElementById('hora-sistema').textContent = now.toLocaleTimeString();
+  if (horaEl) {
+    const now = new Date();
+    horaEl.textContent = now.toLocaleTimeString('pt-BR');
+  }
 }, 1000);
 
-// contador de tempo de sessão
-let tempo = 0;
+// Contador de tempo de sessão (persistente)
+if (!localStorage.getItem('sessionStart')) {
+  localStorage.setItem('sessionStart', Date.now());
+}
+
 setInterval(() => {
-  tempo++;
-  const h = String(Math.floor(tempo/3600)).padStart(2,'0');
-  const m = String(Math.floor((tempo%3600)/60)).padStart(2,'0');
-  const s = String(tempo%60).padStart(2,'0');
-  document.getElementById('tempo-sessao').textContent = `${h}:${m}:${s}`;
+  if (sessaoEl) {
+    const start = parseInt(localStorage.getItem('sessionStart'), 10);
+    const diff = Math.floor((Date.now() - start) / 1000);
+
+    const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+    const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+    const s = String(diff % 60).padStart(2, '0');
+
+    sessaoEl.textContent = `${h}:${m}:${s}`;
+  }
 }, 1000);
