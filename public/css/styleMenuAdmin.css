@@ -62,17 +62,17 @@
 }
 
 /* Submenu */
-
 .submenu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
+    list-style-type: none;
+    padding-left: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
 }
 
-
-/* .submenu .submenu {
+.submenu .submenu {
   max-height: none !important;
-} */
+}
 
 .submenu a {
     padding: 10px 20px;
