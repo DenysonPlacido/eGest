@@ -1,4 +1,5 @@
-﻿export function aplicarEventosMenu() {
+﻿// /workspaces/eGest/public/js/scriptMenuAdmin.js
+export function aplicarEventosMenu() {
   const menuItems = document.querySelectorAll('.menu-item');
 
   menuItems.forEach(item => {
@@ -15,22 +16,20 @@
       const parentLi = this.closest('li');
       const siblingSubmenus = parentLi?.parentElement?.querySelectorAll('.submenu');
       siblingSubmenus?.forEach(sub => {
-        if (sub !== submenu) {
-          sub.style.maxHeight = null;
-        }
+        if (sub !== submenu) sub.style.maxHeight = null;
       });
 
       // Alterna apenas o submenu clicado
       submenu.style.maxHeight = isOpen ? null : submenu.scrollHeight + "px";
 
-      // Ajusta apenas os pais até o topo imediato
-      let parentSubmenu = submenu.closest('.submenu');
+      // Recalcula a altura dos pais (para 3º nível ou mais)
+      let parentSubmenu = submenu.parentElement.closest('.submenu');
       while (parentSubmenu) {
         parentSubmenu.style.maxHeight = parentSubmenu.scrollHeight + "px";
         parentSubmenu = parentSubmenu.parentElement.closest('.submenu');
       }
 
-      // Alterna classe 'active' só no item clicado
+      // Atualiza classe 'active' apenas no item clicado
       document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
       this.classList.add('active');
     });
