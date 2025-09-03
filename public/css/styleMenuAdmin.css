@@ -70,6 +70,10 @@
     transition: max-height 0.3s ease-out;
 }
 
+.submenu .submenu {
+  max-height: none !important;
+}
+
 .submenu a {
     padding: 10px 20px;
     background-color: rgba(50, 45, 70, 0.8);
