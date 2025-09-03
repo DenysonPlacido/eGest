@@ -12,6 +12,7 @@ export function aplicarEventosMenu() {
 
       const isOpen = submenu.style.maxHeight && submenu.style.maxHeight !== "0px";
 
+      
       // Fecha submenus irmãos
       const parentLi = this.closest('li');
       const siblingSubmenus = parentLi?.parentElement?.querySelectorAll('.submenu');
@@ -21,6 +22,14 @@ export function aplicarEventosMenu() {
 
       // Alterna submenu clicado
       submenu.style.maxHeight = isOpen ? null : submenu.scrollHeight + "px";
+
+      
+      // Ajusta a altura do pai também (se existir)
+      let parentSubmenu = submenu.closest('.submenu');
+      while (parentSubmenu) {
+        parentSubmenu.style.maxHeight = parentSubmenu.scrollHeight + "px";
+        parentSubmenu = parentSubmenu.closest('.submenu');
+      }
 
       // Alterna classe 'active'
       document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
