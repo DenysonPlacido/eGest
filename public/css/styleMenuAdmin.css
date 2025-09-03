@@ -6,14 +6,14 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 50px; 
+    top: 50px;
     left: 0;
-    height: calc(100% - 50px); 
+    height: calc(100% - 50px);
     overflow-y: auto;
     backdrop-filter: blur(8px);
     transition: width 0.3s, background 0.3s;
+    z-index: 1000;
 }
-
 
 .sidebar:hover {
     width: 280px;
@@ -61,7 +61,7 @@
     margin-right: 10px;
 }
 
-/* Submenu */
+/* Submenus multi-nível */
 .submenu {
     list-style-type: none;
     padding-left: 15px;
@@ -69,10 +69,6 @@
     overflow: hidden;
     transition: max-height 0.3s ease-out;
 }
-
-/* .submenu .submenu {
-  max-height: none !important;
-} */
 
 .submenu a {
     padding: 10px 20px;
@@ -83,4 +79,25 @@
 
 .submenu a:hover {
     border-left: 3px solid #1abc9c;
+}
+
+/* Submenus aninhados */
+.submenu .submenu {
+    padding-left: 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+/* Responsivo: menu colapsa em telas pequenas */
+@media (max-width: 768px) {
+    .sidebar {
+        position: absolute;
+        left: -260px;
+        width: 250px;
+        transition: left 0.3s ease;
+    }
+    .sidebar.open {
+        left: 0;
+    }
 }
