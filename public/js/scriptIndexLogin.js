@@ -71,7 +71,7 @@ async function login() {
       localStorage.setItem("usuarioId", data.usuario.id);
       localStorage.setItem("empresaId", data.usuario.empresa_id);
 
-      alert("Login realizado com sucesso!");
+      //alert("Login realizado com sucesso!");
       window.location.href = "admin_dashboard.html";
     } else {
       alert("Credenciais inválidas!");
