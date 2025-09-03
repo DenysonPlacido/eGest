@@ -23,13 +23,17 @@ export function aplicarEventosMenu() {
       // Alterna submenu clicado
       submenu.style.maxHeight = isOpen ? null : submenu.scrollHeight + "px";
 
+
+      // Aguarda o navegador recalcular o layout e ajusta os pais
+      setTimeout(() => {
+        let parentSubmenu = submenu.closest('.submenu');
+        while (parentSubmenu) {
+          parentSubmenu.style.maxHeight = parentSubmenu.scrollHeight + "px";
+          parentSubmenu = parentSubmenu.closest('.submenu');
+        }
+      }, 300); // mesmo tempo da transição no CSS (0.3s)
+
       
-      // Ajusta a altura do pai também (se existir)
-      let parentSubmenu = submenu.closest('.submenu');
-      while (parentSubmenu) {
-        parentSubmenu.style.maxHeight = parentSubmenu.scrollHeight + "px";
-        parentSubmenu = parentSubmenu.closest('.submenu');
-      }
 
       // Alterna classe 'active'
       document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
