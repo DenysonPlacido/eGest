@@ -1,58 +1,74 @@
-.header {
+/* /workspaces/eGest/public/css/styleHeader.css */
+/* Sidebar */
+.sidebar {
   position: fixed;
   top: 0;
-  left: 250px;
-  right: 0;
-  height: 50px;
-  background: rgba(31, 28, 44, 0.95);
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #1f1c2c;
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 15px;
-  backdrop-filter: blur(10px);
-  z-index: 100;
+  overflow-y: auto;
+  padding-top: 60px; /* espaço para o header */
+  z-index: 99;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* Menu principal */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.logo-header {
-  height: 30px;
+.menu li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.system-name {
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-.header-center {
-  display: flex;
-  gap: 15px;
-  font-size: 0.9rem;
-}
-
-.header-right {
-  display: flex;
-  gap: 10px;
-}
-
-.icon-btn {
-  background: none;
-  border: none;
+.menu-item {
+  display: block;
+  padding: 12px 20px;
   color: #fff;
-  font-size: 1.1rem;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background 0.3s;
   cursor: pointer;
-  transition: color 0.3s;
 }
 
-.icon-btn:hover {
-  color: #1abc9c;
+.menu-item:hover {
+  background-color: #2c2a3a;
 }
 
-.logout:hover {
-  color: #e74c3c;
+.menu-item.active {
+  background-color: #1abc9c;
+  color: #fff;
+}
+
+/* Submenus */
+.submenu {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.submenu li a {
+  display: block;
+  padding: 10px 20px;
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 0.3s;
+}
+
+.submenu li a:hover {
+  background-color: #2c2a3a;
+  color: #fff;
+}
+
+/* Ícones */
+.menu-item i,
+.submenu li a i {
+  margin-right: 8px;
 }
