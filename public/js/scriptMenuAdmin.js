@@ -1,5 +1,4 @@
-﻿// /workspaces/eGest/public/js/scriptMenuAdmin.js
-export function aplicarEventosMenu() {
+﻿export function aplicarEventosMenu() {
   const menuItems = document.querySelectorAll('.menu-item');
 
   menuItems.forEach(item => {
@@ -10,28 +9,22 @@ export function aplicarEventosMenu() {
       const submenu = document.getElementById(targetId);
       if (!submenu) return;
 
-      const isOpen = submenu.style.maxHeight && submenu.style.maxHeight !== "0px";
+      const isOpen = submenu.classList.contains('open');
 
       // Fecha todos os submenus visíveis no mesmo nível
       const parentUl = this.closest('ul');
       const siblingSubmenus = parentUl?.querySelectorAll('.submenu');
       siblingSubmenus?.forEach(sub => {
-        if (sub !== submenu) sub.style.maxHeight = null;
+        sub.classList.remove('open');
       });
 
       // Abre ou fecha o submenu clicado
-      submenu.style.maxHeight = isOpen ? null : submenu.scrollHeight + "px";
+      submenu.classList.toggle('open');
 
-      // Atualiza altura dos submenus pais
-      let parent = submenu.closest('.submenu');
-      while (parent) {
-        let totalHeight = 0;
-        Array.from(parent.children).forEach(child => {
-          totalHeight += child.offsetHeight;
-        });
-        parent.style.maxHeight = totalHeight + "px";
-        parent = parent.closest('.submenu');
-      }
+      // Atualiza ícones de seta (se houver)
+      document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
+      const arrow = this.querySelector('.arrow-icon');
+      if (arrow) arrow.classList.toggle('rotate');
 
       // Atualiza classe 'active'
       document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));

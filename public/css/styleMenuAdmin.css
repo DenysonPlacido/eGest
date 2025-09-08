@@ -74,39 +74,27 @@
 ============================= */
 
 .submenu {
-  list-style-type: none;
-  padding-left: 15px;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
 }
 
 .submenu.open {
-  max-height: 1000px; /* valor alto para permitir expansão */
+  max-height: 1000px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.submenu a {
-  padding: 10px 20px;
-  background-color: rgba(50, 45, 70, 0.8);
-  border-left: 3px solid transparent;
-  border-radius: 5px;
-  color: #ccc;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
+.arrow-icon {
+  margin-left: auto;
+  transition: transform 0.3s ease;
 }
 
-.submenu a:hover {
-  border-left: 3px solid #1abc9c;
-  color: #fff;
+.arrow-icon.rotate {
+  transform: rotate(180deg);
 }
-
-.submenu .submenu {
-  padding-left: 15px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
-}
-
 /* ============================
    Responsividade
 ============================= */
