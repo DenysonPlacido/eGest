@@ -15,11 +15,18 @@
       const parentUl = this.closest('ul');
       const siblingSubmenus = parentUl?.querySelectorAll('.submenu');
       siblingSubmenus?.forEach(sub => {
-        sub.classList.remove('open');
+        if (sub !== submenu) sub.classList.remove('open');
       });
 
       // Abre ou fecha o submenu clicado
       submenu.classList.toggle('open');
+
+      // Garante que todos os pais do submenu fiquem abertos
+      let parent = submenu.closest('.submenu');
+      while (parent) {
+        parent.classList.add('open');
+        parent = parent.closest('.submenu');
+      }
 
       // Atualiza ícones de seta (se houver)
       document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));

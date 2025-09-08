@@ -22,7 +22,6 @@
   width: 280px;
 }
 
-/* Logo */
 .logo {
   padding: 20px;
   font-size: 1.8rem;
@@ -32,7 +31,6 @@
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Menu principal */
 .menu {
   list-style-type: none;
   padding: 0;
