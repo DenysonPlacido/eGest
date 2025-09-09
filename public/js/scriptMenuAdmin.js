@@ -1,5 +1,5 @@
 ﻿// /workspaces/eGest/public/js/scriptMenuAdmin.js
-
+// Utilitário para gerar IDs seguros a partir de nomes
 export function slugify(text) {
   return text
     .toLowerCase()
@@ -9,40 +9,12 @@ export function slugify(text) {
     .replace(/\_+/g, '_');
 }
 
+// Renderiza os menus dinâmicos no DOM
 export function renderizarMenus(menus) {
   const menuContainer = document.getElementById('menu-container');
-  const submenuHTML = menu.submenus ? gerarSubmenu(menu.submenus) : '';
   const ul = document.createElement('ul');
   ul.classList.add('menu');
-
-  menus.forEach(menu => {
-    const menuId = slugify(menu.nome);
-    const li = document.createElement('li');
-
-    let submenuHTML = menu.submenus.map(sub => {
-      const subId = slugify(sub.nome);
-      return `
-        <li>
-          <a href="#" class="menu-item" data-target="${subId}">
-            <i class="fas ${sub.icone || 'fa-angle-right'}"></i> ${sub.nome}
-            <span class="arrow-icon"><i class="fas fa-chevron-down"></i></span>
-          </a>
-          <ul class="submenu" id="${subId}">
-            ${sub.acoes.map(acao => `
-              <li><a href="${acao.caminho}">${acao.nome}</a></li>
-            `).join('')}
-          </ul>
-        </li>
-      `;
-    }).join('');
-
-
-
-    
-    export function renderizarMenus(menus) {
-  const menuContainer = document.getElementById('menu-container');
-  const ul = document.createElement('ul');
-  ul.classList.add('menu');
+  ul.id = 'menu-dinamico';
 
   menus.forEach(menu => {
     const menuId = slugify(menu.nome);
@@ -75,12 +47,17 @@ export function renderizarMenus(menus) {
     ul.appendChild(li);
   });
 
-  menuContainer.querySelector('#menu-dinamico').replaceWith(ul);
+  const antigo = menuContainer.querySelector('#menu-dinamico');
+  if (antigo) {
+    antigo.replaceWith(ul);
+  } else {
+    menuContainer.appendChild(ul);
+  }
+
   aplicarEventosMenu();
 }
 
-
-
+// Aplica eventos de clique para expandir/contrair submenus
 export function aplicarEventosMenu() {
   const menu = document.querySelector('.menu');
   if (!menu) return;
@@ -126,6 +103,7 @@ export function aplicarEventosMenu() {
   });
 }
 
+// Simula carregamento de conteúdo no painel principal
 function loadContent(target) {
   const content = document.getElementById('main-content');
   switch (target) {
@@ -137,7 +115,7 @@ function loadContent(target) {
   }
 }
 
-
+// Gera submenus recursivamente para múltiplos níveis
 function gerarSubmenu(submenus) {
   return submenus.map(sub => {
     const subId = slugify(sub.nome);
