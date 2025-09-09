@@ -1,20 +1,31 @@
-import { aplicarEventosMenu, renderizarMenus } from './scriptMenuAdmin.js';
+// /workspaces/eGest/public/js/main.js
+
+import { renderizarMenus } from './scriptMenuAdmin.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Carrega o header
   fetch('header.html')
     .then(res => res.text())
     .then(html => {
-      document.getElementById('header-container').innerHTML = html;
-      initLogout();
-      initMenuToggle();
-      import('./session.js');
+      const headerEl = document.getElementById('header-container');
+      if (headerEl) {
+        headerEl.innerHTML = html;
+        initLogout();
+        initMenuToggle();
+        import('./session.js')
+          .catch(err => console.error('Erro ao carregar session.js:', err));
+      }
     });
 
+  // Carrega o menu
   fetch('menu.html')
     .then(res => res.text())
     .then(html => {
-      document.getElementById('menu-container').innerHTML = html;
-      carregarMenuDinamico();
+      const menuEl = document.getElementById('menu-container');
+      if (menuEl) {
+        menuEl.innerHTML = html;
+        carregarMenuDinamico();
+      }
     });
 });
 

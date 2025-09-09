@@ -1,0 +1,15 @@
+/public/
+│
+├── admin_dashboard.html
+├── header.html
+├── menu.html
+│
+├── css/
+│   ├── styleBase.css
+│   ├── styleHeader.css
+│   ├── styleMenuAdmin.css
+│
+├── js/
+│   ├── main.js
+│   ├── scriptMenuAdmin.js
+│   ├── session.js
