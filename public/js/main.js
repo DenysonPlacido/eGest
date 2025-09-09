@@ -1,3 +1,5 @@
+import('./session.js');
+
 export function aplicarEventosMenu() {
   const menu = document.querySelector('.menu');
   if (!menu) return;
@@ -37,3 +39,12 @@ export function aplicarEventosMenu() {
     loadContent(targetId);
   });
 }
+
+fetch('header.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('header-container').innerHTML = html;
+    initLogout();
+    initMenuToggle();
+    import('./session.js');
+  });
