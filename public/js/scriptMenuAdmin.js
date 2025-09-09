@@ -1,13 +1,14 @@
 ﻿
 
 // Utilitário para gerar IDs seguros a partir de nomes
-export function slugify(text) {
-  return text
+export function slugify(text, prefix = '') {
+  const base = text
     .toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/\s+/g, '_')
     .replace(/[^\w\-]/g, '')
     .replace(/\_+/g, '_');
+  return prefix + base;
 }
 
 // Renderiza os menus dinâmicos no DOM
@@ -18,7 +19,8 @@ export function renderizarMenus(menus) {
   ul.id = 'menu-dinamico';
 
   menus.forEach(menu => {
-    const menuId = slugify(menu.nome);
+    const menuId = slugify(menu.nome, 'menu_');
+
     const li = document.createElement('li');
 
     const submenuHTML = menu.submenus ? gerarSubmenu(menu.submenus) : '';
@@ -55,7 +57,6 @@ export function renderizarMenus(menus) {
 
   aplicarEventosMenu();
 }
-
 export function aplicarEventosMenu() {
   const menu = document.querySelector('.menu');
   if (!menu) return;
@@ -70,6 +71,7 @@ export function aplicarEventosMenu() {
     const submenu = document.getElementById(targetId);
 
     const temSubmenu = submenu && submenu.classList.contains('submenu');
+    const temFilhos = submenu && submenu.querySelectorAll('li').length > 0;
 
     // Alterna submenu se existir
     if (temSubmenu) {
@@ -100,8 +102,8 @@ export function aplicarEventosMenu() {
     document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
     item.classList.add('active');
 
-    // Só carrega conteúdo se NÃO tiver submenu
-    if (!temSubmenu) {
+    // ✅ Só carrega conteúdo se NÃO tiver submenu ou filhos
+    if (!temSubmenu || !temFilhos) {
       loadContent(targetId);
     }
   });
@@ -123,7 +125,8 @@ function loadContent(target) {
 // Gera submenus recursivamente para múltiplos níveis
 function gerarSubmenu(submenus) {
   return submenus.map(sub => {
-    const subId = slugify(sub.nome);
+    const subId = slugify(sub.nome, 'sub_');
+
     const temSubmenus = sub.submenus?.length > 0;
     const temAcoes = sub.acoes?.length > 0;
 
