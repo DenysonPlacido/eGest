@@ -23,15 +23,15 @@ function carregarHeader() {
       headerEl.innerHTML = html;
       console.log('✅ Header carregado com sucesso');
 
-      // Aguarda o DOM atualizar antes de inicializar os scripts
-      setTimeout(() => {
+      // Aguarda o DOM atualizar antes de buscar os elementos
+      requestAnimationFrame(() => {
         const toggleBtn = document.getElementById('menu-toggle');
         const sidebar = document.querySelector('.sidebar');
 
         if (!toggleBtn || !sidebar) {
           console.warn('⚠️ Toggle do menu ou sidebar não encontrado');
         } else {
-          initMenuToggle();
+          initMenuToggle(); // ✅ Agora os elementos existem
         }
 
         initLogout();
@@ -39,7 +39,7 @@ function carregarHeader() {
         import('./session.js')
           .then(() => console.log('✅ session.js carregado'))
           .catch(err => console.error('❌ Erro ao carregar session.js:', err));
-      }, 0);
+      });
     })
     .catch(err => console.error('❌ Falha ao carregar header:', err));
 }
