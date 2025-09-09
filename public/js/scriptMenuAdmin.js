@@ -1,6 +1,4 @@
-﻿
-
-// Utilitário para gerar IDs seguros a partir de nomes
+﻿// Utilitário para gerar IDs seguros a partir de nomes
 export function slugify(text, prefix = '') {
   const base = text
     .toLowerCase()
@@ -20,14 +18,13 @@ export function renderizarMenus(menus) {
 
   menus.forEach(menu => {
     const menuId = slugify(menu.nome, 'menu_');
-
     const li = document.createElement('li');
 
-    const submenuHTML = menu.submenus ? gerarSubmenu(menu.submenus) : '';
+    const submenuHTML = menu.submenus ? gerarSubmenu(menu.submenus, menuId) : '';
     const acoesHTML = menu.acoes?.length
       ? menu.acoes.map(acao => `
           <li>
-            <a href="${acao.caminho}">
+            <a href="#" class="menu-item" data-target="${slugify(acao.nome, 'acao_')}">
               <i class="fas ${acao.icone || 'fa-angle-right'}"></i> ${acao.nome}
             </a>
           </li>
@@ -57,80 +54,93 @@ export function renderizarMenus(menus) {
 
   aplicarEventosMenu();
 }
+
+// Aplica eventos de clique para expandir/contrair submenus
 export function aplicarEventosMenu() {
   const menu = document.querySelector('.menu');
   if (!menu) return;
 
-menu.addEventListener('click', function (e) {
-  const item = e.target.closest('.menu-item');
-  if (!item) return;
+  menu.addEventListener('click', function (e) {
+    const item = e.target.closest('.menu-item');
+    if (!item) return;
 
-  e.preventDefault();
+    e.preventDefault();
 
-  const targetId = item.dataset.target;
-  const submenu = document.getElementById(targetId);
+    const targetId = item.dataset.target;
+    const submenu = document.getElementById(targetId);
 
-  const temSubmenu = submenu && submenu.classList.contains('submenu');
-  const temFilhos = submenu && submenu.querySelectorAll('li').length > 0;
+    const temSubmenu = submenu && submenu.classList.contains('submenu');
+    const temFilhos = submenu && submenu.querySelectorAll('li').length > 0;
 
-  console.log('🧭 Clique em:', item.textContent.trim());
-  console.log('📦 targetId:', targetId);
-  console.log('📦 submenu encontrado?', !!submenu);
-  console.log('📦 temSubmenu:', temSubmenu, '| temFilhos:', temFilhos);
+    console.log('🧭 Clique em:', item.textContent.trim());
+    console.log('📦 targetId:', targetId);
+    console.log('📦 submenu encontrado?', !!submenu);
+    console.log('📦 temSubmenu:', temSubmenu, '| temFilhos:', temFilhos);
 
-  // Proteção contra submenu que aponta para si mesmo
-  if (submenu === item.parentElement) {
-    console.warn('⚠️ submenu aponta para o próprio item. Ignorando.');
-    return;
-  }
-
-  // Alterna submenu se existir
-  if (temSubmenu) {
-    submenu.classList.toggle('open');
-
-    // Fecha submenus irmãos
-    const parentLi = item.closest('li');
-    const parentUl = parentLi?.parentElement;
-    const siblingSubmenus = parentUl?.querySelectorAll(':scope > li > .submenu');
-    siblingSubmenus?.forEach(sub => {
-      if (sub !== submenu) sub.classList.remove('open');
-    });
-
-    // Abre todos os pais (nível 3+)
-    let parent = submenu.closest('.submenu');
-    while (parent) {
-      parent.classList.add('open');
-      parent = parent.closest('.submenu');
+    // Proteção contra submenu que aponta para si mesmo
+    if (submenu === item.parentElement) {
+      console.warn('⚠️ submenu aponta para o próprio item. Ignorando.');
+      return;
     }
 
-    // Ícones de seta
-    document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
-    const arrow = item.querySelector('.arrow-icon');
-    if (arrow) arrow.classList.toggle('rotate');
-  }
+    // Alterna submenu se existir
+    if (temSubmenu) {
+      submenu.classList.toggle('open');
 
-  // Ativa item clicado
-  document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-  item.classList.add('active');
+      // Fecha submenus irmãos
+      const parentLi = item.closest('li');
+      const parentUl = parentLi?.parentElement;
+      const siblingSubmenus = parentUl?.querySelectorAll(':scope > li > .submenu');
+      siblingSubmenus?.forEach(sub => {
+        if (sub !== submenu) sub.classList.remove('open');
+      });
 
-  // ✅ Só carrega conteúdo se NÃO tiver submenu ou filhos
-  if (!temSubmenu || !temFilhos) {
-    console.log('🚀 Chamando loadContent para:', targetId);
-    loadContent(targetId);
-  } else {
-    console.log('📂 Item tem submenu. Não carregando conteúdo.');
-  }
-});
+      // Abre todos os pais (nível 3+)
+      let parent = submenu.closest('.submenu');
+      while (parent) {
+        parent.classList.add('open');
+        parent = parent.closest('.submenu');
+      }
 
+      // Ícones de seta
+      document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
+      const arrow = item.querySelector('.arrow-icon');
+      if (arrow) arrow.classList.toggle('rotate');
+    }
+
+    // Ativa item clicado
+    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+
+    // ✅ Só carrega conteúdo se NÃO tiver submenu ou filhos
+    if (!temSubmenu || !temFilhos) {
+      console.log('🚀 Chamando loadContent para:', targetId);
+      loadContent(targetId);
+    } else {
+      console.log('📂 Item tem submenu. Não carregando conteúdo.');
+    }
+  });
 }
-
 
 // Simula carregamento de conteúdo no painel principal
 function loadContent(target) {
   const content = document.getElementById('main-content');
+  if (!content) {
+    console.warn('⚠️ Elemento #main-content não encontrado');
+    return;
+  }
+
+  console.log('🚀 Carregando conteúdo para:', target);
+
   switch (target) {
     case 'dashboard':
       content.innerHTML = `<div class="welcome-box"><h1>Dashboard</h1><p>Resumo do sistema.</p></div>`;
+      break;
+    case 'acao_cadastrar_pessoa':
+      content.innerHTML = `<div class="welcome-box"><h1>Cadastrar Pessoa</h1></div>`;
+      break;
+    case 'acao_consultar_usuarios':
+      content.innerHTML = `<div class="welcome-box"><h1>Consultar Usuários</h1></div>`;
       break;
     default:
       content.innerHTML = `<div class="welcome-box"><h1>Bem-vindo ao eGest!</h1></div>`;
@@ -138,16 +148,22 @@ function loadContent(target) {
 }
 
 // Gera submenus recursivamente para múltiplos níveis
-function gerarSubmenu(submenus) {
+function gerarSubmenu(submenus, parentPrefix = '') {
   return submenus.map(sub => {
-    const subId = slugify(sub.nome, 'sub_');
+    const subId = slugify(sub.nome, parentPrefix + '_sub_');
 
     const temSubmenus = sub.submenus?.length > 0;
     const temAcoes = sub.acoes?.length > 0;
 
-    const subSubmenuHTML = temSubmenus ? gerarSubmenu(sub.submenus) : '';
+    const subSubmenuHTML = temSubmenus ? gerarSubmenu(sub.submenus, subId) : '';
     const acoesHTML = temAcoes
-      ? sub.acoes.map(acao => `<li><a href="${acao.caminho}">${acao.nome}</a></li>`).join('')
+      ? sub.acoes.map(acao => `
+          <li>
+            <a href="#" class="menu-item" data-target="${slugify(acao.nome, 'acao_')}">
+              <i class="fas ${acao.icone || 'fa-angle-right'}"></i> ${acao.nome}
+            </a>
+          </li>
+        `).join('')
       : '';
 
     return `
