@@ -1,10 +1,4 @@
-﻿/* /workspaces/eGest/public/css/styleMenuAdmin.css */
-
-/* ============================
-   Sidebar e Menu Principal
-============================= */
-
-.sidebar {
+﻿.sidebar {
   width: 250px;
   background: rgba(31, 28, 44, 0.9);
   color: white;
@@ -16,12 +10,12 @@
   height: calc(100% - 50px);
   overflow-y: auto;
   backdrop-filter: blur(8px);
-  transition: width 0.3s, background 0.3s;
+  transition: left 0.3s ease;
   z-index: 1000;
 }
 
-.sidebar:hover {
-  width: 280px;
+.sidebar.open {
+  left: 0;
 }
 
 .logo {
@@ -70,10 +64,6 @@
   font-weight: bold;
 }
 
-/* ============================
-   Submenus e Níveis Aninhados
-============================= */
-
 .submenu {
   list-style-type: none;
   padding-left: 15px;
@@ -105,12 +95,6 @@
   color: #fff;
 }
 
-/* Submenus aninhados */
-.submenu .submenu {
-  padding-left: 15px;
-}
-
-/* Ícones de seta animados */
 .arrow-icon {
   margin-left: auto;
   transition: transform 0.3s ease;
@@ -120,19 +104,19 @@
   transform: rotate(180deg);
 }
 
-/* ============================
-   Responsividade
-============================= */
-
+/* Responsividade */
 @media (max-width: 768px) {
   .sidebar {
-    position: absolute;
     left: -250px;
     width: 250px;
-    transition: left 0.3s ease;
   }
 
   .sidebar.open {
     left: 0;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 70px 20px 20px 20px;
   }
 }

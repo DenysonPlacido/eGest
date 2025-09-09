@@ -1,79 +1,51 @@
 /* /workspaces/eGest/public/css/styleBase.css */
-
-/* Reset e base */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  color: #e0e0e0;
+  flex-direction: column;
 }
 
-/* Cabeçalho */
-.header {
-    position: fixed;
-    top: 0;
-    left: 250px;
-    right: 0;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    font-size: 10px;
-    justify-content: space-between;
-    backdrop-filter: blur(10px);
-    z-index: 100;
-}
-
-/* Conteúdo central */
 .content {
-    padding-top: 60px;
-    margin-left: 250px;
-    padding: 60px 30px 30px 30px;
-    flex-grow: 1;
-    overflow-y: auto;
+  margin-left: 250px;
+  padding: 70px 30px 30px 30px;
+  flex-grow: 1;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
 }
 
-/* Caixa central */
 .welcome-box {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 40px 30px;
-    text-align: center;
-    max-width: 600px;
-    margin: auto;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 40px 30px;
+  text-align: center;
+  max-width: 600px;
+  margin: auto;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #fff;
 }
 
 .welcome-box:hover {
-    transform: scale(1.02);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  transform: scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
 .welcome-box h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
+  font-size: 28px;
+  margin-bottom: 20px;
 }
 
 .welcome-box p {
-    font-size: 16px;
-    color: #ddd;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .sidebar { width: 60px; }
-    .sidebar:hover { width: 250px; }
-    .content { margin-left: 60px; padding: 20px; }
+  font-size: 16px;
+  color: #ddd;
 }

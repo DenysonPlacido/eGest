@@ -1,5 +1,4 @@
 ﻿// /workspaces/eGest/public/js/scriptMenuAdmin.js
-// /workspaces/eGest/public/js/scriptMenuAdmin.js
 
 export function slugify(text) {
   return text
