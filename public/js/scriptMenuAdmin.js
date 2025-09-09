@@ -95,12 +95,14 @@ export function aplicarEventosMenu() {
         if (sub !== submenu) sub.classList.remove('open');
       });
 
-      // Abre todos os pais (nível 3+)
-      let parent = submenu.closest('.submenu');
-      while (parent) {
-        parent.classList.add('open');
-        parent = parent.closest('.submenu');
-      }
+     let parent = submenu.closest('.submenu');
+const visited = new Set();
+
+while (parent && !visited.has(parent)) {
+  visited.add(parent);
+  parent.classList.add('open');
+  parent = parent.closest('.submenu');
+}
 
       // Ícones de seta
       document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
