@@ -1,50 +1,60 @@
-import('./session.js');
+import { aplicarEventosMenu, renderizarMenus } from './scriptMenuAdmin.js';
 
-export function aplicarEventosMenu() {
-  const menu = document.querySelector('.menu');
-  if (!menu) return;
-
-  menu.addEventListener('click', function (e) {
-    const item = e.target.closest('.menu-item');
-    if (!item) return;
-
-    e.preventDefault();
-
-    const targetId = item.dataset.target;
-    const submenu = document.getElementById(targetId);
-    if (!submenu) return;
-
-    const parentUl = item.closest('ul');
-    const siblingSubmenus = parentUl?.querySelectorAll('.submenu');
-    siblingSubmenus?.forEach(sub => {
-      if (sub !== submenu) sub.classList.remove('open');
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('header.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('header-container').innerHTML = html;
+      initLogout();
+      initMenuToggle();
+      import('./session.js');
     });
 
-    submenu.classList.toggle('open');
+  fetch('menu.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('menu-container').innerHTML = html;
+      carregarMenuDinamico();
+    });
+});
 
-    let parent = submenu.closest('.submenu');
-    while (parent) {
-      parent.classList.add('open');
-      parent = parent.closest('.submenu');
+function carregarMenuDinamico() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('Sessão expirada. Faça login novamente.');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  fetch('https://e-gest-back-end.vercel.app/api/menus', {
+    headers: {
+      Authorization: `Bearer ${token}`
     }
-
-    document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
-    const arrow = item.querySelector('.arrow-icon');
-    if (arrow) arrow.classList.toggle('rotate');
-
-    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-    item.classList.add('active');
-
-    // Carrega conteúdo
-    loadContent(targetId);
-  });
+  })
+    .then(res => res.json())
+    .then(menus => renderizarMenus(menus))
+    .catch(err => {
+      console.error('Erro ao carregar menus:', err);
+      alert("Erro ao carregar menus.");
+    });
 }
 
-fetch('header.html')
-  .then(res => res.text())
-  .then(html => {
-    document.getElementById('header-container').innerHTML = html;
-    initLogout();
-    initMenuToggle();
-    import('./session.js');
-  });
+function initLogout() {
+  const btnSair = document.getElementById('btn-sair');
+  if (btnSair) {
+    btnSair.addEventListener('click', () => {
+      localStorage.clear();
+      window.location.href = 'index.html';
+    });
+  }
+}
+
+function initMenuToggle() {
+  const toggleBtn = document.getElementById('menu-toggle');
+  const sidebar = document.getElementById('menu-container');
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+  }
+}

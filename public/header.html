@@ -1,28 +1,30 @@
 <!-- /workspaces/eGest/public/header.html -->
 
-<button id="menu-toggle" class="menu-toggle">
-  <i class="fas fa-bars"></i>
-</button>
+<header class="header">
+  <!-- Botão de toggle do menu lateral -->
+  <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">
+    <i class="fas fa-bars"></i>
+  </button>
 
-
-<div class="header">
+  <!-- Logo e nome do sistema -->
   <div class="header-left">
-    <img src="css/erp.png" alt="Logo" class="logo-header">
+    <img src="css/erp.png" alt="Logo eGest" class="logo-header">
     <span class="system-name">eGest ERP</span>
   </div>
 
+  <!-- Informações da sessão -->
   <div class="header-center">
     <span id="empresa-logada">Empresa: </span>
     <span id="usuario-logado">Usuário: </span>
     <span id="hora-sistema">00:00</span>
     <span id="tempo-sessao">00:00:00</span>
-
   </div>
 
+  <!-- Botões de ação -->
   <div class="header-right">
-    <button class="icon-btn"><i class="fas fa-bell"></i></button>
-    <button class="icon-btn"><i class="fas fa-envelope"></i></button>
-    <button class="icon-btn"><i class="fas fa-cog"></i></button>
-    <button id="btn-sair" class="icon-btn logout"><i class="fas fa-sign-out-alt"></i></button>
+    <button class="icon-btn" aria-label="Notificações"><i class="fas fa-bell"></i></button>
+    <button class="icon-btn" aria-label="Mensagens"><i class="fas fa-envelope"></i></button>
+    <button class="icon-btn" aria-label="Configurações"><i class="fas fa-cog"></i></button>
+    <button id="btn-sair" class="icon-btn logout" aria-label="Sair"><i class="fas fa-sign-out-alt"></i></button>
   </div>
-</div>
+</header>
