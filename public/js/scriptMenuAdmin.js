@@ -56,7 +56,6 @@ export function renderizarMenus(menus) {
   aplicarEventosMenu();
 }
 
-// Aplica eventos de clique para expandir/contrair submenus
 export function aplicarEventosMenu() {
   const menu = document.querySelector('.menu');
   if (!menu) return;
@@ -69,7 +68,9 @@ export function aplicarEventosMenu() {
 
     const targetId = item.dataset.target;
     const submenu = document.getElementById(targetId);
-    if (!submenu) return;
+
+    // Verifica se o item tem submenu
+    const temSubmenu = submenu && submenu.classList.contains('submenu');
 
     // Fecha submenus irmãos no mesmo nível
     const parentLi = item.closest('li');
@@ -80,25 +81,30 @@ export function aplicarEventosMenu() {
     });
 
     // Alterna submenu atual
-    submenu.classList.toggle('open');
+    if (temSubmenu) {
+      submenu.classList.toggle('open');
 
-    // Abre todos os pais (nível 3+)
-    let parent = submenu.closest('.submenu');
-    while (parent) {
-      parent.classList.add('open');
-      parent = parent.closest('.submenu');
+      // Abre todos os pais (nível 3+)
+      let parent = submenu.closest('.submenu');
+      while (parent) {
+        parent.classList.add('open');
+        parent = parent.closest('.submenu');
+      }
+
+      // Ícones de seta
+      document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
+      const arrow = item.querySelector('.arrow-icon');
+      if (arrow) arrow.classList.toggle('rotate');
     }
-
-    // Ícones de seta
-    document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
-    const arrow = item.querySelector('.arrow-icon');
-    if (arrow) arrow.classList.toggle('rotate');
 
     // Ativa item clicado
     document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
     item.classList.add('active');
 
-    loadContent(targetId);
+    // ✅ Só carrega conteúdo se não houver submenu (ou seja, é uma ação final)
+    if (!temSubmenu) {
+      loadContent(targetId);
+    }
   });
 }
 
