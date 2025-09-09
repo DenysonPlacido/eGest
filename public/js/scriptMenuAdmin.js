@@ -1,43 +1,116 @@
 ﻿// /workspaces/eGest/public/js/scriptMenuAdmin.js
+// /workspaces/eGest/public/js/scriptMenuAdmin.js
+
+export function slugify(text) {
+  return text
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, '_')
+    .replace(/[^\w\-]/g, '')
+    .replace(/\_+/g, '_');
+}
+
+export function renderizarMenus(menus) {
+  const menuContainer = document.getElementById('menu-container');
+  const ul = document.createElement('ul');
+  ul.classList.add('menu');
+
+  menus.forEach(menu => {
+    const menuId = slugify(menu.nome);
+    const li = document.createElement('li');
+
+    let submenuHTML = menu.submenus.map(sub => {
+      const subId = slugify(sub.nome);
+      return `
+        <li>
+          <a href="#" class="menu-item" data-target="${subId}">
+            <i class="fas ${sub.icone || 'fa-angle-right'}"></i> ${sub.nome}
+            <span class="arrow-icon"><i class="fas fa-chevron-down"></i></span>
+          </a>
+          <ul class="submenu" id="${subId}">
+            ${sub.acoes.map(acao => `
+              <li><a href="${acao.caminho}">${acao.nome}</a></li>
+            `).join('')}
+          </ul>
+        </li>
+      `;
+    }).join('');
+
+    let acoesHTML = '';
+    if (menu.acoes && menu.acoes.length > 0) {
+      acoesHTML = menu.acoes.map(acao => `
+        <li>
+          <a href="${acao.caminho}">
+            <i class="fas ${acao.icone || 'fa-angle-right'}"></i> ${acao.nome}
+          </a>
+        </li>
+      `).join('');
+    }
+
+    li.innerHTML = `
+      <a href="#" class="menu-item" data-target="${menuId}">
+        <i class="fas ${menu.icone}"></i> ${menu.nome}
+        <span class="arrow-icon"><i class="fas fa-chevron-down"></i></span>
+      </a>
+      <ul class="submenu" id="${menuId}">
+        ${submenuHTML}
+        ${acoesHTML}
+      </ul>
+    `;
+
+    ul.appendChild(li);
+  });
+
+  menuContainer.querySelector('#menu-dinamico').replaceWith(ul);
+  aplicarEventosMenu();
+}
 
 export function aplicarEventosMenu() {
-  const menuItems = document.querySelectorAll('.menu-item');
+  const menu = document.querySelector('.menu');
+  if (!menu) return;
 
-  menuItems.forEach(item => {
-    item.addEventListener('click', function (e) {
-      e.preventDefault();
+  menu.addEventListener('click', function (e) {
+    const item = e.target.closest('.menu-item');
+    if (!item) return;
 
-      const targetId = this.dataset.target;
-      const submenu = document.getElementById(targetId);
-      if (!submenu) return;
+    e.preventDefault();
 
-      const isOpen = submenu.classList.contains('open');
+    const targetId = item.dataset.target;
+    const submenu = document.getElementById(targetId);
+    if (!submenu) return;
 
-      // Fecha todos os submenus visíveis no mesmo nível
-      const parentUl = this.closest('ul');
-      const siblingSubmenus = parentUl?.querySelectorAll('.submenu');
-      siblingSubmenus?.forEach(sub => {
-        if (sub !== submenu) sub.classList.remove('open');
-      });
-
-      // Abre ou fecha o submenu clicado
-      submenu.classList.toggle('open');
-
-      // Garante que todos os pais do submenu fiquem abertos
-      let parent = submenu.closest('.submenu');
-      while (parent) {
-        parent.classList.add('open');
-        parent = parent.closest('.submenu');
-      }
-
-      // Atualiza ícones de seta (se houver)
-      document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
-      const arrow = this.querySelector('.arrow-icon');
-      if (arrow) arrow.classList.toggle('rotate');
-
-      // Atualiza classe 'active'
-      document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-      this.classList.add('active');
+    const parentUl = item.closest('ul');
+    const siblingSubmenus = parentUl?.querySelectorAll('.submenu');
+    siblingSubmenus?.forEach(sub => {
+      if (sub !== submenu) sub.classList.remove('open');
     });
+
+    submenu.classList.toggle('open');
+
+    let parent = submenu.closest('.submenu');
+    while (parent) {
+      parent.classList.add('open');
+      parent = parent.closest('.submenu');
+    }
+
+    document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
+    const arrow = item.querySelector('.arrow-icon');
+    if (arrow) arrow.classList.toggle('rotate');
+
+    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+
+    loadContent(targetId);
   });
+}
+
+function loadContent(target) {
+  const content = document.getElementById('main-content');
+  switch (target) {
+    case 'dashboard':
+      content.innerHTML = `<div class="welcome-box"><h1>Dashboard</h1><p>Resumo do sistema.</p></div>`;
+      break;
+    default:
+      content.innerHTML = `<div class="welcome-box"><h1>Bem-vindo ao eGest!</h1></div>`;
+  }
 }
