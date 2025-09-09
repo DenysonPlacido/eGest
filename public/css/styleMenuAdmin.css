@@ -1,9 +1,10 @@
-﻿/* /workspaces/eGest/public/css/styleMenuAdmin.css */
-
+﻿/* ===========================
+   SIDEBAR FIXA COM BLUR
+=========================== */
 .sidebar {
   width: 250px;
   background: rgba(31, 28, 44, 0.9);
-  color: white;
+  color: #fff;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -12,6 +13,7 @@
   height: calc(100% - 50px);
   overflow-y: auto;
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition: left 0.3s ease;
   z-index: 1000;
 }
@@ -20,29 +22,35 @@
   left: 0;
 }
 
+/* ===========================
+   LOGO DO SISTEMA
+=========================== */
 .logo {
   padding: 20px;
   font-size: 1.8rem;
   font-weight: bold;
   text-align: center;
   background: rgba(61, 61, 61, 0.9);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* ===========================
+   MENU PRINCIPAL
+=========================== */
 .menu {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
   margin: 0;
   flex-grow: 1;
 }
 
 .menu > li {
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .menu a {
   text-decoration: none;
-  color: white;
+  color: #fff;
   display: flex;
   align-items: center;
   padding: 15px 20px;
@@ -66,8 +74,11 @@
   font-weight: bold;
 }
 
+/* ===========================
+   SUBMENUS ANIMADOS
+=========================== */
 .submenu {
-  list-style-type: none;
+  list-style: none;
   padding-left: 15px;
   max-height: 0;
   overflow: hidden;
@@ -97,6 +108,9 @@
   color: #fff;
 }
 
+/* ===========================
+   ÍCONE DE SETA
+=========================== */
 .arrow-icon {
   margin-left: auto;
   transition: transform 0.3s ease;
@@ -106,7 +120,9 @@
   transform: rotate(180deg);
 }
 
-/* Responsividade */
+/* ===========================
+   RESPONSIVIDADE
+=========================== */
 @media (max-width: 768px) {
   .sidebar {
     left: -250px;

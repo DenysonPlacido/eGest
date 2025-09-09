@@ -2,8 +2,8 @@
 // Configurações
 // ===========================
 const TEMPO_MAXIMO_SESSAO = 60 * 60; // 1 hora em segundos
-const TEMPO_ALERTA = 5 * 60; // alerta 5 minutos antes
-const INTERVALO_VERIFICACAO = 1000; // 1 segundo
+const TEMPO_ALERTA = 5 * 60;         // alerta 5 minutos antes
+const INTERVALO_VERIFICACAO = 1000;  // 1 segundo
 
 // ===========================
 // Elementos do header
@@ -17,7 +17,7 @@ const sessaoEl = document.getElementById('tempo-sessao');
 // Exibe dados da empresa e usuário
 // ===========================
 const empresa = localStorage.getItem('selectedEmp') || 'Não logada';
-const usuario = localStorage.getItem('username') || 'Desconhecido';
+const usuario = localStorage.getItem('usuarioNome') || 'Desconhecido';
 
 if (empresaEl) empresaEl.textContent = `Empresa: ${empresa}`;
 if (usuarioEl) usuarioEl.textContent = `Usuário: ${usuario}`;
@@ -28,7 +28,7 @@ if (usuarioEl) usuarioEl.textContent = `Usuário: ${usuario}`;
 setInterval(() => {
   if (horaEl) {
     const now = new Date();
-    horaEl.textContent = now.toLocaleTimeString('pt-BR');
+    horaEl.textContent = now.toLocaleTimeString('pt-BR', { hour12: false });
   }
 }, INTERVALO_VERIFICACAO);
 

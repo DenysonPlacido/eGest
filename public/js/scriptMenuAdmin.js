@@ -1,4 +1,5 @@
-﻿// /workspaces/eGest/public/js/scriptMenuAdmin.js
+﻿
+
 // Utilitário para gerar IDs seguros a partir de nomes
 export function slugify(text) {
   return text
@@ -21,17 +22,15 @@ export function renderizarMenus(menus) {
     const li = document.createElement('li');
 
     const submenuHTML = menu.submenus ? gerarSubmenu(menu.submenus) : '';
-
-    let acoesHTML = '';
-    if (menu.acoes && menu.acoes.length > 0) {
-      acoesHTML = menu.acoes.map(acao => `
-        <li>
-          <a href="${acao.caminho}">
-            <i class="fas ${acao.icone || 'fa-angle-right'}"></i> ${acao.nome}
-          </a>
-        </li>
-      `).join('');
-    }
+    const acoesHTML = menu.acoes?.length
+      ? menu.acoes.map(acao => `
+          <li>
+            <a href="${acao.caminho}">
+              <i class="fas ${acao.icone || 'fa-angle-right'}"></i> ${acao.nome}
+            </a>
+          </li>
+        `).join('')
+      : '';
 
     li.innerHTML = `
       <a href="#" class="menu-item" data-target="${menuId}">
@@ -119,20 +118,13 @@ function loadContent(target) {
 function gerarSubmenu(submenus) {
   return submenus.map(sub => {
     const subId = slugify(sub.nome);
-    const temSubmenus = sub.submenus && sub.submenus.length > 0;
-    const temAcoes = sub.acoes && sub.acoes.length > 0;
+    const temSubmenus = sub.submenus?.length > 0;
+    const temAcoes = sub.acoes?.length > 0;
 
-    let subSubmenuHTML = '';
-    if (temSubmenus) {
-      subSubmenuHTML = gerarSubmenu(sub.submenus);
-    }
-
-    let acoesHTML = '';
-    if (temAcoes) {
-      acoesHTML = sub.acoes.map(acao => `
-        <li><a href="${acao.caminho}">${acao.nome}</a></li>
-      `).join('');
-    }
+    const subSubmenuHTML = temSubmenus ? gerarSubmenu(sub.submenus) : '';
+    const acoesHTML = temAcoes
+      ? sub.acoes.map(acao => `<li><a href="${acao.caminho}">${acao.nome}</a></li>`).join('')
+      : '';
 
     return `
       <li>

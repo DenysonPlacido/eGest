@@ -1,4 +1,6 @@
-﻿// ===========================
+﻿// /workspaces/eGest/public/js/scriptIndexLogin.js
+
+// ===========================
 // Seleção da empresa
 // ===========================
 document.getElementById('select-btn').addEventListener('click', selectedEmpresa);
@@ -21,8 +23,12 @@ function selectedEmpresa() {
 async function carregarEmpresas() {
   try {
     const response = await fetch("https://e-gest-back-end.vercel.app/api/empresas");
-    const empresas = await response.json();
 
+    if (!response.ok) {
+      throw new Error("Erro ao buscar empresas");
+    }
+
+    const empresas = await response.json();
     const select = document.getElementById("Empresa-select");
     select.innerHTML = '';
 
@@ -45,11 +51,11 @@ window.addEventListener('DOMContentLoaded', carregarEmpresas);
 // Função de login com JWT
 // ===========================
 async function login() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
   const empresa_id = localStorage.getItem("selectedEmp");
 
-  if (!username || !password) {
+  if (!username || !password || !empresa_id) {
     alert("Por favor, preencha todos os campos.");
     return;
   }
@@ -61,17 +67,21 @@ async function login() {
       body: JSON.stringify({ empresa_id, username, senha: password })
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      alert(errorData.message || "Erro ao fazer login.");
+      return;
+    }
+
     const data = await response.json();
 
     if (data.token) {
-      // Armazena token e dados do usuário
       localStorage.setItem("token", data.token);
       localStorage.setItem("usuarioNome", data.usuario.nome);
       localStorage.setItem("usuarioPerfil", data.usuario.perfil);
       localStorage.setItem("usuarioId", data.usuario.id);
       localStorage.setItem("empresaId", data.usuario.empresa_id);
 
-      //alert("Login realizado com sucesso!");
       window.location.href = "admin_dashboard.html";
     } else {
       alert("Credenciais inválidas!");
