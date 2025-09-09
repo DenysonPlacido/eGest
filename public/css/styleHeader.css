@@ -3,15 +3,17 @@
 .header {
   position: fixed;
   top: 0;
-  left: 250px;
+  left: 0; /* ← importante para ocupar desde o canto esquerdo */
   right: 0;
+  width: 100%; /* ← garante que ocupe toda a largura */
   height: 50px;
-  background: rgba(31, 28, 44, 0.95);
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0 15px;
+  font-size: 14px;
+  justify-content: space-between;
   backdrop-filter: blur(10px);
   z-index: 100;
 }

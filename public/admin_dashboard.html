@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿<!-- /workspaces/eGest/public/admin_dashboard.html -->
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -11,18 +12,23 @@
 </head>
 <body>
   <!-- menu lateral -->
-  <div class="sidebar" id="menu-container"></div>
+  <div class="sidebar" id="menu-container">
+    <div class="logo">eGest</div>
+    <ul class="menu" id="menu-dinamico">
+      <!-- Os itens do menu serão inseridos dinamicamente via JavaScript -->
+    </ul>
+  </div>
 
   <!-- conteúdo principal -->
   <div class="content" id="main-content">
-      <div class="welcome-box">
-          <h1>Bem-vindo ao Gestor!</h1>
-          <p>Selecione uma opção no menu lateral para começar.</p>
-      </div>
+    <div class="welcome-box">
+      <h1>Bem-vindo ao Gestor!</h1>
+      <p>Selecione uma opção no menu lateral para começar.</p>
+    </div>
   </div>
 
   <!-- scripts -->
-  <script src="js/main.js"></script>
+  <script type="module" src="js/main.js"></script>
   <script src="js/session.js"></script>
 </body>
 </html>

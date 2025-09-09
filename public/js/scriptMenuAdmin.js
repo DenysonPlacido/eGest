@@ -1,4 +1,6 @@
-﻿export function aplicarEventosMenu() {
+﻿// /workspaces/eGest/public/js/scriptMenuAdmin.js
+
+export function aplicarEventosMenu() {
   const menuItems = document.querySelectorAll('.menu-item');
 
   menuItems.forEach(item => {

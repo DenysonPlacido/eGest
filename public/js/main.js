@@ -1,7 +1,10 @@
 // /workspaces/eGest/public/js/main.js
+
+import { aplicarEventosMenu } from './scriptMenuAdmin.js';
 // ===========================
 // Carrega o header
 // ===========================
+
 fetch('header.html')
   .then(res => res.text())
   .then(html => {
@@ -100,35 +103,6 @@ li.innerHTML = `
   aplicarEventosMenu();
 }
 
-// ===========================
-// Aplica eventos de clique nos menus
-// ===========================
-function aplicarEventosMenu() {
-  document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', function (e) {
-      e.preventDefault();
-      const targetId = this.dataset.target;
-      const submenu = document.getElementById(targetId);
-      if (!submenu) return;
-
-      const isOpen = submenu.style.maxHeight && submenu.style.maxHeight !== "0px";
-      const siblings = this.closest('li')?.parentElement?.querySelectorAll('.submenu');
-      siblings?.forEach(sib => {
-        if (sib !== submenu) sib.style.maxHeight = null;
-      });
-      submenu.style.maxHeight = isOpen ? null : submenu.scrollHeight + "px";
-    });
-  });
-
-  // Troca conteúdo principal
-  document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', e => {
-      e.preventDefault();
-      const target = item.dataset.target;
-      loadContent(target);
-    });
-  });
-}
 
 // ===========================
 // Função para trocar conteúdo
@@ -156,3 +130,15 @@ function initLogout() {
     });
   }
 }
+
+// abrir/fechar menu
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('menu-toggle');
+  const sidebar = document.getElementById('menu-container');
+
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+  }
+});
