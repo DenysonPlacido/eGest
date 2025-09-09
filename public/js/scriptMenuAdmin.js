@@ -61,52 +61,67 @@ export function aplicarEventosMenu() {
   const menu = document.querySelector('.menu');
   if (!menu) return;
 
-  menu.addEventListener('click', function (e) {
-    const item = e.target.closest('.menu-item');
-    if (!item) return;
+menu.addEventListener('click', function (e) {
+  const item = e.target.closest('.menu-item');
+  if (!item) return;
 
-    e.preventDefault();
+  e.preventDefault();
 
-    const targetId = item.dataset.target;
-    const submenu = document.getElementById(targetId);
+  const targetId = item.dataset.target;
+  const submenu = document.getElementById(targetId);
 
-    const temSubmenu = submenu && submenu.classList.contains('submenu');
-    const temFilhos = submenu && submenu.querySelectorAll('li').length > 0;
+  const temSubmenu = submenu && submenu.classList.contains('submenu');
+  const temFilhos = submenu && submenu.querySelectorAll('li').length > 0;
 
-    // Alterna submenu se existir
-    if (temSubmenu) {
-      submenu.classList.toggle('open');
+  console.log('🧭 Clique em:', item.textContent.trim());
+  console.log('📦 targetId:', targetId);
+  console.log('📦 submenu encontrado?', !!submenu);
+  console.log('📦 temSubmenu:', temSubmenu, '| temFilhos:', temFilhos);
 
-      // Fecha submenus irmãos
-      const parentLi = item.closest('li');
-      const parentUl = parentLi?.parentElement;
-      const siblingSubmenus = parentUl?.querySelectorAll(':scope > li > .submenu');
-      siblingSubmenus?.forEach(sub => {
-        if (sub !== submenu) sub.classList.remove('open');
-      });
+  // Proteção contra submenu que aponta para si mesmo
+  if (submenu === item.parentElement) {
+    console.warn('⚠️ submenu aponta para o próprio item. Ignorando.');
+    return;
+  }
 
-      // Abre todos os pais (nível 3+)
-      let parent = submenu.closest('.submenu');
-      while (parent) {
-        parent.classList.add('open');
-        parent = parent.closest('.submenu');
-      }
+  // Alterna submenu se existir
+  if (temSubmenu) {
+    submenu.classList.toggle('open');
 
-      // Ícones de seta
-      document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
-      const arrow = item.querySelector('.arrow-icon');
-      if (arrow) arrow.classList.toggle('rotate');
+    // Fecha submenus irmãos
+    const parentLi = item.closest('li');
+    const parentUl = parentLi?.parentElement;
+    const siblingSubmenus = parentUl?.querySelectorAll(':scope > li > .submenu');
+    siblingSubmenus?.forEach(sub => {
+      if (sub !== submenu) sub.classList.remove('open');
+    });
+
+    // Abre todos os pais (nível 3+)
+    let parent = submenu.closest('.submenu');
+    while (parent) {
+      parent.classList.add('open');
+      parent = parent.closest('.submenu');
     }
 
-    // Ativa item clicado
-    document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-    item.classList.add('active');
+    // Ícones de seta
+    document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
+    const arrow = item.querySelector('.arrow-icon');
+    if (arrow) arrow.classList.toggle('rotate');
+  }
 
-    // ✅ Só carrega conteúdo se NÃO tiver submenu ou filhos
-    if (!temSubmenu || !temFilhos) {
-      loadContent(targetId);
-    }
-  });
+  // Ativa item clicado
+  document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+  item.classList.add('active');
+
+  // ✅ Só carrega conteúdo se NÃO tiver submenu ou filhos
+  if (!temSubmenu || !temFilhos) {
+    console.log('🚀 Chamando loadContent para:', targetId);
+    loadContent(targetId);
+  } else {
+    console.log('📂 Item tem submenu. Não carregando conteúdo.');
+  }
+});
+
 }
 
 
