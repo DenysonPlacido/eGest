@@ -23,12 +23,23 @@ function carregarHeader() {
       headerEl.innerHTML = html;
       console.log('✅ Header carregado com sucesso');
 
-      initLogout();
-      initMenuToggle();
+      // Aguarda o DOM atualizar antes de inicializar os scripts
+      setTimeout(() => {
+        const toggleBtn = document.getElementById('menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
 
-      import('./session.js')
-        .then(() => console.log('✅ session.js carregado'))
-        .catch(err => console.error('❌ Erro ao carregar session.js:', err));
+        if (!toggleBtn || !sidebar) {
+          console.warn('⚠️ Toggle do menu ou sidebar não encontrado');
+        } else {
+          initMenuToggle();
+        }
+
+        initLogout();
+
+        import('./session.js')
+          .then(() => console.log('✅ session.js carregado'))
+          .catch(err => console.error('❌ Erro ao carregar session.js:', err));
+      }, 0);
     })
     .catch(err => console.error('❌ Falha ao carregar header:', err));
 }
