@@ -69,20 +69,19 @@ export function aplicarEventosMenu() {
     const targetId = item.dataset.target;
     const submenu = document.getElementById(targetId);
 
-    // Verifica se o item tem submenu
     const temSubmenu = submenu && submenu.classList.contains('submenu');
 
-    // Fecha submenus irmãos no mesmo nível
-    const parentLi = item.closest('li');
-    const parentUl = parentLi?.parentElement;
-    const siblingSubmenus = parentUl?.querySelectorAll(':scope > li > .submenu');
-    siblingSubmenus?.forEach(sub => {
-      if (sub !== submenu) sub.classList.remove('open');
-    });
-
-    // Alterna submenu atual
+    // Alterna submenu se existir
     if (temSubmenu) {
       submenu.classList.toggle('open');
+
+      // Fecha submenus irmãos
+      const parentLi = item.closest('li');
+      const parentUl = parentLi?.parentElement;
+      const siblingSubmenus = parentUl?.querySelectorAll(':scope > li > .submenu');
+      siblingSubmenus?.forEach(sub => {
+        if (sub !== submenu) sub.classList.remove('open');
+      });
 
       // Abre todos os pais (nível 3+)
       let parent = submenu.closest('.submenu');
@@ -101,12 +100,13 @@ export function aplicarEventosMenu() {
     document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
     item.classList.add('active');
 
-    // ✅ Só carrega conteúdo se não houver submenu (ou seja, é uma ação final)
+    // Só carrega conteúdo se NÃO tiver submenu
     if (!temSubmenu) {
       loadContent(targetId);
     }
   });
 }
+
 
 // Simula carregamento de conteúdo no painel principal
 function loadContent(target) {
