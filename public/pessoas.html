@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro de Pessoa | eGest</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="js/pessoas.js"></script>
+</head>
+<body>
+  <!-- Cabeçalho e menu -->
+  <div id="header-container"></div>
+  <div id="menu-container"></div>
+
+  <main class="main-content">
+    <h2>Cadastro de Pessoa</h2>
+    <form id="form-pessoa" class="form-grid">
+      <input type="text" name="nome" placeholder="Nome completo" required />
+      <input type="text" name="cpf_cnpj" placeholder="CPF ou CNPJ" required />
+      <input type="date" name="data_nascimento" placeholder="Data de nascimento" />
+      <input type="email" name="email" placeholder="E-mail" />
+      <input type="text" name="ddd" placeholder="DDD" />
+      <input type="text" name="fone" placeholder="Telefone" />
+      <input type="text" name="cep" placeholder="CEP" />
+      <input type="text" name="complemento" placeholder="Complemento" />
+      <button type="submit" class="btn">Salvar</button>
+    </form>
+  </main>
+</body>
+</html>
