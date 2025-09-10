@@ -1,13 +1,4 @@
-// /public/js/cadastropessoa.js
 document.addEventListener('DOMContentLoaded', () => {
-  // Carrega header e menu
-  fetch('header.html').then(res => res.text()).then(html => {
-    document.getElementById('header-container').innerHTML = html;
-  });
-  fetch('menu.html').then(res => res.text()).then(html => {
-    document.getElementById('menu-container').innerHTML = html;
-  });
-
   // Busca endereço via CEP
   document.querySelector('input[name="cep"]').addEventListener('blur', async (e) => {
     const cep = e.target.value.replace(/\D/g, '');
@@ -19,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (endereco.erro) throw new Error('CEP não encontrado');
 
       document.querySelector('input[name="complemento"]').value = endereco.complemento || '';
-      // Adicione mais campos se quiser preencher logradouro, bairro, etc.
     } catch (err) {
       console.warn('Erro ao buscar CEP:', err);
       mostrarMensagem('⚠️ CEP inválido ou não encontrado.', 'erro');
@@ -27,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Envio do formulário
-  const form = document.getElementById('form-pessoa');
+  const form = document.getElementById('cp-form-pessoa');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(form);
@@ -108,7 +98,7 @@ function validarCNPJ(cnpj) {
 // Feedback visual
 function mostrarMensagem(msg, tipo = 'sucesso') {
   const box = document.createElement('div');
-  box.className = `msg-box ${tipo}`;
+  box.className = `cp-msg-box ${tipo}`;
   box.textContent = msg;
   document.body.appendChild(box);
   setTimeout(() => box.remove(), 4000);

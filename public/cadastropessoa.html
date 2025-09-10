@@ -1,20 +1,23 @@
 <!-- /public/cadastropessoa.html -->
-<div class="form-box">
-  <h2>Cadastro de Pessoa</h2>
-  <form id="form-pessoa" class="form-grid">
-    <input type="text" name="nome" placeholder="Nome completo" required />
-    <input type="text" name="cpf_cnpj" placeholder="CPF ou CNPJ" required />
-    <input type="date" name="data_nascimento" placeholder="Data de nascimento" />
-    <input type="email" name="email" placeholder="E-mail" />
-    <input type="text" name="ddd" placeholder="DDD" />
-    <input type="text" name="fone" placeholder="Telefone" />
-    <input type="text" name="cep" placeholder="CEP" />
-    <input type="text" name="cod_logradouro" placeholder="Código do logradouro" />
-    <input type="text" name="numero" placeholder="Número" />
-    <input type="text" name="cod_bairro" placeholder="Código do bairro" />
-    <input type="text" name="complemento" placeholder="Complemento" />
+<link rel="stylesheet" href="css/cadastropessoa.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Cadastro de Pessoa</h2>
+  <form id="cp-form-pessoa" class="cp-form">
+    <input class="cp-input" type="text" name="nome" placeholder="Nome completo" required />
+    <input class="cp-input" type="text" name="cpf_cnpj" placeholder="CPF ou CNPJ" required />
+    <input class="cp-input" type="date" name="data_nascimento" placeholder="Data de nascimento" />
+    <input class="cp-input" type="email" name="email" placeholder="E-mail" />
+    <input class="cp-input" type="text" name="ddd" placeholder="DDD" />
+    <input class="cp-input" type="text" name="fone" placeholder="Telefone" />
+    <input class="cp-input" type="text" name="cep" placeholder="CEP" />
+    <input class="cp-input" type="text" name="cod_logradouro" placeholder="Código do logradouro" />
+    <input class="cp-input" type="text" name="numero" placeholder="Número" />
+    <input class="cp-input" type="text" name="cod_bairro" placeholder="Código do bairro" />
+    <input class="cp-input" type="text" name="complemento" placeholder="Complemento" />
     <input type="hidden" name="tipo_pessoa" value="1" />
-    <button type="submit" class="btn">Salvar</button>
+    <button type="submit" class="cp-btn">Salvar</button>
   </form>
 </div>
+
 <script src="js/cadastropessoa.js"></script>
