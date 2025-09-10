@@ -1,54 +1,67 @@
-/* Layout do formulário */
-#form-pessoa {
-  max-width: 600px;
-  margin: 30px auto;
-  padding: 20px;
-  background-color: var(--bg-box, #fff);
+/* Container principal */
+.cp-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Título da página */
-#form-pessoa h2,
-.cadastro-titulo {
-  font-size: 22px;
-  margin-bottom: 16px;
-  color: var(--text-primary, #333);
-  text-align: center;
+/* Título */
+.cp-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+
+/* Formulário */
+.cp-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
 /* Campos de entrada */
-#form-pessoa .input,
-#form-pessoa input[type="text"],
-#form-pessoa input[type="email"],
-#form-pessoa input[type="date"] {
+.cp-input {
   padding: 10px;
-  border: 1px solid var(--border-color, #ccc);
+  font-size: 14px;
+  border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 15px;
-  background-color: var(--input-bg, #fefefe);
-  color: var(--text-input, #222);
+  background-color: #fefefe;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Botão de envio */
-#form-pessoa .btn,
-#form-pessoa button[type="submit"] {
+/* Campo que ocupa linha inteira */
+.cp-form input[name="nome"],
+.cp-form input[name="cpf_cnpj"],
+.cp-form input[name="email"],
+.cp-form input[name="complemento"] {
+  grid-column: span 2;
+}
+
+/* Botão */
+.cp-btn {
+  grid-column: span 2;
   padding: 12px;
-  background-color: var(--btn-bg, #198754);
+  background-color: #198754;
   color: white;
   border: none;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-#form-pessoa .btn:hover,
-#form-pessoa button[type="submit"]:hover {
-  background-color: var(--btn-hover, #146c43);
+.cp-btn:hover {
+  background-color: #146c43;
 }
 
 /* Mensagens de feedback */
