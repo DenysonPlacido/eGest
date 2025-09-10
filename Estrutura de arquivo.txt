@@ -1,15 +1,34 @@
-/public/
-│
-├── admin_dashboard.html
-├── header.html
-├── menu.html
-│
-├── css/
-│   ├── styleBase.css
-│   ├── styleHeader.css
-│   ├── styleMenuAdmin.css
-│
-├── js/
-│   ├── main.js
-│   ├── scriptMenuAdmin.js
-│   ├── session.js
+├── Estrutura de arquivo.txt
+├── README.md
+├── package-lock.json
+├── package.json
+├── public
+│   ├── UserHome.html
+│   ├── admin_dashboard.html
+│   ├── admin_novo_usuario.html
+│   ├── cadastropessoa.html
+│   ├── css
+│   │   ├── CadastroPessoa.css
+│   │   ├── erp.png
+│   │   ├── styleAdminForms.css
+│   │   ├── styleBase.css
+│   │   ├── styleHeader.css
+│   │   ├── styleIndexLogin.css
+│   │   ├── styleMenuAdmin.css
+│   │   └── styleUserHome.css
+│   ├── header.html
+│   ├── index.html
+│   ├── js
+│   │   ├── cadastropessoa.js
+│   │   ├── main.js
+│   │   ├── scriptIndexLogin.js
+│   │   ├── scriptMenuAdmin.js
+│   │   ├── scriptUserHome.js
+│   │   └── session.js
+│   ├── login.html
+│   └── menu.html
+├── server.js
+├── src
+│   ├── App.js
+│   └── index.js
+└── vercel.json
