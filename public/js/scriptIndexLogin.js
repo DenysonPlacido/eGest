@@ -1,5 +1,4 @@
 ﻿// /workspaces/eGest/public/js/scriptIndexLogin.js
-
 // ===========================
 // Seleção da empresa
 // ===========================
@@ -9,8 +8,6 @@ function selectedEmpresa() {
   const select = document.getElementById("Empresa-select");
   const selectedEmp = select.value;
   const selectedEmpName = select.options[select.selectedIndex].text;
-
-
 
   if (selectedEmp) {
     localStorage.setItem("selectedEmp", selectedEmp);
@@ -78,13 +75,19 @@ async function login() {
     }
 
     const data = await response.json();
+    console.log('🔐 Dados recebidos do login:', data);
 
     if (data.token) {
       localStorage.setItem("token", data.token);
-      localStorage.setItem("usuarioNome", data.usuario.username);
+      localStorage.setItem("usuarioNome", data.usuario.nome || data.usuario.username || "Usuário");
       localStorage.setItem("usuarioPerfil", data.usuario.perfil);
       localStorage.setItem("usuarioId", data.usuario.id);
       localStorage.setItem("empresaId", data.usuario.empresa_id);
+
+      // Se o backend retornar o nome da empresa, salve também
+      if (data.usuario.empresa_nome) {
+        localStorage.setItem("selectedEmpName", data.usuario.empresa_nome);
+      }
 
       window.location.href = "admin_dashboard.html";
     } else {

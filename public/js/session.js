@@ -1,3 +1,4 @@
+// /workspaces/eGest/public/js/session.js
 // ===========================
 // Configurações
 // ===========================
@@ -16,7 +17,6 @@ const sessaoEl = document.getElementById('tempo-sessao');
 // ===========================
 // Exibe dados da empresa e usuário
 // ===========================
-
 const empresaNome = localStorage.getItem('selectedEmpName') || 'Não logada';
 const usuario = localStorage.getItem('usuarioNome') || 'Desconhecido';
 
@@ -45,24 +45,20 @@ if (isNaN(sessionStart)) {
 let lastActivity = Date.now();
 let alertaMostrado = false;
 
-// Atualiza timestamp de atividade
 function renovarSessao() {
   lastActivity = Date.now();
   alertaMostrado = false;
 }
 
-// Eventos que indicam atividade do usuário
 ['mousemove', 'keydown', 'click', 'scroll'].forEach(evt => {
   document.addEventListener(evt, renovarSessao);
 });
 
-// Verifica tempo de sessão e inatividade
 setInterval(() => {
   const agora = Date.now();
   const tempoSessao = Math.floor((agora - sessionStart) / 1000);
   const tempoInativo = Math.floor((agora - lastActivity) / 1000);
 
-  // Atualiza tempo de sessão no header
   if (sessaoEl) {
     const h = String(Math.floor(tempoSessao / 3600)).padStart(2, '0');
     const m = String(Math.floor((tempoSessao % 3600) / 60)).padStart(2, '0');
@@ -70,13 +66,11 @@ setInterval(() => {
     sessaoEl.textContent = `${h}:${m}:${s}`;
   }
 
-  // Alerta de expiração
   if (!alertaMostrado && tempoInativo >= TEMPO_MAXIMO_SESSAO - TEMPO_ALERTA) {
     alertaMostrado = true;
     alert("Você está inativo há um tempo. A sessão será encerrada em breve.");
   }
 
-  // Expiração automática
   if (tempoInativo >= TEMPO_MAXIMO_SESSAO) {
     alert("Sessão encerrada por inatividade.");
     localStorage.clear();
