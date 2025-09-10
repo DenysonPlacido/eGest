@@ -8,9 +8,13 @@ document.getElementById('select-btn').addEventListener('click', selectedEmpresa)
 function selectedEmpresa() {
   const select = document.getElementById("Empresa-select");
   const selectedEmp = select.value;
+  const selectedEmpName = select.options[select.selectedIndex].text;
+
+
 
   if (selectedEmp) {
     localStorage.setItem("selectedEmp", selectedEmp);
+    localStorage.setItem("selectedEmpName", selectedEmpName);
     window.location.href = "login.html";
   } else {
     alert("Por favor, selecione uma Empresa.");
@@ -77,7 +81,7 @@ async function login() {
 
     if (data.token) {
       localStorage.setItem("token", data.token);
-      localStorage.setItem("usuarioNome", data.usuario.nome);
+      localStorage.setItem("usuarioNome", data.usuario.username);
       localStorage.setItem("usuarioPerfil", data.usuario.perfil);
       localStorage.setItem("usuarioId", data.usuario.id);
       localStorage.setItem("empresaId", data.usuario.empresa_id);

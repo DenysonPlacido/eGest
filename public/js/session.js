@@ -16,10 +16,11 @@ const sessaoEl = document.getElementById('tempo-sessao');
 // ===========================
 // Exibe dados da empresa e usuário
 // ===========================
-const empresa = localStorage.getItem('selectedEmp') || 'Não logada';
+
+const empresaNome = localStorage.getItem('selectedEmpName') || 'Não logada';
 const usuario = localStorage.getItem('usuarioNome') || 'Desconhecido';
 
-if (empresaEl) empresaEl.textContent = `Empresa: ${empresa}`;
+if (empresaEl) empresaEl.textContent = `Empresa: ${empresaNome}`;
 if (usuarioEl) usuarioEl.textContent = `Usuário: ${usuario}`;
 
 // ===========================
