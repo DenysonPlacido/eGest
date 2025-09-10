@@ -95,14 +95,14 @@ export function aplicarEventosMenu() {
         if (sub !== submenu) sub.classList.remove('open');
       });
 
-     let parent = submenu.closest('.submenu');
-const visited = new Set();
+      let parent = submenu.closest('.submenu');
+      const visited = new Set();
 
-while (parent && !visited.has(parent)) {
-  visited.add(parent);
-  parent.classList.add('open');
-  parent = parent.closest('.submenu');
-}
+      while (parent && !visited.has(parent)) {
+        visited.add(parent);
+        parent.classList.add('open');
+        parent = parent.closest('.submenu');
+      }
 
       // Ícones de seta
       document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
@@ -134,18 +134,30 @@ function loadContent(target) {
 
   console.log('🚀 Carregando conteúdo para:', target);
 
-  switch (target) {
-    case 'dashboard':
-      content.innerHTML = `<div class="welcome-box"><h1>Dashboard</h1><p>Resumo do sistema.</p></div>`;
-      break;
-    case 'acao_cadastrar_pessoa':
-      content.innerHTML = `<div class="welcome-box"><h1>Cadastrar Pessoa</h1></div>`;
-      break;
-    case 'acao_consultar_usuarios':
-      content.innerHTML = `<div class="welcome-box"><h1>Consultar Usuários</h1></div>`;
-      break;
-    default:
-      content.innerHTML = `<div class="welcome-box"><h1>Bem-vindo ao eGest!</h1></div>`;
+  // Mapeia os targets para arquivos HTML reais
+  const pages = {
+    dashboard: 'dashboard.html',
+    acao_cadastrar_pessoa: 'cadastropessoa.html',
+    acao_consultar_usuarios: 'usuarios.html'
+  };
+
+  const page = pages[target];
+
+  if (page) {
+    fetch(page)
+      .then(res => {
+        if (!res.ok) throw new Error(`Erro ao carregar ${page}`);
+        return res.text();
+      })
+      .then(html => {
+        content.innerHTML = html;
+      })
+      .catch(err => {
+        console.error('❌ Erro ao carregar página:', err);
+        content.innerHTML = `<div class="error-box">Erro ao carregar conteúdo.</div>`;
+      });
+  } else {
+    content.innerHTML = `<div class="welcome-box"><h1>Bem-vindo ao eGest!</h1></div>`;
   }
 }
 
