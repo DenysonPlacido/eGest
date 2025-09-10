@@ -79,7 +79,7 @@ async function login() {
 
     if (data.token) {
       localStorage.setItem("token", data.token);
-      localStorage.setItem("usuarioNome", data.usuario.nome || data.usuario.username || "Usuário");
+      localStorage.setItem("usuarioNome", data.usuario.login);
       localStorage.setItem("usuarioPerfil", data.usuario.perfil);
       localStorage.setItem("usuarioId", data.usuario.id);
       localStorage.setItem("empresaId", data.usuario.empresa_id);
