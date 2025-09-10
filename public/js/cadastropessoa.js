@@ -1,6 +1,4 @@
-
-
-
+// /public/js/cadastropessoa.js
 document.addEventListener('DOMContentLoaded', () => {
   // Carrega header e menu
   fetch('header.html').then(res => res.text()).then(html => {
@@ -8,6 +6,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   fetch('menu.html').then(res => res.text()).then(html => {
     document.getElementById('menu-container').innerHTML = html;
+  });
+
+  // Busca endereço via CEP
+  document.querySelector('input[name="cep"]').addEventListener('blur', async (e) => {
+    const cep = e.target.value.replace(/\D/g, '');
+    if (cep.length !== 8) return;
+
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const endereco = await res.json();
+      if (endereco.erro) throw new Error('CEP não encontrado');
+
+      document.querySelector('input[name="complemento"]').value = endereco.complemento || '';
+      // Adicione mais campos se quiser preencher logradouro, bairro, etc.
+    } catch (err) {
+      console.warn('Erro ao buscar CEP:', err);
+      mostrarMensagem('⚠️ CEP inválido ou não encontrado.', 'erro');
+    }
   });
 
   // Envio do formulário
@@ -18,6 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const data = Object.fromEntries(formData.entries());
     data.acao = 'INSERT';
 
+    if (!validarCpfCnpj(data.cpf_cnpj)) {
+      mostrarMensagem('⚠️ CPF ou CNPJ inválido.', 'erro');
+      return;
+    }
+
     try {
       const res = await fetch('/api/pessoas/gerenciar', {
         method: 'POST',
@@ -27,19 +48,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const result = await res.json();
       if (result.status === 'OK') {
-        alert('✅ Pessoa cadastrada com sucesso!');
+        mostrarMensagem('✅ Pessoa cadastrada com sucesso!');
         form.reset();
       } else {
-        alert('⚠️ Erro ao cadastrar pessoa.');
+        mostrarMensagem('⚠️ Erro ao cadastrar pessoa.', 'erro');
       }
     } catch (err) {
       console.error('Erro ao cadastrar pessoa:', err);
-      alert('❌ Erro interno ao cadastrar pessoa.');
+      mostrarMensagem('❌ Erro interno ao cadastrar pessoa.', 'erro');
     }
   });
 });
 
-
+// Validação de CPF/CNPJ
 function validarCpfCnpj(valor) {
   const v = valor.replace(/\D/g, '');
   if (v.length === 11) return validarCPF(v);
@@ -84,33 +105,7 @@ function validarCNPJ(cnpj) {
   return resultado === parseInt(digitos.charAt(1));
 }
 
-
-
-if (!validarCpfCnpj(data.cpf_cnpj)) {
-  alert('⚠️ CPF ou CNPJ inválido.');
-  return;
-}
-
-
-
-document.querySelector('input[name="cep"]').addEventListener('blur', async (e) => {
-  const cep = e.target.value.replace(/\D/g, '');
-  if (cep.length !== 8) return;
-
-  try {
-    const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-    const endereco = await res.json();
-    if (endereco.erro) throw new Error('CEP não encontrado');
-
-    document.querySelector('input[name="complemento"]').value = endereco.complemento || '';
-    // Se quiser preencher outros campos, adapte aqui
-  } catch (err) {
-    console.warn('Erro ao buscar CEP:', err);
-    alert('⚠️ CEP inválido ou não encontrado.');
-  }
-});
-
-
+// Feedback visual
 function mostrarMensagem(msg, tipo = 'sucesso') {
   const box = document.createElement('div');
   box.className = `msg-box ${tipo}`;
@@ -118,7 +113,3 @@ function mostrarMensagem(msg, tipo = 'sucesso') {
   document.body.appendChild(box);
   setTimeout(() => box.remove(), 4000);
 }
-
-
-
-mostrarMensagem('Pessoa cadastrada com sucesso!');
