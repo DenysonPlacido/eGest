@@ -138,6 +138,7 @@ function loadContent(target) {
   const pages = {
     dashboard: 'dashboard.html',
     acao_cadastrar_pessoa: 'cadastropessoa.html',
+    pessoa_acao_novo: 'cadastropessoa.html',
     acao_consultar_usuarios: 'usuarios.html'
   };
 
