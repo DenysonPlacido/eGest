@@ -1,41 +1,43 @@
-/* Container principal */
-.cp-container {
+/* Layout do formulário */
+#form-pessoa {
   max-width: 600px;
-  margin: 40px auto;
-  padding: 25px;
-  background: #fdfdfd;
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.08);
-  font-family: 'Segoe UI', sans-serif;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: var(--bg-box, #fff);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* Título */
-.cp-title {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
+/* Título da página */
+#form-pessoa h2,
+.cadastro-titulo {
+  font-size: 22px;
+  margin-bottom: 16px;
+  color: var(--text-primary, #333);
   text-align: center;
 }
 
-/* Formulário */
-.cp-form {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Campos */
-.cp-input {
+/* Campos de entrada */
+#form-pessoa .input,
+#form-pessoa input[type="text"],
+#form-pessoa input[type="email"],
+#form-pessoa input[type="date"] {
   padding: 10px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color, #ccc);
   border-radius: 6px;
   font-size: 15px;
+  background-color: var(--input-bg, #fefefe);
+  color: var(--text-input, #222);
 }
 
-/* Botão */
-.cp-btn {
+/* Botão de envio */
+#form-pessoa .btn,
+#form-pessoa button[type="submit"] {
   padding: 12px;
-  background-color: #007bff;
+  background-color: var(--btn-bg, #198754);
   color: white;
   border: none;
   border-radius: 6px;
@@ -44,12 +46,13 @@
   transition: background-color 0.3s ease;
 }
 
-.cp-btn:hover {
-  background-color: #0056b3;
+#form-pessoa .btn:hover,
+#form-pessoa button[type="submit"]:hover {
+  background-color: var(--btn-hover, #146c43);
 }
 
-/* Mensagens */
-.cp-msg-box {
+/* Mensagens de feedback */
+.msg-box {
   position: fixed;
   top: 20px;
   right: 20px;
@@ -60,14 +63,14 @@
   z-index: 9999;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
   font-family: sans-serif;
-  animation: cp-fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.cp-msg-box.erro {
+.msg-box.erro {
   background: #f44336;
 }
 
-@keyframes cp-fadeIn {
+@keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
