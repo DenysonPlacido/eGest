@@ -72,7 +72,7 @@ function carregarMenuDinamico() {
   const token = localStorage.getItem('token');
   if (!token) {
     alert('Sessão expirada. Faça login novamente.');
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
     return;
   }
 
@@ -92,7 +92,7 @@ function carregarMenuDinamico() {
     .catch(err => {
       console.error('❌ Erro ao carregar menus:', err);
       alert("Erro ao carregar menus. Faça login novamente.");
-      window.location.href = 'login.html';
+      window.location.href = 'Index.html';
     });
 }
 

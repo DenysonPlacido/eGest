@@ -74,6 +74,6 @@ setInterval(() => {
   if (tempoInativo >= TEMPO_MAXIMO_SESSAO) {
     alert("Sessão encerrada por inatividade.");
     localStorage.clear();
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
   }
 }, INTERVALO_VERIFICACAO);

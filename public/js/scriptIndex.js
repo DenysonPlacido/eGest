@@ -12,7 +12,7 @@ function selectedEmpresa() {
   if (selectedEmp) {
     localStorage.setItem("selectedEmp", selectedEmp);
     localStorage.setItem("selectedEmpName", selectedEmpName);
-    window.location.href = "login.html";
+    window.location.href = "index.html";
   } else {
     alert("Por favor, selecione uma Empresa.");
   }
