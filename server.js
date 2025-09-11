@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname)));
 
 // Rota raiz (opcional, mas garante que index.html seja servido)
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "login.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.listen(PORT, () => {
