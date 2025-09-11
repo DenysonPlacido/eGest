@@ -51,12 +51,15 @@ window.addEventListener('DOMContentLoaded', carregarEmpresas);
 // ===========================
 // Função de login com JWT
 // ===========================
+// ===========================
+// Função de login com JWT
+// ===========================
 async function login() {
+  const empresa_id = document.getElementById("empresa").value.trim();
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
-  const empresa_id = localStorage.getItem("selectedEmp");
 
-  if (!username || !password || !empresa_id) {
+  if (!empresa_id || !username || !password) {
     alert("Por favor, preencha todos os campos.");
     return;
   }
@@ -68,31 +71,26 @@ async function login() {
       body: JSON.stringify({ empresa_id, username, senha: password })
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      alert(errorData.message || "Erro ao fazer login.");
-      return;
-    }
-
     const data = await response.json();
     console.log('🔐 Dados recebidos do login:', data);
 
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("usuarioNome", data.usuario.nome);
-      localStorage.setItem("usuarioPerfil", data.usuario.perfil);
-      localStorage.setItem("usuarioId", data.usuario.id);
-      localStorage.setItem("empresaId", data.usuario.empresa_id);
-
-      // Se o backend retornar o nome da empresa, salve também
-      if (data.usuario.empresa_nome) {
-        localStorage.setItem("selectedEmpName", data.usuario.empresa_nome);
-      }
-
-      window.location.href = "admin_dashboard.html";
-    } else {
-      alert("Credenciais inválidas!");
+    if (!response.ok || !data.token) {
+      alert(data.message || "Credenciais inválidas!");
+      return;
     }
+
+    // Salvar dados no localStorage
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("usuarioNome", data.usuario.nome);
+    localStorage.setItem("usuarioPerfil", data.usuario.perfil);
+    localStorage.setItem("usuarioId", data.usuario.id);
+    localStorage.setItem("empresaId", data.usuario.empresa_id);
+
+    if (data.usuario.empresa_nome) {
+      localStorage.setItem("selectedEmpName", data.usuario.empresa_nome);
+    }
+
+    window.location.href = "adminHome.html";
 
   } catch (err) {
     console.error('Erro ao conectar com o servidor:', err);
