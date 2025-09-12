@@ -51,17 +51,19 @@
 .cp-btn {
   grid-column: span 2;
   padding: 12px;
-  background-color: #198754;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: none;
   border-radius: 6px;
   font-size: 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .cp-btn:hover {
-  background-color: #146c43;
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Mensagens de feedback */
