@@ -23,32 +23,32 @@
 // ===========================
 // Carregar empresas do backend
 // ===========================
-async function carregarEmpresas() {
-  try {
-    const response = await fetch("https://e-gest-back-end.vercel.app/api/empresas");
+// async function carregarEmpresas() {
+//   try {
+//     const response = await fetch("https://e-gest-back-end.vercel.app/api/empresas");
 
-    if (!response.ok) {
-      throw new Error("Erro ao buscar empresas");
-    }
+//     if (!response.ok) {
+//       throw new Error("Erro ao buscar empresas");
+//     }
 
-    const empresas = await response.json();
-    const select = document.getElementById("Empresa-select");
-    select.innerHTML = '';
+//     const empresas = await response.json();
+//     const select = document.getElementById("Empresa-select");
+//     select.innerHTML = '';
 
-    empresas.forEach(emp => {
-      const option = document.createElement("option");
-      option.value = emp.empresa_id;
-      option.textContent = emp.nome;
-      select.appendChild(option);
-    });
+//     empresas.forEach(emp => {
+//       const option = document.createElement("option");
+//       option.value = emp.empresa_id;
+//       option.textContent = emp.nome;
+//       select.appendChild(option);
+//     });
 
-  } catch (err) {
-    console.error('Erro ao carregar empresas:', err);
-    alert("Erro ao carregar empresas.");
-  }
-}
+//   } catch (err) {
+//     console.error('Erro ao carregar empresas:', err);
+//     alert("Erro ao carregar empresas.");
+//   }
+// }
 
-window.addEventListener('DOMContentLoaded', carregarEmpresas);
+// window.addEventListener('DOMContentLoaded', carregarEmpresas);
 
 // ===========================
 // Função de login com JWT
