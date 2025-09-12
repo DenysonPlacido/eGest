@@ -1,0 +1,25 @@
+.cp-pessoas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cp-form-pessoa {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.cp-form-pessoa input {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 8px;
+}
+
+.cp-form-pessoa .cp-btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}

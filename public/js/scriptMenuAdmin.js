@@ -139,7 +139,8 @@ function loadContent(target) {
     dashboard: 'adminHome.html',
     acao_cadastrar_pessoa: 'cadastroPessoa.html',
     acao_novo: 'cadastroPessoa.html',
-    // acao_consultar_usuarios: 'usuarios.html'
+    acao_consultar_pessoa: 'consultaPessoa.html',
+    acao_consultar: 'consultaPessoa.html'
   };
 
   const page = pages[target];
