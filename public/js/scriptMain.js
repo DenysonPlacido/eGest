@@ -36,8 +36,8 @@ function carregarHeader() {
 
         initLogout();
 
-        import('./session.js')
-          .then(() => console.log('✅ session.js carregado'))
+        import('./scriptSession.js')
+          .then(() => console.log('✅ scriptSession.js carregado'))
           .catch(err => console.error('❌ Erro ao carregar session.js:', err));
       });
     })
