@@ -1,4 +1,17 @@
-﻿// Utilitário para gerar IDs seguros a partir de nomes
+﻿
+
+
+export function gerarTargetHierarquico(caminho) {
+  return 'menu_' + caminho.map(p =>
+    p.toLowerCase()
+     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+     .replace(/\s+/g, '_')
+     .replace(/[^\w\-]/g, '')
+     .replace(/\_+/g, '_')
+  ).join('_');
+}
+
+// Utilitário para gerar IDs seguros a partir de nomes
 export function slugify(text, prefix = '') {
   const base = text
     .toLowerCase()
@@ -20,7 +33,7 @@ export function renderizarMenus(menus) {
     const menuId = slugify(menu.nome, 'menu_');
     const li = document.createElement('li');
 
-    const submenuHTML = menu.submenus ? gerarSubmenu(menu.submenus, menuId) : '';
+    const submenuHTML = menu.submenus ? gerarSubmenu(menu.submenus, [menu.nome]) : '';
     const acoesHTML = menu.acoes?.length
       ? menu.acoes.map(acao => `
           <li>
@@ -137,10 +150,10 @@ function loadContent(target) {
   // Mapeia os targets para arquivos HTML reais
   const pages = {
     dashboard: 'adminHome.html',
-    acao_cadastra_pessoa: 'cadastroPessoa.html',
-    acao_novo: 'cadastroPessoa.html',
-    acao_consulta_pessoa: 'consultaPessoa.html',
-    acao_consulta: 'consultaPessoa.html'
+    menu_cadastro_do_sistema_sub_pessoas_acao_novo: 'cadastroPessoa.html',
+    menu_cadastro_do_sistema_sub_pessoas_acao_consulta: 'consultaPessoa.html',
+
+
   };
 
   const page = pages[target];
@@ -164,22 +177,27 @@ function loadContent(target) {
 }
 
 // Gera submenus recursivamente para múltiplos níveis
-function gerarSubmenu(submenus, parentPrefix = '') {
+function gerarSubmenu(submenus, caminhoPai = []) {
   return submenus.map(sub => {
-    const subId = slugify(sub.nome, parentPrefix + '_sub_');
+    const caminhoAtual = [...caminhoPai, sub.nome];
+    const subId = gerarTargetHierarquico(caminhoAtual);
 
     const temSubmenus = sub.submenus?.length > 0;
     const temAcoes = sub.acoes?.length > 0;
 
-    const subSubmenuHTML = temSubmenus ? gerarSubmenu(sub.submenus, subId) : '';
+    const subSubmenuHTML = temSubmenus ? gerarSubmenu(sub.submenus, caminhoAtual) : '';
     const acoesHTML = temAcoes
-      ? sub.acoes.map(acao => `
-          <li>
-            <a href="#" class="menu-item" data-target="${slugify(acao.nome, 'acao_')}">
-              <i class="fas ${acao.icone || 'fa-angle-right'}"></i> ${acao.nome}
-            </a>
-          </li>
-        `).join('')
+      ? sub.acoes.map(acao => {
+          const caminhoAcao = [...caminhoAtual, 'acao', acao.nome];
+          const acaoId = gerarTargetHierarquico(caminhoAcao);
+          return `
+            <li>
+              <a href="#" class="menu-item" data-target="${acaoId}">
+                <i class="fas ${acao.icone || 'fa-angle-right'}"></i> ${acao.nome}
+              </a>
+            </li>
+          `;
+        }).join('')
       : '';
 
     return `
