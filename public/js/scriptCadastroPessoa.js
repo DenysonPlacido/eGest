@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
   // Busca endereço via CEP
   document.querySelector('input[name="cep"]').addEventListener('blur', async (e) => {
@@ -24,12 +22,26 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+
+    // Define ação como INSERT
     data.acao = 'INSERT';
 
+    // Validação de CPF/CNPJ
     if (!validarCpfCnpj(data.cpf_cnpj)) {
       mostrarMensagem('⚠️ CPF ou CNPJ inválido.', 'erro');
       return;
     }
+
+    if (data.senha !== data.repetir_senha) {
+      mostrarMensagem('⚠️ As senhas não coincidem.', 'erro');
+      return;
+    }
+
+
+    // Conversão de campos numéricos
+    data.cod_logradouro = parseInt(data.cod_logradouro) || null;
+    data.cod_bairro = parseInt(data.cod_bairro) || null;
+    data.numero = parseInt(data.numero) || null;
 
     try {
       const res = await fetch('/api/pessoas/gerenciar', {
@@ -40,14 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const result = await res.json();
       if (result.status === 'OK') {
-        mostrarMensagem('✅ Pessoa cadastrada com sucesso!');
+        const msg = result.mensagem || '✅ Pessoa cadastrada com sucesso!';
+        mostrarMensagem(msg);
         form.reset();
       } else {
-        mostrarMensagem('⚠️ Erro ao cadastrar pessoa.', 'erro');
+        const msg = result.mensagem || '⚠️ Erro ao cadastrar pessoa.';
+        mostrarMensagem(msg, 'erro');
       }
     } catch (err) {
       console.error('Erro ao cadastrar pessoa:', err);
-      mostrarMensagem('❌ Erro interno ao cadastrar pessoa.', 'erro');
+      mostrarMensagem(`❌ ${err.message || 'Erro interno ao cadastrar pessoa.'}`, 'erro');
     }
   });
 });
@@ -105,3 +119,31 @@ function mostrarMensagem(msg, tipo = 'sucesso') {
   document.body.appendChild(box);
   setTimeout(() => box.remove(), 4000);
 }
+
+
+document.getElementById('btn-buscar-endereco').addEventListener('click', async () => {
+  const cep = document.querySelector('input[name="cep"]').value.replace(/\D/g, '');
+  if (cep.length !== 8) {
+    mostrarMensagem('⚠️ CEP inválido.', 'erro');
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/enderecos/buscar?cep=${cep}`);
+    const endereco = await res.json();
+
+    if (!endereco || !endereco.cod_logradouro || !endereco.cod_bairro) {
+      throw new Error('Endereço não encontrado');
+    }
+
+    document.querySelector('input[name="logradouro"]').value = endereco.logradouro;
+    document.querySelector('input[name="bairro"]').value = endereco.bairro;
+    document.querySelector('input[name="cod_logradouro"]').value = endereco.cod_logradouro;
+    document.querySelector('input[name="cod_bairro"]').value = endereco.cod_bairro;
+
+    mostrarMensagem('✅ Endereço carregado com sucesso!');
+  } catch (err) {
+    console.error('Erro ao buscar endereço:', err);
+    mostrarMensagem('❌ Endereço não encontrado.', 'erro');
+  }
+});

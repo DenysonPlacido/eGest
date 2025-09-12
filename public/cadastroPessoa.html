@@ -1,21 +1,45 @@
-<!-- /public/cadastropessoa.html -->
+<!-- /workspaces/eGest/public/cadastroPessoa.html -->
+
 <link rel="stylesheet" href="css/styleCadastroPessoa.css" />
 
 <div class="cp-container">
   <h2 class="cp-title">Cadastro de Pessoa</h2>
   <form id="cp-form-pessoa" class="cp-form">
-    <input class="cp-input" type="text" name="nome" placeholder="Nome completo" required />
-    <input class="cp-input" type="text" name="cpf_cnpj" placeholder="CPF ou CNPJ" required />
-    <input class="cp-input" type="date" name="data_nascimento" placeholder="Data de nascimento" />
-    <input class="cp-input" type="email" name="email" placeholder="E-mail" />
-    <input class="cp-input" type="text" name="ddd" placeholder="DDD" />
-    <input class="cp-input" type="text" name="fone" placeholder="Telefone" />
-    <input class="cp-input" type="text" name="cep" placeholder="CEP" />
-    <input class="cp-input" type="text" name="cod_logradouro" placeholder="Código do logradouro" />
-    <input class="cp-input" type="text" name="numero" placeholder="Número" />
-    <input class="cp-input" type="text" name="cod_bairro" placeholder="Código do bairro" />
-    <input class="cp-input" type="text" name="complemento" placeholder="Complemento" />
+
+    <!-- 🔹 Dados Pessoais -->
+    <fieldset>
+      <legend>Dados Pessoais</legend>
+      <input class="cp-input" type="text" name="nome" placeholder="Nome completo" required />
+      <input class="cp-input" type="text" name="cpf_cnpj" placeholder="CPF ou CNPJ" required />
+      <input class="cp-input" type="date" name="data_nascimento" placeholder="Data de nascimento" />
+      <input class="cp-input" type="email" name="email" placeholder="E-mail" />
+      <input class="cp-input" type="text" name="ddd" placeholder="DDD" />
+      <input class="cp-input" type="text" name="fone" placeholder="Telefone" />
+    </fieldset>
+
+    <!-- 🔹 Endereço -->
+    <fieldset>
+      <legend>Endereço</legend>
+      <div class="cp-input-group">
+        <input class="cp-input" type="text" name="cep" placeholder="CEP" />
+        <button type="button" id="btn-buscar-endereco" class="cp-btn-icon">🔍</button>
+      </div>
+      <input class="cp-input" type="text" name="logradouro" placeholder="Logradouro" readonly />
+      <input class="cp-input" type="text" name="bairro" placeholder="Bairro" readonly />
+      <input class="cp-input" type="text" name="numero" placeholder="Número" />
+      <input class="cp-input" type="text" name="complemento" placeholder="Complemento" />
+    </fieldset>
+
+    <!-- 🔹 Senha -->
+    <fieldset>
+      <legend>Senha</legend>
+      <input class="cp-input" type="password" name="senha" placeholder="Senha" required />
+      <input class="cp-input" type="password" name="repetir_senha" placeholder="Repetir senha" required />
+    </fieldset>
+
     <input type="hidden" name="tipo_pessoa" value="1" />
+    <input type="hidden" name="cod_logradouro" />
+    <input type="hidden" name="cod_bairro" />
     <button type="submit" class="cp-btn">Salvar</button>
   </form>
 </div>
