@@ -1,3 +1,5 @@
+// /workspaces/eGest/public/js/scriptConsultaPessoa.js
+
 document.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById('cp-pessoas-lista');
 

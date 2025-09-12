@@ -147,12 +147,11 @@ function loadContent(target) {
 
   console.log('🚀 Carregando conteúdo para:', target);
 
-  // Mapeia os targets para arquivos HTML reais
-const pages = {
-  dashboard: 'adminHome.html',
-  menu_cadastro_do_sistema_pessoas_acao_novo: 'cadastroPessoa.html',
-  menu_cadastro_do_sistema_pessoas_acao_consulta: 'consultaPessoa.html'
-};
+  const pages = {
+    dashboard: 'adminHome.html',
+    menu_cadastro_do_sistema_pessoas_acao_novo: 'cadastroPessoa.html',
+    menu_cadastro_do_sistema_pessoas_acao_consulta: 'consultaPessoa.html'
+  };
 
   const page = pages[target];
 
@@ -163,7 +162,20 @@ const pages = {
         return res.text();
       })
       .then(html => {
+        // ✅ Injeta o HTML
         content.innerHTML = html;
+
+        // ✅ Carrega scripts externos manualmente
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        const scripts = tempDiv.querySelectorAll('script[src]');
+
+        scripts.forEach(script => {
+          const newScript = document.createElement('script');
+          newScript.src = script.src;
+          newScript.type = script.type || 'text/javascript';
+          document.body.appendChild(newScript);
+        });
       })
       .catch(err => {
         console.error('❌ Erro ao carregar página:', err);
