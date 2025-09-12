@@ -148,13 +148,11 @@ function loadContent(target) {
   console.log('🚀 Carregando conteúdo para:', target);
 
   // Mapeia os targets para arquivos HTML reais
-  const pages = {
-    dashboard: 'adminHome.html',
-    menu_cadastro_do_sistema_pessoas_acao_novo: 'cadastroPessoa.html',
-    menu_cadastro_do_sistema_pessoas_acao_novo: 'consultaPessoa.html',
-
-
-  };
+const pages = {
+  dashboard: 'adminHome.html',
+  menu_cadastro_do_sistema_pessoas_acao_novo: 'cadastroPessoa.html',
+  menu_cadastro_do_sistema_pessoas_acao_consulta: 'consultaPessoa.html'
+};
 
   const page = pages[target];
 
