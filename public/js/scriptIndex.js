@@ -1,22 +1,24 @@
 ﻿// /workspaces/eGest/public/js/scriptIndexLogin.js
+
+
 // ===========================
 // Seleção da empresa
 // ===========================
-document.getElementById('select-btn').addEventListener('click', selectedEmpresa);
+// document.getElementById('select-btn').addEventListener('click', selectedEmpresa);
 
-function selectedEmpresa() {
-  const select = document.getElementById("Empresa-select");
-  const selectedEmp = select.value;
-  const selectedEmpName = select.options[select.selectedIndex].text;
+// function selectedEmpresa() {
+//   const select = document.getElementById("Empresa-select");
+//   const selectedEmp = select.value;
+//   const selectedEmpName = select.options[select.selectedIndex].text;
 
-  if (selectedEmp) {
-    localStorage.setItem("selectedEmp", selectedEmp);
-    localStorage.setItem("selectedEmpName", selectedEmpName);
-    window.location.href = "index.html";
-  } else {
-    alert("Por favor, selecione uma Empresa.");
-  }
-}
+//   if (selectedEmp) {
+//     localStorage.setItem("selectedEmp", selectedEmp);
+//     localStorage.setItem("selectedEmpName", selectedEmpName);
+//     window.location.href = "index.html";
+//   } else {
+//     alert("Por favor, selecione uma Empresa.");
+//   }
+// }
 
 // ===========================
 // Carregar empresas do backend
