@@ -137,10 +137,10 @@ function loadContent(target) {
   // Mapeia os targets para arquivos HTML reais
   const pages = {
     dashboard: 'adminHome.html',
-    acao_cadastrar_pessoa: 'cadastroPessoa.html',
+    acao_cadastra_pessoa: 'cadastroPessoa.html',
     acao_novo: 'cadastroPessoa.html',
-    acao_consultar_pessoa: 'consultaPessoa.html',
-    acao_consultar: 'consultaPessoa.html'
+    acao_consulta_pessoa: 'consultaPessoa.html',
+    acao_consulta: 'consultaPessoa.html'
   };
 
   const page = pages[target];
