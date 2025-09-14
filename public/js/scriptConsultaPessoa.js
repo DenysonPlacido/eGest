@@ -1,46 +1,49 @@
-// /workspaces/eGest/public/js/scriptConsultaPessoa.js
-let todasPessoas = [];
+const formBusca = document.getElementById('form-busca');
+const listaContainer = document.getElementById('cp-pessoas-lista');
+const btnExportar = document.getElementById('btn-exportar');
+let resultados = [];
 
-(async () => {
-  const container = document.getElementById('cp-pessoas-lista');
-  const filtroInput = document.getElementById('filtro-nome');
-  const btnExportar = document.getElementById('btn-exportar');
+formBusca.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-  if (!container) return;
+  const pessoa_id = document.getElementById('busca-id').value.trim();
+  const nome = document.getElementById('busca-nome').value.trim();
+
+  const filtros = { acao: 'SELECT' };
+  if (pessoa_id) filtros.pessoa_id = pessoa_id;
+  if (nome) filtros.nome = nome;
 
   const res = await fetch('/api/pessoas/gerenciar', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ acao: 'SELECT' })
+    body: JSON.stringify(filtros)
   });
 
-  todasPessoas = await res.json();
-  renderizarPessoas(todasPessoas);
+  resultados = await res.json();
+  renderizarResultados(resultados);
+});
 
-  filtroInput.addEventListener('input', () => {
-    const termo = filtroInput.value.toLowerCase();
-    const filtradas = todasPessoas.filter(p =>
-      p.nome.toLowerCase().includes(termo)
-    );
-    renderizarPessoas(filtradas);
-  });
+btnExportar.addEventListener('click', () => {
+  if (!resultados.length) return mostrarMensagem('⚠️ Nenhum dado para exportar', 'erro');
 
-  btnExportar.addEventListener('click', () => {
-    const linhas = todasPessoas.map(p =>
-      `${p.pessoa_id};${p.nome};${p.cpf_cnpj};${p.email};${p.numero};${p.complemento}`
-    );
-    const csv = ['ID;Nome;CPF/CNPJ;Email;Número;Complemento', ...linhas].join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'pessoas.csv';
-    link.click();
-  });
-})();
+  const linhas = resultados.map(p =>
+    `${p.pessoa_id};${p.nome};${p.cpf_cnpj};${p.email};${p.numero};${p.complemento}`
+  );
+  const csv = ['ID;Nome;CPF/CNPJ;Email;Número;Complemento', ...linhas].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'pessoas_filtradas.csv';
+  link.click();
+});
 
-function renderizarPessoas(lista) {
-  const container = document.getElementById('cp-pessoas-lista');
-  container.innerHTML = '';
+function renderizarResultados(lista) {
+  listaContainer.innerHTML = '';
+
+  if (!lista.length) {
+    listaContainer.innerHTML = `<div class="cp-msg-box erro">Nenhum resultado encontrado.</div>`;
+    return;
+  }
 
   lista.forEach(pessoa => {
     const form = document.createElement('form');
@@ -98,7 +101,7 @@ function renderizarPessoas(lista) {
       form.remove();
     });
 
-    container.appendChild(form);
+    listaContainer.appendChild(form);
   });
 }
 

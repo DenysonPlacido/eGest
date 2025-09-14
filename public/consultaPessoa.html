@@ -3,13 +3,15 @@
 <div class="cp-container">
   <h2 class="cp-title">Consulta de Pessoas</h2>
 
-  <div class="cp-filtro">
-    <input type="text" id="filtro-nome" placeholder="🔍 Buscar por nome..." />
-    <button id="btn-exportar">Exportar para Excel</button>
-  </div>
+  <form id="form-busca" class="cp-filtro">
+    <input type="text" id="busca-id" placeholder="🔍 ID da pessoa" />
+    <input type="text" id="busca-nome" placeholder="🔍 Nome da pessoa" />
+    <button type="submit">Buscar</button>
+    <button type="button" id="btn-exportar">Exportar para Excel</button>
+  </form>
 
   <div id="cp-pessoas-lista" class="cp-pessoas-lista">
-    <!-- Os formulários serão inseridos aqui via JS -->
+    <!-- Resultados da busca serão inseridos aqui -->
   </div>
 </div>
 
