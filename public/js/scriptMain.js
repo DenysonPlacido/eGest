@@ -92,7 +92,7 @@ function carregarMenuDinamico() {
     .catch(err => {
       console.error('❌ Erro ao carregar menus:', err);
       alert("Erro ao carregar menus. Faça login novamente.");
-      window.location.href = 'Index.html';
+      window.location.href = 'index.html';
     });
 }
 
