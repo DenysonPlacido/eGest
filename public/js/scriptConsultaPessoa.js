@@ -1,3 +1,6 @@
+// /workspaces/eGest/public/js/scriptConsultaPessoa.js
+const API_BASE = 'https://e-gest-back-end.vercel.app';
+
 let paginaAtual = 1;
 const limitePorPagina = 10;
 let resultados = [];
@@ -53,14 +56,23 @@ async function buscarPessoas() {
     offset: (paginaAtual - 1) * limitePorPagina
   };
 
-const res = await fetch('https://e-gest-back-end.vercel.app/api/pessoas/gerenciar', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(filtros)
-});
-  resultados = await res.json();
-  renderizarResultados(resultados);
-  paginaLabel.textContent = `Página ${paginaAtual}`;
+  try {
+    const res = await fetch(`${API_BASE}/api/pessoas/gerenciar`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(filtros)
+    });
+
+    if (!res.ok) throw new Error('Erro ao buscar pessoas');
+
+    resultados = await res.json();
+    renderizarResultados(resultados);
+    paginaLabel.textContent = `Página ${paginaAtual}`;
+  } catch (err) {
+    mostrarMensagem(`❌ ${err.message}`, 'erro');
+    resultados = [];
+    listaContainer.innerHTML = '';
+  }
 }
 
 function renderizarResultados(lista) {
@@ -102,29 +114,41 @@ function renderizarResultados(lista) {
       const data = Object.fromEntries(new FormData(form).entries());
       data.acao = 'UPDATE';
 
-      const res = await fetch('/api/pessoas/gerenciar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+      try {
+        const res = await fetch(`${API_BASE}/api/pessoas/gerenciar`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
 
-      const result = await res.json();
-      mostrarMensagem(result.mensagem || '✅ Pessoa atualizada com sucesso!');
+        if (!res.ok) throw new Error('Erro ao atualizar pessoa');
+
+        const result = await res.json();
+        mostrarMensagem(result.mensagem || '✅ Pessoa atualizada com sucesso!');
+      } catch (err) {
+        mostrarMensagem(`❌ ${err.message}`, 'erro');
+      }
     });
 
     form.querySelector('.btn-excluir').addEventListener('click', async () => {
       const id = form.pessoa_id.value;
       if (!confirm('Tem certeza que deseja excluir esta pessoa?')) return;
 
-      const res = await fetch('/api/pessoas/gerenciar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ acao: 'DELETE', pessoa_id: id })
-      });
+      try {
+        const res = await fetch(`${API_BASE}/api/pessoas/gerenciar`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ acao: 'DELETE', pessoa_id: id })
+        });
 
-      const result = await res.json();
-      mostrarMensagem(result.mensagem || '✅ Pessoa excluída.');
-      form.remove();
+        if (!res.ok) throw new Error('Erro ao excluir pessoa');
+
+        const result = await res.json();
+        mostrarMensagem(result.mensagem || '✅ Pessoa excluída.');
+        form.remove();
+      } catch (err) {
+        mostrarMensagem(`❌ ${err.message}`, 'erro');
+      }
     });
 
     listaContainer.appendChild(form);
