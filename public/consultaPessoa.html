@@ -1,12 +1,17 @@
 <!-- /workspaces/eGest/public/consultaPessoa.html -->
-
 <link rel="stylesheet" href="css/styleConsultaPessoa.css" />
 
 <div class="cp-container">
   <h2 class="cp-title">Consulta de Pessoas</h2>
+
+  <div class="cp-filtro">
+    <input type="text" id="filtro-nome" placeholder="🔍 Buscar por nome..." />
+    <button id="btn-exportar">Exportar para Excel</button>
+  </div>
+
   <div id="cp-pessoas-lista" class="cp-pessoas-lista">
     <!-- Os formulários individuais serão inseridos aqui via JS -->
   </div>
 </div>
 
-<script src="js/scriptConsultaPessoa.js"></script>
+<script type="module" src="js/scriptConsultaPessoa.js"></script>
