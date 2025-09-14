@@ -57,7 +57,7 @@ async function buscarPessoas() {
   };
 
   try {
-    const res = await fetch(`${API_BASE}/pessoas/gerenciar`, {
+    const res = await fetch(`${API_BASE}/api/pessoas/gerenciar`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(filtros)
