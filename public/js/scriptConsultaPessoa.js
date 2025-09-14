@@ -53,12 +53,11 @@ async function buscarPessoas() {
     offset: (paginaAtual - 1) * limitePorPagina
   };
 
-  const res = await fetch('/api/pessoas/gerenciar', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(filtros)
-  });
-
+const res = await fetch('https://e-gest-back-end.vercel.app/api/pessoas/gerenciar', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(filtros)
+});
   resultados = await res.json();
   renderizarResultados(resultados);
   paginaLabel.textContent = `Página ${paginaAtual}`;
