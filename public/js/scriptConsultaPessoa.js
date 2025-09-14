@@ -1,26 +1,30 @@
+let paginaAtual = 1;
+const limitePorPagina = 10;
+let resultados = [];
+
 const formBusca = document.getElementById('form-busca');
 const listaContainer = document.getElementById('cp-pessoas-lista');
 const btnExportar = document.getElementById('btn-exportar');
-let resultados = [];
+const btnAnterior = document.getElementById('btn-anterior');
+const btnProximo = document.getElementById('btn-proximo');
+const paginaLabel = document.getElementById('pagina-atual');
 
 formBusca.addEventListener('submit', async (e) => {
   e.preventDefault();
+  paginaAtual = 1;
+  await buscarPessoas();
+});
 
-  const pessoa_id = document.getElementById('busca-id').value.trim();
-  const nome = document.getElementById('busca-nome').value.trim();
+btnAnterior.addEventListener('click', async () => {
+  if (paginaAtual > 1) {
+    paginaAtual--;
+    await buscarPessoas();
+  }
+});
 
-  const filtros = { acao: 'SELECT' };
-  if (pessoa_id) filtros.pessoa_id = pessoa_id;
-  if (nome) filtros.nome = nome;
-
-  const res = await fetch('/api/pessoas/gerenciar', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(filtros)
-  });
-
-  resultados = await res.json();
-  renderizarResultados(resultados);
+btnProximo.addEventListener('click', async () => {
+  paginaAtual++;
+  await buscarPessoas();
 });
 
 btnExportar.addEventListener('click', () => {
@@ -36,6 +40,29 @@ btnExportar.addEventListener('click', () => {
   link.download = 'pessoas_filtradas.csv';
   link.click();
 });
+
+async function buscarPessoas() {
+  const nome = document.getElementById('busca-nome').value.trim();
+  const pessoa_id = document.getElementById('busca-id').value.trim();
+
+  const filtros = {
+    acao: 'SELECT',
+    nome: nome || null,
+    pessoa_id: pessoa_id || null,
+    limit: limitePorPagina,
+    offset: (paginaAtual - 1) * limitePorPagina
+  };
+
+  const res = await fetch('/api/pessoas/gerenciar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(filtros)
+  });
+
+  resultados = await res.json();
+  renderizarResultados(resultados);
+  paginaLabel.textContent = `Página ${paginaAtual}`;
+}
 
 function renderizarResultados(lista) {
   listaContainer.innerHTML = '';
