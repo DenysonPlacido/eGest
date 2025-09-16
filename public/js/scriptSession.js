@@ -78,7 +78,7 @@ function mostrarMensagem(msg, tipo = 'info') {
   div.style.fontWeight = 'bold';
   div.style.opacity = '0.95';
 
-  if (tipo === 'info') div.style.backgroundColor = '#ffffffff';
+  if (tipo === 'info') div.style.backgroundColor = '#3498db';
   if (tipo === 'alerta') div.style.backgroundColor = '#f1c40f';
   if (tipo === 'alerta2') div.style.backgroundColor = '#e67e22';
   if (tipo === 'critico') div.style.backgroundColor = '#e74c3c';
@@ -128,7 +128,7 @@ setInterval(() => {
     } else if (tempoRestante <= TEMPO_ALERTA_1) {
       sessaoEl.style.color = '#f1c40f';
     } else {
-      sessaoEl.style.color = '#2c3e50';
+      sessaoEl.style.color = '#ffffffff';
     }
 
     // piscar dramático últimos TEMPO_PISCAR_DRAMATICO
