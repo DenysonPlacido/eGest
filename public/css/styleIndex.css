@@ -78,7 +78,7 @@ body {
 }
 
 .input-group input {
-  width: 100%;
+  width: 93%;
   padding: 12px;
   border-radius: 10px;
   border: none;
@@ -93,7 +93,7 @@ body {
    Botão moderno
 =========================== */
 button {
-  width: 100%;
+  width: 50%;
   padding: 12px;
   font-size: 16px;
   font-weight: 600;

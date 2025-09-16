@@ -1,149 +1,169 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Busca endereço via CEP
-  document.querySelector('input[name="cep"]').addEventListener('blur', async (e) => {
-    const cep = e.target.value.replace(/\D/g, '');
-    if (cep.length !== 8) return;
+// /workspaces/eGest/public/js/session.js
 
-    try {
-      const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      const endereco = await res.json();
-      if (endereco.erro) throw new Error('CEP não encontrado');
+// ===========================
+// Configurações de tempo (em segundos)
+// ===========================
+const INTERVALO_VERIFICACAO = 1000;       // 1 segundo
+const TEMPO_ALERTA_1 = 1.5 * 60;        // alerta 2 minutos
+const TEMPO_ALERTA_2 = 1 * 60;        // alerta 1 minuto
+const TEMPO_ALERTA_CRITICO = 30;         // alerta crítico 30 segundos
+const TEMPO_PISCAR_DRAMATICO = 15;       // últimos 15 segundos piscar
 
-      document.querySelector('input[name="complemento"]').value = endereco.complemento || '';
-    } catch (err) {
-      console.warn('Erro ao buscar CEP:', err);
-      mostrarMensagem('⚠️ CEP inválido ou não encontrado.', 'erro');
-    }
-  });
+// ===========================
+// Mensagens de alerta
+// ===========================
+const MENSAGEM_ALERTA_2MIN = `⚠️ Sua sessão vai expirar em ${TEMPO_ALERTA_1 / 60} minutos!`;
+const MENSAGEM_ALERTA_1MIN = `⚠️ Sua sessão vai expirar em ${TEMPO_ALERTA_2 / 60} minuto!`;
+const MENSAGEM_ALERTA_CRITICO = `⛔ Sua sessão vai expirar em ${TEMPO_ALERTA_CRITICO} segundos!`;
+const MENSAGEM_SESSAO_EXPIRADA = "⛔ Sessão expirada.";
 
-  // Envio do formulário
-  const form = document.getElementById('cp-form-pessoa');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+// ===========================
+// Elementos do header
+// ===========================
+const empresaEl = document.getElementById('empresa-logada');
+const usuarioEl = document.getElementById('usuario-logado');
+const horaEl = document.getElementById('hora-sistema');
+const sessaoEl = document.getElementById('tempo-sessao');
 
-    // Define ação como INSERT
-    data.acao = 'INSERT';
+// ===========================
+// Exibe dados da empresa e usuário
+// ===========================
+const empresaNome = localStorage.getItem('selectedEmpName') || 'Não logada';
+const usuario = localStorage.getItem('usuarioNome') || 'Desconhecido';
+if (usuarioEl) usuarioEl.textContent = `Bem Vindo ${usuario}`;
 
-    // Validação de CPF/CNPJ
-    if (!validarCpfCnpj(data.cpf_cnpj)) {
-      mostrarMensagem('⚠️ CPF ou CNPJ inválido.', 'erro');
-      return;
-    }
-
-    if (data.senha !== data.repetir_senha) {
-      mostrarMensagem('⚠️ As senhas não coincidem.', 'erro');
-      return;
-    }
-
-
-    // Conversão de campos numéricos
-    data.cod_logradouro = parseInt(data.cod_logradouro) || null;
-    data.cod_bairro = parseInt(data.cod_bairro) || null;
-    data.numero = parseInt(data.numero) || null;
-
-    try {
-      const res = await fetch('/api/pessoas/gerenciar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      const result = await res.json();
-      if (result.status === 'OK') {
-        const msg = result.mensagem || '✅ Pessoa cadastrada com sucesso!';
-        mostrarMensagem(msg);
-        form.reset();
-      } else {
-        const msg = result.mensagem || '⚠️ Erro ao cadastrar pessoa.';
-        mostrarMensagem(msg, 'erro');
-      }
-    } catch (err) {
-      console.error('Erro ao cadastrar pessoa:', err);
-      mostrarMensagem(`❌ ${err.message || 'Erro interno ao cadastrar pessoa.'}`, 'erro');
-    }
-  });
-});
-
-// Validação de CPF/CNPJ
-function validarCpfCnpj(valor) {
-  const v = valor.replace(/\D/g, '');
-  if (v.length === 11) return validarCPF(v);
-  if (v.length === 14) return validarCNPJ(v);
-  return false;
-}
-
-function validarCPF(cpf) {
-  let soma = 0, resto;
-  if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
-  for (let i = 1; i <= 9; i++) soma += parseInt(cpf[i - 1]) * (11 - i);
-  resto = (soma * 10) % 11;
-  if (resto === 10 || resto === 11) resto = 0;
-  if (resto !== parseInt(cpf[9])) return false;
-  soma = 0;
-  for (let i = 1; i <= 10; i++) soma += parseInt(cpf[i - 1]) * (12 - i);
-  resto = (soma * 10) % 11;
-  if (resto === 10 || resto === 11) resto = 0;
-  return resto === parseInt(cpf[10]);
-}
-
-function validarCNPJ(cnpj) {
-  let tamanho = cnpj.length - 2;
-  let numeros = cnpj.substring(0, tamanho);
-  let digitos = cnpj.substring(tamanho);
-  let soma = 0, pos = tamanho - 7;
-  for (let i = tamanho; i >= 1; i--) {
-    soma += numeros.charAt(tamanho - i) * pos--;
-    if (pos < 2) pos = 9;
+// ===========================
+// Relógio do sistema (HH:MM)
+// ===========================
+setInterval(() => {
+  if (horaEl) {
+    const now = new Date();
+    horaEl.textContent = `⏰ ${now.toLocaleTimeString('pt-BR', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    })}`;
   }
-  let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-  if (resultado !== parseInt(digitos.charAt(0))) return false;
-  tamanho += 1;
-  numeros = cnpj.substring(0, tamanho);
-  soma = 0;
-  pos = tamanho - 7;
-  for (let i = tamanho; i >= 1; i--) {
-    soma += numeros.charAt(tamanho - i) * pos--;
-    if (pos < 2) pos = 9;
-  }
-  resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-  return resultado === parseInt(digitos.charAt(1));
-}
+}, INTERVALO_VERIFICACAO);
 
-// Feedback visual
-function mostrarMensagem(msg, tipo = 'sucesso') {
-  const box = document.createElement('div');
-  box.className = `cp-msg-box ${tipo}`;
-  box.textContent = msg;
-  document.body.appendChild(box);
-  setTimeout(() => box.remove(), 4000);
-}
-
-
-document.getElementById('btn-buscar-endereco').addEventListener('click', async () => {
-  const cep = document.querySelector('input[name="cep"]').value.replace(/\D/g, '');
-  if (cep.length !== 8) {
-    mostrarMensagem('⚠️ CEP inválido.', 'erro');
-    return;
-  }
-
+// ===========================
+// Função para decodificar JWT sem lib
+// ===========================
+function parseJwt(token) {
   try {
-    const res = await fetch(`/api/enderecos/buscar?cep=${cep}`);
-    const endereco = await res.json();
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return null;
+  }
+}
 
-    if (!endereco || !endereco.cod_logradouro || !endereco.cod_bairro) {
-      throw new Error('Endereço não encontrado');
+// ===========================
+// Função de alerta customizado
+// ===========================
+function mostrarMensagem(msg, tipo = 'info') {
+  const div = document.createElement('div');
+  div.textContent = msg;
+  div.style.position = 'fixed';
+  div.style.top = '20px';
+  div.style.right = '20px';
+  div.style.padding = '10px 20px';
+  div.style.borderRadius = '5px';
+  div.style.zIndex = 9999;
+  div.style.color = '#fff';
+  div.style.fontWeight = 'bold';
+  div.style.opacity = '0.95';
+
+  if (tipo === 'info') div.style.backgroundColor = '#3498db';
+  if (tipo === 'alerta') div.style.backgroundColor = '#f1c40f';
+  if (tipo === 'alerta2') div.style.backgroundColor = '#e67e22';
+  if (tipo === 'critico') div.style.backgroundColor = '#e74c3c';
+
+  document.body.appendChild(div);
+  setTimeout(() => div.remove(), 5000);
+}
+
+// ===========================
+// Pega token do localStorage
+// ===========================
+let token = localStorage.getItem('token');
+let expTimestamp = null;
+
+if (token) {
+  const decoded = parseJwt(token);
+  if (decoded && decoded.exp) {
+    expTimestamp = decoded.exp * 1000; // exp em ms
+  }
+}
+
+// ===========================
+// Contagem regressiva com alertas e piscar dramático
+// ===========================
+let alerta2minMostrado = false;
+let alerta1minMostrado = false;
+let alertaCriticoMostrado = false;
+let piscarLigado = false;
+
+setInterval(() => {
+  if (!expTimestamp || !sessaoEl) return;
+
+  const agora = Date.now();
+  const tempoRestante = Math.floor((expTimestamp - agora) / 1000);
+
+  if (tempoRestante > 0) {
+    const h = String(Math.floor(tempoRestante / 3600)).padStart(2, '0');
+    const m = String(Math.floor((tempoRestante % 3600) / 60)).padStart(2, '0');
+    const s = String(tempoRestante % 60).padStart(2, '0');
+    sessaoEl.textContent = `⏳ ${h}:${m}:${s}`;
+
+    // cores escalonadas
+    if (tempoRestante <= TEMPO_ALERTA_CRITICO) {
+      sessaoEl.style.color = '#e74c3c';
+    } else if (tempoRestante <= TEMPO_ALERTA_2) {
+      sessaoEl.style.color = '#e67e22';
+    } else if (tempoRestante <= TEMPO_ALERTA_1) {
+      sessaoEl.style.color = '#f1c40f';
+    } else {
+      sessaoEl.style.color = '#2c3e50';
     }
 
-    document.querySelector('input[name="logradouro"]').value = endereco.logradouro;
-    document.querySelector('input[name="bairro"]').value = endereco.bairro;
-    document.querySelector('input[name="cod_logradouro"]').value = endereco.cod_logradouro;
-    document.querySelector('input[name="cod_bairro"]').value = endereco.cod_bairro;
+    // piscar dramático últimos TEMPO_PISCAR_DRAMATICO
+    if (tempoRestante <= TEMPO_PISCAR_DRAMATICO) {
+      piscarLigado = !piscarLigado;
+      sessaoEl.style.opacity = piscarLigado ? '1' : '0.2';
+      sessaoEl.style.transform = piscarLigado ? 'scale(1.3)' : 'scale(1)';
+      sessaoEl.style.transition = 'all 0.5s ease';
+    } else {
+      sessaoEl.style.opacity = '1';
+      sessaoEl.style.transform = 'scale(1)';
+    }
 
-    mostrarMensagem('✅ Endereço carregado com sucesso!');
-  } catch (err) {
-    console.error('Erro ao buscar endereço:', err);
-    mostrarMensagem('❌ Endereço não encontrado.', 'erro');
+    // alertas escalonados usando variáveis
+    if (!alerta2minMostrado && tempoRestante <= TEMPO_ALERTA_1 && tempoRestante > TEMPO_ALERTA_2) {
+      alerta2minMostrado = true;
+      mostrarMensagem(MENSAGEM_ALERTA_2MIN, 'alerta');
+    }
+
+    if (!alerta1minMostrado && tempoRestante <= TEMPO_ALERTA_2 && tempoRestante > TEMPO_ALERTA_CRITICO) {
+      alerta1minMostrado = true;
+      mostrarMensagem(MENSAGEM_ALERTA_1MIN, 'alerta2');
+    }
+
+    if (!alertaCriticoMostrado && tempoRestante <= TEMPO_ALERTA_CRITICO) {
+      alertaCriticoMostrado = true;
+      mostrarMensagem(MENSAGEM_ALERTA_CRITICO, 'critico');
+    }
+
+  } else {
+    sessaoEl.textContent = "⏳ 00:00:00";
+    sessaoEl.style.opacity = '1';
+    sessaoEl.style.transform = 'scale(1)';
+    mostrarMensagem(MENSAGEM_SESSAO_EXPIRADA, 'critico');
+    localStorage.clear();
+    window.location.href = 'index.html';
   }
-});
+}, INTERVALO_VERIFICACAO);
