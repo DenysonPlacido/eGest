@@ -1,8 +1,10 @@
+// /workspaces/eGest/public/js/scriptMain.js
+
 import { renderizarMenus } from './scriptMenuAdmin.js';
+import { showAlert } from './alerts.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🔄 DOM carregado. Iniciando fetch dos componentes...');
-
   carregarHeader();
   carregarMenu();
 });
@@ -23,7 +25,6 @@ function carregarHeader() {
       headerEl.innerHTML = html;
       console.log('✅ Header carregado com sucesso');
 
-      // Aguarda o DOM atualizar antes de buscar os elementos
       requestAnimationFrame(() => {
         const toggleBtn = document.getElementById('menu-toggle');
         const sidebar = document.querySelector('.sidebar');
@@ -31,7 +32,7 @@ function carregarHeader() {
         if (!toggleBtn || !sidebar) {
           console.warn('⚠️ Toggle do menu ou sidebar não encontrado');
         } else {
-          initMenuToggle(); // ✅ Agora os elementos existem
+          initMenuToggle();
         }
 
         initLogout();
@@ -71,15 +72,13 @@ function carregarMenu() {
 function carregarMenuDinamico() {
   const token = localStorage.getItem('token');
   if (!token) {
-    alert('Sessão expirada. Faça login novamente.');
+    showAlert('⚠️ Sessão expirada. Faça login novamente.', 'warning');
     window.location.href = 'index.html';
     return;
   }
 
   fetch('https://e-gest-back-end.vercel.app/api/menus', {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
+    headers: { Authorization: `Bearer ${token}` }
   })
     .then(res => {
       if (!res.ok) throw new Error('Erro ao buscar menus da API');
@@ -91,7 +90,7 @@ function carregarMenuDinamico() {
     })
     .catch(err => {
       console.error('❌ Erro ao carregar menus:', err);
-      alert("Erro ao carregar menus. Faça login novamente.");
+      showAlert('❌ Erro ao carregar menus. Faça login novamente.', 'error');
       window.location.href = 'index.html';
     });
 }

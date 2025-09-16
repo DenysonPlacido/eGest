@@ -1,5 +1,6 @@
 ﻿
-
+//workspaces/eGest/public/js/scriptMenuAdmin.js
+import { showAlert } from './alerts.js';
 
 export function gerarTargetHierarquico(caminho) {
   return 'menu_' + caminho.map(p =>
@@ -11,7 +12,6 @@ export function gerarTargetHierarquico(caminho) {
   ).join('_');
 }
 
-// Utilitário para gerar IDs seguros a partir de nomes
 export function slugify(text, prefix = '') {
   const base = text
     .toLowerCase()
@@ -22,7 +22,6 @@ export function slugify(text, prefix = '') {
   return prefix + base;
 }
 
-// Renderiza os menus dinâmicos no DOM
 export function renderizarMenus(menus) {
   const menuContainer = document.getElementById('menu-container');
   const ul = document.createElement('ul');
@@ -68,7 +67,6 @@ export function renderizarMenus(menus) {
   aplicarEventosMenu();
 }
 
-// Aplica eventos de clique para expandir/contrair submenus
 export function aplicarEventosMenu() {
   const menu = document.querySelector('.menu');
   if (!menu) return;
@@ -78,74 +76,50 @@ export function aplicarEventosMenu() {
     if (!item) return;
 
     e.preventDefault();
-
     const targetId = item.dataset.target;
     const submenu = document.getElementById(targetId);
 
     const temSubmenu = submenu && submenu.classList.contains('submenu');
     const temFilhos = submenu && submenu.querySelectorAll('li').length > 0;
 
-    console.log('🧭 Clique em:', item.textContent.trim());
-    console.log('📦 targetId:', targetId);
-    console.log('📦 submenu encontrado?', !!submenu);
-    console.log('📦 temSubmenu:', temSubmenu, '| temFilhos:', temFilhos);
-
     // Proteção contra submenu que aponta para si mesmo
-    if (submenu === item.parentElement) {
-      console.warn('⚠️ submenu aponta para o próprio item. Ignorando.');
-      return;
-    }
+    if (submenu === item.parentElement) return;
 
-    // Alterna submenu se existir
     if (temSubmenu) {
       submenu.classList.toggle('open');
-
-      // Fecha submenus irmãos
       const parentLi = item.closest('li');
       const parentUl = parentLi?.parentElement;
       const siblingSubmenus = parentUl?.querySelectorAll(':scope > li > .submenu');
-      siblingSubmenus?.forEach(sub => {
-        if (sub !== submenu) sub.classList.remove('open');
-      });
+      siblingSubmenus?.forEach(sub => { if (sub !== submenu) sub.classList.remove('open'); });
 
       let parent = submenu.closest('.submenu');
       const visited = new Set();
-
       while (parent && !visited.has(parent)) {
         visited.add(parent);
         parent.classList.add('open');
         parent = parent.closest('.submenu');
       }
 
-      // Ícones de seta
       document.querySelectorAll('.arrow-icon').forEach(icon => icon.classList.remove('rotate'));
       const arrow = item.querySelector('.arrow-icon');
       if (arrow) arrow.classList.toggle('rotate');
     }
 
-    // Ativa item clicado
     document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
     item.classList.add('active');
 
-    // ✅ Só carrega conteúdo se NÃO tiver submenu ou filhos
     if (!temSubmenu || !temFilhos) {
-      console.log('🚀 Chamando loadContent para:', targetId);
       loadContent(targetId);
-    } else {
-      console.log('📂 Item tem submenu. Não carregando conteúdo.');
     }
   });
 }
 
-// Simula carregamento de conteúdo no painel principal
 function loadContent(target) {
   const content = document.getElementById('main-content');
   if (!content) {
-    console.warn('⚠️ Elemento #main-content não encontrado');
+    showAlert('⚠️ Elemento #main-content não encontrado', 'warning', 4000);
     return;
   }
-
-  console.log('🚀 Carregando conteúdo para:', target);
 
   const pages = {
     dashboard: 'adminHome.html',
@@ -162,14 +136,12 @@ function loadContent(target) {
         return res.text();
       })
       .then(html => {
-        // ✅ Injeta o HTML
         content.innerHTML = html;
 
-        // ✅ Carrega scripts externos manualmente
+        // Carrega scripts externos
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
         const scripts = tempDiv.querySelectorAll('script[src]');
-
         scripts.forEach(script => {
           const newScript = document.createElement('script');
           newScript.src = script.src;
@@ -178,7 +150,8 @@ function loadContent(target) {
         });
       })
       .catch(err => {
-        console.error('❌ Erro ao carregar página:', err);
+        console.error(err);
+        showAlert(`❌ Erro ao carregar página: ${err.message}`, 'error', 5000);
         content.innerHTML = `<div class="error-box">Erro ao carregar conteúdo.</div>`;
       });
   } else {
@@ -186,7 +159,6 @@ function loadContent(target) {
   }
 }
 
-// Gera submenus recursivamente para múltiplos níveis
 function gerarSubmenu(submenus, caminhoPai = []) {
   return submenus.map(sub => {
     const caminhoAtual = [...caminhoPai, sub.nome];

@@ -1,68 +1,15 @@
-﻿// /workspaces/eGest/public/js/scriptIndexLogin.js
+﻿// /workspaces/eGest/public/js/scriptIndex.js
 
 
-// ===========================
-// Seleção da empresa
-// ===========================
-// document.getElementById('select-btn').addEventListener('click', selectedEmpresa);
+import { showAlert } from './alerts.js';
 
-// function selectedEmpresa() {
-//   const select = document.getElementById("Empresa-select");
-//   const selectedEmp = select.value;
-//   const selectedEmpName = select.options[select.selectedIndex].text;
-
-//   if (selectedEmp) {
-//     localStorage.setItem("selectedEmp", selectedEmp);
-//     localStorage.setItem("selectedEmpName", selectedEmpName);
-//     window.location.href = "index.html";
-//   } else {
-//     alert("Por favor, selecione uma Empresa.");
-//   }
-// }
-
-// ===========================
-// Carregar empresas do backend
-// ===========================
-// async function carregarEmpresas() {
-//   try {
-//     const response = await fetch("https://e-gest-back-end.vercel.app/api/empresas");
-
-//     if (!response.ok) {
-//       throw new Error("Erro ao buscar empresas");
-//     }
-
-//     const empresas = await response.json();
-//     const select = document.getElementById("Empresa-select");
-//     select.innerHTML = '';
-
-//     empresas.forEach(emp => {
-//       const option = document.createElement("option");
-//       option.value = emp.empresa_id;
-//       option.textContent = emp.nome;
-//       select.appendChild(option);
-//     });
-
-//   } catch (err) {
-//     console.error('Erro ao carregar empresas:', err);
-//     alert("Erro ao carregar empresas.");
-//   }
-// }
-
-// window.addEventListener('DOMContentLoaded', carregarEmpresas);
-
-// ===========================
-// Função de login com JWT
-// ===========================
-// ===========================
-// Função de login com JWT
-// ===========================
 async function login() {
   const empresa_id = document.getElementById("empresa").value.trim();
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
 
   if (!empresa_id || !username || !password) {
-    alert("Por favor, preencha todos os campos.");
+    showAlert("⚠️ Por favor, preencha todos os campos.", "warning");
     return;
   }
 
@@ -77,7 +24,7 @@ async function login() {
     console.log('🔐 Dados recebidos do login:', data);
 
     if (!response.ok || !data.token) {
-      alert(data.message || "Credenciais inválidas!");
+      showAlert(data.message || "❌ Credenciais inválidas!", "error");
       return;
     }
 
@@ -92,10 +39,17 @@ async function login() {
       localStorage.setItem("selectedEmpName", data.usuario.empresa_nome);
     }
 
+    // Redireciona para a home
     window.location.href = "adminHome.html";
 
   } catch (err) {
     console.error('Erro ao conectar com o servidor:', err);
-    alert("Erro ao conectar com o servidor!");
+    showAlert("❌ Erro ao conectar com o servidor!", "error");
   }
 }
+
+// Ativa o botão de login
+document.getElementById("btn-login").addEventListener("click", (e) => {
+  e.preventDefault();
+  login();
+});

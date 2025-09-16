@@ -1,4 +1,5 @@
-// /workspaces/eGest/public/js/scriptConsultaPessoa.js
+import { showAlert } from './alerts.js';
+
 const API_BASE = 'https://e-gest-back-end.vercel.app';
 
 let paginaAtual = 1;
@@ -31,7 +32,9 @@ btnProximo.addEventListener('click', async () => {
 });
 
 btnExportar.addEventListener('click', () => {
-  if (!resultados.length) return mostrarMensagem('⚠️ Nenhum dado para exportar', 'erro');
+  if (!resultados.length) {
+    return showAlert('⚠️ Nenhum dado para exportar', 'warning', 4000);
+  }
 
   const linhas = resultados.map(p =>
     `${p.pessoa_id};${p.nome};${p.cpf_cnpj};${p.email};${p.numero};${p.complemento}`
@@ -69,7 +72,7 @@ async function buscarPessoas() {
     renderizarResultados(resultados);
     paginaLabel.textContent = `Página ${paginaAtual}`;
   } catch (err) {
-    mostrarMensagem(`❌ ${err.message}`, 'erro');
+    showAlert(`❌ ${err.message}`, 'error', 4000);
     resultados = [];
     listaContainer.innerHTML = '';
   }
@@ -79,8 +82,7 @@ function renderizarResultados(lista) {
   listaContainer.innerHTML = '';
 
   if (!lista.length) {
-    listaContainer.innerHTML = `<div class="cp-msg-box erro">Nenhum resultado encontrado.</div>`;
-    return;
+    return showAlert('Nenhum resultado encontrado.', 'warning', 4000);
   }
 
   lista.forEach(pessoa => {
@@ -124,9 +126,9 @@ function renderizarResultados(lista) {
         if (!res.ok) throw new Error('Erro ao atualizar pessoa');
 
         const result = await res.json();
-        mostrarMensagem(result.mensagem || '✅ Pessoa atualizada com sucesso!');
+        showAlert(result.mensagem || '✅ Pessoa atualizada com sucesso!', 'success', 4000);
       } catch (err) {
-        mostrarMensagem(`❌ ${err.message}`, 'erro');
+        showAlert(`❌ ${err.message}`, 'error', 4000);
       }
     });
 
@@ -144,21 +146,13 @@ function renderizarResultados(lista) {
         if (!res.ok) throw new Error('Erro ao excluir pessoa');
 
         const result = await res.json();
-        mostrarMensagem(result.mensagem || '✅ Pessoa excluída.');
+        showAlert(result.mensagem || '✅ Pessoa excluída.', 'success', 4000);
         form.remove();
       } catch (err) {
-        mostrarMensagem(`❌ ${err.message}`, 'erro');
+        showAlert(`❌ ${err.message}`, 'error', 4000);
       }
     });
 
     listaContainer.appendChild(form);
   });
-}
-
-function mostrarMensagem(msg, tipo = 'sucesso') {
-  const box = document.createElement('div');
-  box.className = `cp-msg-box ${tipo}`;
-  box.textContent = msg;
-  document.body.appendChild(box);
-  setTimeout(() => box.remove(), 4000);
 }

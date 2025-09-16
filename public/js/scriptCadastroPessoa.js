@@ -1,3 +1,6 @@
+///workspaces/eGest/public/js/scriptCadastroPessoa.js
+
+import { showAlert } from './alerts.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Busca endereço via CEP
@@ -13,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('input[name="complemento"]').value = endereco.complemento || '';
     } catch (err) {
       console.warn('Erro ao buscar CEP:', err);
-      mostrarMensagem('⚠️ CEP inválido ou não encontrado.', 'erro');
+      showAlert('⚠️ CEP inválido ou não encontrado.', 'warning', 4000);
     }
   });
 
@@ -24,20 +27,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    // Define ação como INSERT
     data.acao = 'INSERT';
 
     // Validação de CPF/CNPJ
     if (!validarCpfCnpj(data.cpf_cnpj)) {
-      mostrarMensagem('⚠️ CPF ou CNPJ inválido.', 'erro');
+      showAlert('⚠️ CPF ou CNPJ inválido.', 'error', 4000);
       return;
     }
 
     if (data.senha !== data.repetir_senha) {
-      mostrarMensagem('⚠️ As senhas não coincidem.', 'erro');
+      showAlert('⚠️ As senhas não coincidem.', 'error', 4000);
       return;
     }
-
 
     // Conversão de campos numéricos
     data.cod_logradouro = parseInt(data.cod_logradouro) || null;
@@ -54,15 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await res.json();
       if (result.status === 'OK') {
         const msg = result.mensagem || '✅ Pessoa cadastrada com sucesso!';
-        mostrarMensagem(msg);
+        showAlert(msg, 'success', 5000);
         form.reset();
       } else {
         const msg = result.mensagem || '⚠️ Erro ao cadastrar pessoa.';
-        mostrarMensagem(msg, 'erro');
+        showAlert(msg, 'error', 5000);
       }
     } catch (err) {
       console.error('Erro ao cadastrar pessoa:', err);
-      mostrarMensagem(`❌ ${err.message || 'Erro interno ao cadastrar pessoa.'}`, 'erro');
+      showAlert(`❌ ${err.message || 'Erro interno ao cadastrar pessoa.'}`, 'error', 5000);
     }
   });
 });
@@ -112,20 +113,11 @@ function validarCNPJ(cnpj) {
   return resultado === parseInt(digitos.charAt(1));
 }
 
-// Feedback visual
-function mostrarMensagem(msg, tipo = 'sucesso') {
-  const box = document.createElement('div');
-  box.className = `cp-msg-box ${tipo}`;
-  box.textContent = msg;
-  document.body.appendChild(box);
-  setTimeout(() => box.remove(), 4000);
-}
-
-
+// Botão de busca de endereço
 document.getElementById('btn-buscar-endereco').addEventListener('click', async () => {
   const cep = document.querySelector('input[name="cep"]').value.replace(/\D/g, '');
   if (cep.length !== 8) {
-    mostrarMensagem('⚠️ CEP inválido.', 'erro');
+    showAlert('⚠️ CEP inválido.', 'warning', 4000);
     return;
   }
 
@@ -142,9 +134,9 @@ document.getElementById('btn-buscar-endereco').addEventListener('click', async (
     document.querySelector('input[name="cod_logradouro"]').value = endereco.cod_logradouro;
     document.querySelector('input[name="cod_bairro"]').value = endereco.cod_bairro;
 
-    mostrarMensagem('✅ Endereço carregado com sucesso!');
+    showAlert('✅ Endereço carregado com sucesso!', 'success', 5000);
   } catch (err) {
     console.error('Erro ao buscar endereço:', err);
-    mostrarMensagem('❌ Endereço não encontrado.', 'erro');
+    showAlert('❌ Endereço não encontrado.', 'error', 5000);
   }
 });
