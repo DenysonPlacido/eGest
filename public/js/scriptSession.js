@@ -78,7 +78,7 @@ function mostrarMensagem(msg, tipo = 'info') {
   div.style.fontWeight = 'bold';
   div.style.opacity = '0.95';
 
-  if (tipo === 'info') div.style.backgroundColor = '#3498db';
+  if (tipo === 'info') div.style.backgroundColor = '#ffffffff';
   if (tipo === 'alerta') div.style.backgroundColor = '#f1c40f';
   if (tipo === 'alerta2') div.style.backgroundColor = '#e67e22';
   if (tipo === 'critico') div.style.backgroundColor = '#e74c3c';
