@@ -1,6 +1,7 @@
+// /workspaces/eGest/public/js/scriptConsultaPessoa.js
 import { showAlert } from './alerts.js';
 
-const API_BASE = 'https://e-gest-back-end.vercel.app';
+const API_BASE = 'https://e-gest-back-end.vercel.app/api/pessoas';
 
 let paginaAtual = 1;
 const limitePorPagina = 10;
@@ -32,12 +33,10 @@ btnProximo.addEventListener('click', async () => {
 });
 
 btnExportar.addEventListener('click', () => {
-  if (!resultados.length) {
-    return showAlert('⚠️ Nenhum dado para exportar', 'warning', 4000);
-  }
+  if (!resultados.length) return showAlert('⚠️ Nenhum dado para exportar', 'warning', 4000);
 
   const linhas = resultados.map(p =>
-    `${p.pessoa_id};${p.nome};${p.cpf_cnpj};${p.email};${p.numero};${p.complemento}`
+    `${p.pessoa_id};${p.nome};${p.cpf_cnpj};${p.email};${p.numero || ''};${p.complemento || ''}`
   );
   const csv = ['ID;Nome;CPF/CNPJ;Email;Número;Complemento', ...linhas].join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
@@ -51,21 +50,15 @@ async function buscarPessoas() {
   const nome = document.getElementById('busca-nome').value.trim();
   const pessoa_id = document.getElementById('busca-id').value.trim();
 
-  const filtros = {
-    acao: 'SELECT',
-    nome: nome || null,
-    pessoa_id: pessoa_id || null,
+  const query = new URLSearchParams({
+    nome: nome || '',
+    pessoa_id: pessoa_id || '',
     limit: limitePorPagina,
     offset: (paginaAtual - 1) * limitePorPagina
-  };
+  }).toString();
 
   try {
-    const res = await fetch(`${API_BASE}/api/pessoas/gerenciar`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(filtros)
-    });
-
+    const res = await fetch(`${API_BASE}?${query}`);
     if (!res.ok) throw new Error('Erro ao buscar pessoas');
 
     resultados = await res.json();
@@ -93,7 +86,7 @@ function renderizarResultados(lista) {
       <input type="hidden" name="pessoa_id" value="${pessoa.pessoa_id}" />
       <input type="text" name="nome" value="${pessoa.nome}" placeholder="Nome" disabled />
       <input type="text" name="cpf_cnpj" value="${pessoa.cpf_cnpj}" placeholder="CPF/CNPJ" disabled />
-      <input type="email" name="email" value="${pessoa.email}" placeholder="E-mail" disabled />
+      <input type="email" name="email" value="${pessoa.email || ''}" placeholder="E-mail" disabled />
       <input type="text" name="complemento" value="${pessoa.complemento || ''}" placeholder="Complemento" disabled />
       <input type="text" name="numero" value="${pessoa.numero || ''}" placeholder="Número" disabled />
 
@@ -104,6 +97,7 @@ function renderizarResultados(lista) {
       </div>
     `;
 
+    // Editar
     form.querySelector('.btn-editar').addEventListener('click', () => {
       form.querySelectorAll('input:not([type="hidden"]):not([name="cpf_cnpj"])').forEach(input => {
         input.disabled = false;
@@ -111,20 +105,19 @@ function renderizarResultados(lista) {
       form.querySelector('button[type="submit"]').disabled = false;
     });
 
+    // Salvar alterações
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
-      data.acao = 'UPDATE';
 
       try {
-        const res = await fetch(`${API_BASE}/api/pessoas/gerenciar`, {
-          method: 'POST',
+        const res = await fetch(`${API_BASE}/${data.pessoa_id}`, {
+          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
 
         if (!res.ok) throw new Error('Erro ao atualizar pessoa');
-
         const result = await res.json();
         showAlert(result.mensagem || '✅ Pessoa atualizada com sucesso!', 'success', 4000);
       } catch (err) {
@@ -132,17 +125,13 @@ function renderizarResultados(lista) {
       }
     });
 
+    // Excluir
     form.querySelector('.btn-excluir').addEventListener('click', async () => {
       const id = form.pessoa_id.value;
       if (!confirm('Tem certeza que deseja excluir esta pessoa?')) return;
 
       try {
-        const res = await fetch(`${API_BASE}/api/pessoas/gerenciar`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ acao: 'DELETE', pessoa_id: id })
-        });
-
+        const res = await fetch(`${API_BASE}/${id}`, { method: 'DELETE' });
         if (!res.ok) throw new Error('Erro ao excluir pessoa');
 
         const result = await res.json();
