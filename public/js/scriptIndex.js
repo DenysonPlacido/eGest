@@ -1,15 +1,12 @@
 ﻿// /workspaces/eGest/public/js/scriptIndex.js
 
-
-import { showAlert } from './alerts.js';
-
 async function login() {
   const empresa_id = document.getElementById("empresa").value.trim();
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
 
   if (!empresa_id || !username || !password) {
-    showAlert("⚠️ Por favor, preencha todos os campos.", "warning");
+    alert("Por favor, preencha todos os campos.");
     return;
   }
 
@@ -24,7 +21,7 @@ async function login() {
     console.log('🔐 Dados recebidos do login:', data);
 
     if (!response.ok || !data.token) {
-      showAlert(data.message || "❌ Credenciais inválidas!", "error");
+      alert(data.message || "Credenciais inválidas!");
       return;
     }
 
@@ -39,17 +36,10 @@ async function login() {
       localStorage.setItem("selectedEmpName", data.usuario.empresa_nome);
     }
 
-    // Redireciona para a home
     window.location.href = "adminHome.html";
 
   } catch (err) {
     console.error('Erro ao conectar com o servidor:', err);
-    showAlert("❌ Erro ao conectar com o servidor!", "error");
+    alert("Erro ao conectar com o servidor!");
   }
 }
-
-// Ativa o botão de login
-document.getElementById("btn-login").addEventListener("click", (e) => {
-  e.preventDefault();
-  login();
-});
