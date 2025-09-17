@@ -29,12 +29,44 @@
 
 ## 📂 Estrutura do Projeto
 
-
-/public ├── adminHome.html ├── consultaPessoa.html ├── cadastroPessoa.html ├── css/ └── js/
-/routes ├── auth.js ├── pessoas.js ├── empresas.js └── ...
-/db.js /index.js
+```bash
+├── Estrutura de arquivo.txt
+├── README.md
+├── package-lock.json
+├── package.json
+├── public
+│   ├── UserHome.html
+│   ├── admin_dashboard.html
+│   ├── admin_novo_usuario.html
+│   ├── cadastropessoa.html
+│   ├── css
+│   │   ├── CadastroPessoa.css
+│   │   ├── erp.png
+│   │   ├── styleAdminForms.css
+│   │   ├── styleBase.css
+│   │   ├── styleHeader.css
+│   │   ├── styleIndexLogin.css
+│   │   ├── styleMenuAdmin.css
+│   │   └── styleUserHome.css
+│   ├── header.html
+│   ├── index.html
+│   ├── js
+│   │   ├── cadastropessoa.js
+│   │   ├── main.js
+│   │   ├── scriptIndexLogin.js
+│   │   ├── scriptMenuAdmin.js
+│   │   ├── scriptUserHome.js
+│   │   └── session.js
+│   ├── login.html
+│   └── menu.html
+├── server.js
+├── src
+│   ├── App.js
+│   └── index.js
+└── vercel.json
 
----
+
+```
 
 ## 🔧 Configuração
 
@@ -42,21 +74,23 @@
 
 ```bash
 npm install
+```
 
 
-2. Configurar variáveis de ambiente
+### 2. Configurar variáveis de ambiente
 Crie um arquivo .env com:
 PORT=3000
 DATABASE_URL=postgres://usuario:senha@host:porta/db
 JWT_SECRET=sua_chave_secreta
 
 
-3. Rodar o servidor
+### 3. Rodar o servidor
+```bash
 npm start
+```
 
 
-
-🔐 Autenticação JWT
+## 🔐 Autenticação JWT
 - Após login, o backend retorna um token JWT
 - O frontend armazena o token em localStorage
 - Todas as requisições protegidas enviam o token no header:
@@ -64,27 +98,33 @@ Authorization: Bearer <token>
 
 
 
-📦 API Principal
+## 📦 API Principal
 POST /api/pessoas/gerenciar
 Gerencia ações de SELECT, UPDATE, DELETE via procedure SQL.
+
 Body:
+```js
 {
   "acao": "SELECT",
   "nome": "João",
   "limit": 10,
   "offset": 0
 }
+```
 
 
+### 📤 Exportação CSV
 
-📤 Exportação CSV
 Na tela de consulta, os dados podem ser exportados com um clique em Exportar para Excel, gerando um arquivo .csv com os resultados filtrados.
 
-📌 Autor
+### 📌 Autor
+
 Desenvolvido por Denyson Deserto Plácido
+
 📍 Campo Grande - MS, Brasil
 
-📄 Licença
+### 📄 Licença
+
 Este projeto está sob a licença MIT.
 
 
