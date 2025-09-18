@@ -11,11 +11,13 @@ async function login() {
   }
 
   try {
-    const response = await fetch("https://e-gest-back-end.vercel.app/api/auth/login", {
+    const response = await fetch(`https://e-gest-back-end.vercel.app/api/auth/login?empresa_id=${empresa_id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ empresa_id, username, senha: password })
+      body: JSON.stringify({ username, senha: password })
     });
+
+    const empresa_id = req.query.empresa_id;
 
     const data = await response.json();
     console.log('🔐 Dados recebidos do login:', data);
