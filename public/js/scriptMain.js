@@ -71,14 +71,23 @@ function carregarMenu() {
 // ===========================
 function carregarMenuDinamico() {
   const token = localStorage.getItem('token');
-  if (!token) {
-    showAlert('⚠️ Sessão expirada. Faça login novamente.', 'warning');
+  const empresaId = localStorage.getItem('empresaId');
+
+  if (!token || !empresaId) {
+    showAlert('⚠️ Sessão expirada ou empresa não informada. Faça login novamente.', 'warning');
     window.location.href = 'index.html';
     return;
   }
 
+  console.log("🔐 Token:", token);
+  console.log("🏢 Empresa ID:", empresaId);
+  console.log("📡 Enviando requisição para /menus...");
+
   fetch('https://e-gest-back-end.vercel.app/api/menus', {
-    headers: { Authorization: `Bearer ${token}` }
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'x-empresa-id': empresaId
+    }
   })
     .then(res => {
       if (!res.ok) throw new Error('Erro ao buscar menus da API');

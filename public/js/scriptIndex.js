@@ -19,7 +19,6 @@ async function login() {
       body: JSON.stringify({ username, senha: password })
     });
 
-
     const data = await response.json();
     console.log('🔐 Dados recebidos do login:', data);
 
@@ -28,12 +27,14 @@ async function login() {
       return;
     }
 
+    // ✅ Salvando dados no localStorage
     localStorage.setItem("token", data.token);
     localStorage.setItem("usuarioNome", data.usuario.nome);
     localStorage.setItem("usuarioPerfil", data.usuario.tipo_usuario);
     localStorage.setItem("usuarioId", data.usuario.id);
-    
+    localStorage.setItem("empresaId", empresa_id); // ← ESSENCIAL!
 
+    // Redireciona para a página principal
     window.location.href = "adminHome.html";
 
   } catch (err) {
