@@ -8,7 +8,6 @@ const limitePorPagina = 10;
 let resultados = [];
 
 const formBusca = document.getElementById('form-busca');
-const listaContainer = document.getElementById('cp-pessoas-lista');
 const btnExportar = document.getElementById('btn-exportar');
 const btnAnterior = document.getElementById('btn-anterior');
 const btnProximo = document.getElementById('btn-proximo');
@@ -19,6 +18,8 @@ formBusca.addEventListener('submit', async (e) => {
   paginaAtual = 1;
   await buscarPessoas();
 });
+
+console.log('formBusca:', formBusca);
 
 btnAnterior.addEventListener('click', async () => {
   if (paginaAtual > 1) {
@@ -57,8 +58,17 @@ async function buscarPessoas() {
     offset: (paginaAtual - 1) * limitePorPagina
   }).toString();
 
+  const token = localStorage.getItem('token');
+  const empresaId = localStorage.getItem('empresaId');
+
   try {
-    const res = await fetch(`${API_BASE}?${query}`);
+    const res = await fetch(`${API_BASE}?${query}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'x-empresa-id': empresaId
+      }
+    });
+
     if (!res.ok) throw new Error('Erro ao buscar pessoas');
 
     resultados = await res.json();
@@ -67,81 +77,99 @@ async function buscarPessoas() {
   } catch (err) {
     showAlert(`❌ ${err.message}`, 'error', 4000);
     resultados = [];
-    listaContainer.innerHTML = '';
+    document.querySelector('#tabela-pessoas tbody').innerHTML = '';
   }
 }
 
 function renderizarResultados(lista) {
-  listaContainer.innerHTML = '';
+  const tbody = document.querySelector('#tabela-pessoas tbody');
+  tbody.innerHTML = '';
 
   if (!lista.length) {
     return showAlert('Nenhum resultado encontrado.', 'warning', 4000);
   }
 
   lista.forEach(pessoa => {
-    const form = document.createElement('form');
-    form.className = 'cp-form-pessoa';
-
-    form.innerHTML = `
-      <input type="hidden" name="pessoa_id" value="${pessoa.pessoa_id}" />
-      <input type="text" name="nome" value="${pessoa.nome}" placeholder="Nome" disabled />
-      <input type="text" name="cpf_cnpj" value="${pessoa.cpf_cnpj}" placeholder="CPF/CNPJ" disabled />
-      <input type="email" name="email" value="${pessoa.email || ''}" placeholder="E-mail" disabled />
-      <input type="text" name="complemento" value="${pessoa.complemento || ''}" placeholder="Complemento" disabled />
-      <input type="text" name="numero" value="${pessoa.numero || ''}" placeholder="Número" disabled />
-
-      <div class="cp-btn-group">
-        <button type="button" class="btn-editar">Editar</button>
-        <button type="submit" disabled>Salvar</button>
-        <button type="button" class="btn-excluir">Excluir</button>
-      </div>
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${pessoa.pessoa_id}</td>
+      <td>${pessoa.nome}</td>
+      <td>${pessoa.cpf_cnpj}</td>
+      <td>${pessoa.email || '—'}</td>
+      <td>${pessoa.numero ?? '—'}</td>
+      <td>${pessoa.complemento ?? '—'}</td>
+      <td><button class="btn-visualizar" data-id="${pessoa.pessoa_id}">👁️ Visualizar</button></td>
     `;
+    tbody.appendChild(tr);
 
-    // Editar
-    form.querySelector('.btn-editar').addEventListener('click', () => {
-      form.querySelectorAll('input:not([type="hidden"]):not([name="cpf_cnpj"])').forEach(input => {
-        input.disabled = false;
-      });
-      form.querySelector('button[type="submit"]').disabled = false;
-    });
-
-    // Salvar alterações
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
-
-      try {
-        const res = await fetch(`${API_BASE}/${data.pessoa_id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-
-        if (!res.ok) throw new Error('Erro ao atualizar pessoa');
-        const result = await res.json();
-        showAlert(result.mensagem || '✅ Pessoa atualizada com sucesso!', 'success', 4000);
-      } catch (err) {
-        showAlert(`❌ ${err.message}`, 'error', 4000);
-      }
-    });
-
-    // Excluir
-    form.querySelector('.btn-excluir').addEventListener('click', async () => {
-      const id = form.pessoa_id.value;
-      if (!confirm('Tem certeza que deseja excluir esta pessoa?')) return;
-
-      try {
-        const res = await fetch(`${API_BASE}/${id}`, { method: 'DELETE' });
-        if (!res.ok) throw new Error('Erro ao excluir pessoa');
-
-        const result = await res.json();
-        showAlert(result.mensagem || '✅ Pessoa excluída.', 'success', 4000);
-        form.remove();
-      } catch (err) {
-        showAlert(`❌ ${err.message}`, 'error', 4000);
-      }
-    });
-
-    listaContainer.appendChild(form);
+    tr.querySelector('.btn-visualizar').addEventListener('click', () => abrirFormularioEdicao(pessoa));
   });
 }
+
+function abrirFormularioEdicao(pessoa) {
+  const form = document.getElementById('form-edicao');
+  document.getElementById('form-edicao-container').style.display = 'block';
+
+  form.pessoa_id.value = pessoa.pessoa_id;
+  form.nome.value = pessoa.nome;
+  form.cpf_cnpj.value = pessoa.cpf_cnpj;
+  form.email.value = pessoa.email || '';
+  form.numero.value = pessoa.numero || '';
+  form.complemento.value = pessoa.complemento || '';
+}
+
+document.getElementById('form-edicao').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target).entries());
+
+  const token = localStorage.getItem('token');
+  const empresaId = localStorage.getItem('empresaId');
+
+  try {
+    const res = await fetch(`${API_BASE}/${data.pessoa_id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'x-empresa-id': empresaId
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!res.ok) throw new Error('Erro ao atualizar pessoa');
+    const result = await res.json();
+    showAlert(result.mensagem || '✅ Pessoa atualizada com sucesso!', 'success', 4000);
+    document.getElementById('form-edicao-container').style.display = 'none';
+    await buscarPessoas();
+  } catch (err) {
+    showAlert(`❌ ${err.message}`, 'error', 4000);
+  }
+});
+
+document.getElementById('btn-excluir-edicao').addEventListener('click', async () => {
+  const id = document.querySelector('#form-edicao [name="pessoa_id"]').value;
+  if (!confirm('Tem certeza que deseja excluir esta pessoa?')) return;
+
+  const token = localStorage.getItem('token');
+  const empresaId = localStorage.getItem('empresaId');
+
+  try {
+    const res = await fetch(`${API_BASE}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'x-empresa-id': empresaId
+      }
+    });
+
+    if (!res.ok) throw new Error('Erro ao excluir pessoa');
+    const result = await res.json();
+    showAlert(result.mensagem || '✅ Pessoa excluída.', 'success', 4000);
+    document.getElementById('form-edicao-container').style.display = 'none';
+    await buscarPessoas();
+  } catch (err) {
+    showAlert(`❌ ${err.message}`, 'error', 4000);
+  }
+});
+
+document.get

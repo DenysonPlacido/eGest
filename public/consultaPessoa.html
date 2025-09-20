@@ -1,5 +1,4 @@
 <!-- /workspaces/eGest/public/consultaPessoa.html -->
-
 <link rel="stylesheet" href="css/styleConsultaPessoa.css" />
 
 <div class="cp-container">
@@ -12,14 +11,42 @@
     <button type="button" id="btn-exportar">Exportar para Excel</button>
   </form>
 
-  <div id="cp-pessoas-lista" class="cp-pessoas-lista">
-    <!-- Resultados da busca serão inseridos aqui -->
-  </div>
+  <table id="tabela-pessoas" class="cp-tabela">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>CPF/CNPJ</th>
+        <th>Email</th>
+        <th>Número</th>
+        <th>Complemento</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
   <div class="cp-paginacao">
     <button id="btn-anterior">⬅️ Página anterior</button>
     <span id="pagina-atual">Página 1</span>
     <button id="btn-proximo">➡️ Próxima página</button>
+  </div>
+
+  <div id="form-edicao-container" class="cp-form-edicao" style="display: none;">
+    <h3>Editar Pessoa</h3>
+    <form id="form-edicao">
+      <input type="hidden" name="pessoa_id" />
+      <input type="text" name="nome" placeholder="Nome" />
+      <input type="text" name="cpf_cnpj" placeholder="CPF/CNPJ" disabled />
+      <input type="email" name="email" placeholder="E-mail" />
+      <input type="text" name="numero" placeholder="Número" />
+      <input type="text" name="complemento" placeholder="Complemento" />
+      <div class="cp-btn-group">
+        <button type="submit">Salvar</button>
+        <button type="button" id="btn-cancelar-edicao">Cancelar</button>
+        <button type="button" id="btn-excluir-edicao">Excluir</button>
+      </div>
+    </form>
   </div>
 </div>
 

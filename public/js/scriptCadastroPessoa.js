@@ -1,7 +1,8 @@
+// /workspaces/eGest/public/js/scriptCadastroPessoa.js
+
 import { showAlert } from './alerts.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-
   // Busca endereço via CEP
   document.querySelector('input[name="cep"]').addEventListener('blur', buscarEnderecoPorCEP);
   document.getElementById('btn-buscar-endereco').addEventListener('click', buscarEnderecoPorCEP);
@@ -25,10 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
     data.numero = parseInt(data.numero) || null;
     data.tipo_pessoa = parseInt(data.tipo_pessoa) || 1;
 
+    const token = localStorage.getItem('token');
+    const empresaId = localStorage.getItem('empresaId');
+
     try {
       const res = await fetch('/api/pessoas', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'x-empresa-id': empresaId
+        },
         body: JSON.stringify(data)
       });
 
@@ -52,8 +60,17 @@ async function buscarEnderecoPorCEP() {
   const cep = document.querySelector('input[name="cep"]').value.replace(/\D/g, '');
   if (cep.length !== 8) return;
 
+  const token = localStorage.getItem('token');
+  const empresaId = localStorage.getItem('empresaId');
+
   try {
-    const res = await fetch(`/api/enderecos/buscar?cep=${cep}`);
+    const res = await fetch(`/api/enderecos/buscar?cep=${cep}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'x-empresa-id': empresaId
+      }
+    });
+
     const endereco = await res.json();
 
     if (!endereco || !endereco.cod_logradouro || !endereco.cod_bairro) {
@@ -71,11 +88,6 @@ async function buscarEnderecoPorCEP() {
     showAlert('❌ Endereço não encontrado.', 'error', 5000);
   }
 }
-
-// Validação de CPF/CNPJ (mesma lógica)
-function validarCpfCnpj(valor) { /* ... mesma função ... */ }
-function validarCPF(cpf) { /* ... mesma função ... */ }
-function validarCNPJ(cnpj) { /* ... mesma função ... */ }
 
 // Validação de CPF/CNPJ
 function validarCpfCnpj(valor) {
