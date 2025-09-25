@@ -1,4 +1,5 @@
 // /workspaces/eGest/public/js/scriptConsultaPessoa.js
+
 import { showAlert } from './alerts.js';
 
 const API_BASE = 'https://e-gest-back-end.vercel.app/api/pessoas';
@@ -15,6 +16,8 @@ const paginaLabel = document.getElementById('pagina-atual');
 
 formBusca.addEventListener('submit', async (e) => {
   e.preventDefault();
+  console.log('Formulário interceptado');
+
   paginaAtual = 1;
   await buscarPessoas();
 });
@@ -61,6 +64,13 @@ async function buscarPessoas() {
   const token = localStorage.getItem('token');
   const empresaId = localStorage.getItem('empresaId');
 
+
+  console.log('🔍 Buscando pessoas...');
+  console.log('Query:', query);
+  console.log('Token:', token);
+  console.log('Empresa ID:', empresaId);
+
+
   try {
     const res = await fetch(`${API_BASE}?${query}`, {
       headers: {
@@ -76,8 +86,8 @@ async function buscarPessoas() {
     paginaLabel.textContent = `Página ${paginaAtual}`;
   } catch (err) {
     showAlert(`❌ ${err.message}`, 'error', 4000);
-    resultados = [];
-    document.querySelector('#tabela-pessoas tbody').innerHTML = '';
+    // resultados = [];
+    // document.querySelector('#tabela-pessoas tbody').innerHTML = '';
   }
 }
 

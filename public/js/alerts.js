@@ -1,4 +1,4 @@
-// alerts.js - Sistema avançado de alertas
+// /workspaces/eGest/public/js/alerts.js - Sistema avançado de alertas
 
 let alertContainer = document.getElementById("alert-container");
 if (!alertContainer) {
