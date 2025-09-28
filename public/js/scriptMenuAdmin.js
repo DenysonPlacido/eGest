@@ -164,6 +164,7 @@ function loadContent(target) {
       tempDiv.querySelectorAll('script[src]').forEach(script => {
         const newScript = document.createElement('script');
         newScript.src = script.src;
+        if (script.type) newScript.type = script.type; 
         document.body.appendChild(newScript);
       });
     })
