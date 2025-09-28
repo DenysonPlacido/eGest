@@ -1,59 +1,53 @@
 <!-- /workspaces/eGest/public/consultaPessoa.html -->
 <link rel="stylesheet" href="css/styleConsultaPessoa.css" />
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+<div class="cp-container">
+  <h2 class="cp-title">Consulta de Pessoas</h2>
 
-<div class="page-container">
-  <div class="page-title">
-    <h2><i class="fa fa-users"></i> Consulta de Pessoas</h2>
-    <button class="btn btn-primary"><i class="fa fa-plus"></i> Novo Cadastro</button>
+  <form id="form-busca" class="cp-filtro">
+    <input type="text" id="busca-id" placeholder="🔍 ID da pessoa" />
+    <input type="text" id="busca-nome" placeholder="🔍 Nome da pessoa" />
+    <button type="submit">Buscar</button>
+    <button type="button" id="btn-exportar">Exportar para Excel</button>
+  </form>
+
+  <table id="tabela-pessoas" class="cp-tabela">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>CPF/CNPJ</th>
+        <th>Email</th>
+        <th>Número</th>
+        <th>Complemento</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="cp-paginacao">
+    <button id="btn-anterior">⬅️ Página anterior</button>
+    <span id="pagina-atual">Página 1</span>
+    <button id="btn-proximo">➡️ Próxima página</button>
   </div>
 
-  <section class="filters">
-    <form id="form-filtros">
-      <input type="text" placeholder="🔍 ID" />
-      <input type="text" placeholder="🔍 Nome" />
-      <input type="text" placeholder="CPF/CNPJ" />
-      <select>
-        <option value="">Ativo/Inativo</option>
-        <option value="1">Ativo</option>
-        <option value="0">Inativo</option>
-      </select>
-      <button type="submit"><i class="fa fa-search"></i> Buscar</button>
-      <button type="reset"><i class="fa fa-eraser"></i> Limpar</button>
+  <div id="form-edicao-container" class="cp-form-edicao" style="display: none;">
+    <h3>Editar Pessoa</h3>
+    <form id="form-edicao">
+      <input type="hidden" name="pessoa_id" />
+      <input type="text" name="nome" placeholder="Nome" />
+      <input type="text" name="cpf_cnpj" placeholder="CPF/CNPJ" disabled />
+      <input type="email" name="email" placeholder="E-mail" />
+      <input type="text" name="numero" placeholder="Número" />
+      <input type="text" name="complemento" placeholder="Complemento" />
+      <div class="cp-btn-group">
+        <button type="submit">Salvar</button>
+        <button type="button" id="btn-cancelar-edicao">Cancelar</button>
+        <button type="button" id="btn-excluir-edicao">Excluir</button>
+      </div>
     </form>
-  </section>
-
-  <section class="table-container">
-    <table class="styled-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>CPF/CNPJ</th>
-          <th>Email</th>
-          <th>Número</th>
-          <th>Complemento</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- carregado via JS -->
-      </tbody>
-    </table>
-  </section>
-
-  <footer class="pagination">
-    <span>Total: 120 registros</span>
-    <div>
-      <button><<</button>
-      <button><</button>
-      <span>Página 1 de 12</span>
-      <button>></button>
-      <button>>></button>
-    </div>
-  </footer>
+  </div>
 </div>
-
 
 <script type="module" src="js/scriptConsultaPessoa.js"></script>
