@@ -3,6 +3,7 @@
 /* ===========================
    HEADER FIXO E RESPONSIVO
 =========================== */
+
 .header {
   position: fixed;
   top: 0;
@@ -10,14 +11,14 @@
   right: 0;
   height: 50px;
   width: 100%;
-  background: var(--header-bg, rgba(255, 255, 255, 0.08));
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
   z-index: 100;
-  color: var(--text-light);
+  color: #fff;
   font-size: 14px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
@@ -25,10 +26,11 @@
 /* ===========================
    BOTÃO DE MENU (MOBILE)
 =========================== */
+
 .menu-toggle {
   background: none;
   border: none;
-  color: var(--text-light);
+  color: white;
   font-size: 20px;
   cursor: pointer;
   margin-right: 10px;
@@ -37,6 +39,7 @@
 /* ===========================
    SEÇÕES DO HEADER
 =========================== */
+
 .header-left,
 .header-center,
 .header-right {
@@ -49,74 +52,45 @@
    LOGO E NOME DO SISTEMA
 =========================== */
 
-/* Esconde todas inicialmente */
 .logo-header {
-  display: none;
-  height: 50px;
+  height: 100px;
   width: auto;
 }
 
-/* Mostra apenas a do tema ativo */
-body.light-theme .logo-light { display: inline-block; }
-body.dark-theme .logo-dark { display: inline-block; }
-body.modern-theme .logo-modern { display: inline-block; }
+.system-name {
+  font-weight: bold;
+  font-size: 16px;
+}
 
 /* ===========================
    BOTÕES DE AÇÃO
 =========================== */
+
 .icon-btn {
   background: none;
   border: none;
-  color: var(--text-light);
+  color: white;
   font-size: 16px;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .icon-btn:hover {
-  color: var(--primary-hover);
+  color: #1abc9c;
 }
 
 .logout {
-  color: var(--danger);
+  color: #ff4d4d;
 }
 
 .logout:hover {
-  color: #ff6b6b; /* tom mais claro do danger */
-}
-
-/* ===========================
-   BOTÕES DE TROCA DE TEMA
-=========================== */
-.theme-switcher {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-left: 10px;
-}
-
-.theme-btn {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid var(--text-light);
-  cursor: pointer;
-  transition: transform 0.2s ease, border 0.2s ease;
-}
-
-/* Cores dos temas */
-.theme-btn[data-theme="white-theme"] { background-color: #f1f3f4; }
-.theme-btn[data-theme="black-theme"] { background-color: #222; }
-.theme-btn[data-theme="moderne-theme"] { background: linear-gradient(135deg, #444, #222); }
-
-.theme-btn:hover {
-  transform: scale(1.2);
-  border-color: var(--primary-hover);
+  color: #ff6b6b;
 }
 
 /* ===========================
    RESPONSIVIDADE
 =========================== */
+
 @media (max-width: 768px) {
   .header {
     flex-wrap: wrap;

@@ -1,0 +1,224 @@
+/* /workspaces/eGest/public/css/styleMenu.css */
+
+
+/* ===========================
+   SIDEBAR FIXA
+=========================== */
+.sidebar {
+  width: 250px;
+  background: var(--primary-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50px; /* espaço do header */
+  left: 0;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.15);
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.open { left: 0; }
+
+/* LOGO DO SISTEMA */
+.logo {
+  padding: 20px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+  background: var(--primary-hover);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  letter-spacing: 1px;
+}
+
+/* MENU PRINCIPAL */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.menu > li { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+
+.menu a {
+  text-decoration: none;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  transition: all 0.25s ease;
+  position: relative;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.menu a:hover {
+  background: var(--primary-hover);
+  padding-left: 26px;
+}
+
+.menu i { margin-right: 10px; font-size: 1rem; }
+
+.menu-item.active {
+  background: rgba(255, 255, 255, 0.15);
+  font-weight: 600;
+  border-left: 4px solid var(--success-color);
+}
+
+/* SUBMENUS */
+.submenu {
+  list-style: none;
+  padding-left: 15px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.submenu.open {
+  max-height: 1000px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.submenu li a {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid transparent;
+  border-radius: 4px;
+  color: var(--text-color);
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.submenu li a:hover {
+  border-left: 3px solid var(--success-color);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+}
+
+/* ÍCONE DE SETA */
+.arrow-icon {
+  margin-left: auto;
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.arrow-icon.rotate { transform: rotate(180deg); }
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+  .sidebar { left: -250px; width: 230px; }
+  .sidebar.open { left: 0; }
+  .content { margin-left: 0; padding: 70px 20px 20px 20px; }
+}
+
+
+
+
+
+/* Container principal */
+.cp-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: var(--secondary);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--text-dark);
+}
+
+/* Título */
+.cp-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 24px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+
+/* Formulário */
+.cp-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Campos de entrada */
+.cp-input {
+  padding: 10px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: var(--text-dark);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cp-input:disabled {
+  background-color: #eee;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* Campo que ocupa linha inteira */
+.cp-form input[name="nome"],
+.cp-form input[name="cpf_cnpj"],
+.cp-form input[name="email"],
+.cp-form input[name="complemento"] {
+  grid-column: span 2;
+}
+
+/* Botão ERP */
+.cp-btn {
+  grid-column: span 2;
+  padding: 12px;
+  background: var(--primary);
+  color: var(--text-light);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cp-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Mensagens de feedback */
+.msg-box {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--success);
+  color: var(--text-light);
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  font-family: sans-serif;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.msg-box.erro {
+  background: var(--danger);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+

@@ -1,4 +1,5 @@
 <!-- /workspaces/eGest/public/header.html -->
+<link rel="stylesheet" href="css/styleHeader.css">
 
 <header class="header">
   <!-- Botão de toggle do menu lateral -->
@@ -8,20 +9,21 @@
 
   <!-- Logo e nome do sistema -->
   <div class="header-left">
-    <img src="img/eGest_Black_theme.png" alt="Logo eGest" class="logo-header" />
-    <!-- <span class="system-name">eGest ERP</span> -->
+      <img src="img/img/eGest_White_theme.png" alt="Logo eGest" class="logo-header logo-light" />
+      <img src="img/img/eGest_Dark_theme.png" alt="Logo eGest" class="logo-header logo-dark" />
+      <img src="img/img/eGest_Modern_theme.png" alt="Logo eGest" class="logo-header logo-modern" />
   </div>
 
   <!-- Informações da sessão -->
   <div class="header-center" role="status" aria-live="polite">
-    <!-- <span id="empresa-logada" class="session-info">Bem Vindo </span> -->
     <span id="usuario-logado" class="session-info">Bem Vindo: </span>
     <span id="hora-sistema" class="session-info">00:00</span>
     <span id="tempo-sessao" class="session-info">00:00:00</span>
   </div>
 
-  <!-- Botões de ação -->
+  <!-- Botões de ação e troca de tema -->
   <div class="header-right">
+    <!-- Botões de ações -->
     <button class="icon-btn" aria-label="Notificações" title="Notificações">
       <i class="fas fa-bell" aria-hidden="true"></i>
     </button>
@@ -34,5 +36,16 @@
     <button id="btn-sair" class="icon-btn logout" aria-label="Sair" title="Sair">
       <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
     </button>
+
+    <!-- Botões de tema -->
+    <div class="theme-switcher" aria-label="Trocar tema">
+      <button class="theme-btn" data-theme="white-theme"></button>
+      <button class="theme-btn" data-theme="black-theme"></button>
+      <button class="theme-btn" data-theme="moderne-theme"></button>
+
+
+    </div>
   </div>
 </header>
+
+<script type="module" src="js/themeSwitcher.js"></script>

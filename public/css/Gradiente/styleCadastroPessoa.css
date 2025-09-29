@@ -1,27 +1,25 @@
-/* ===========================
-   CONTEÚDO CADASTRO PESSOA
-=========================== */
+/* /workspaces/eGest/public/css/styleCadastroPessoa.css */
+
+/* Container principal */
 .cp-container {
   max-width: 800px;
   margin: 40px auto;
   padding: 30px;
-  background-color: var(--secondary-color);
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   font-family: 'Segoe UI', sans-serif;
-  color: var(--text-color);
-  transition: background 0.3s ease, color 0.3s ease;
 }
 
+/* Título */
 .cp-title {
-  font-size: 1.25rem;
+  font-size: 20px;
   font-weight: 600;
-  color: var(--primary-color);
+  color: #333;
   margin-bottom: 24px;
   text-align: left;
-  border-bottom: 1px solid var(--secondary-color);
+  border-bottom: 1px solid #e0e0e0;
   padding-bottom: 8px;
-  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Formulário */
@@ -34,23 +32,16 @@
 /* Campos de entrada */
 .cp-input {
   padding: 10px;
-  font-size: 0.95rem;
-  border: 1px solid var(--secondary-color);
+  font-size: 14px;
+  border: 1px solid #ccc;
   border-radius: 6px;
-  background-color: var(--secondary-color);
-  color: var(--text-color);
+  background-color: #fefefe;
+  color: #333;
   width: 100%;
   box-sizing: border-box;
-  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-.cp-input:disabled {
-  background-color: #555;
-  color: #aaa;
-  cursor: not-allowed;
-}
-
-/* Campos que ocupam linha inteira */
+/* Campo que ocupa linha inteira */
 .cp-form input[name="nome"],
 .cp-form input[name="cpf_cnpj"],
 .cp-form input[name="email"],
@@ -58,23 +49,23 @@
   grid-column: span 2;
 }
 
-/* Botão ERP */
+/* Botão */
 .cp-btn {
   grid-column: span 2;
   padding: 12px;
-  background: var(--primary-color);
-  color: var(--text-light);
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
   border: none;
   border-radius: 6px;
-  font-size: 0.95rem;
+  font-size: 15px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .cp-btn:hover {
-  background: var(--primary-hover);
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Mensagens de feedback */
@@ -82,19 +73,18 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  background: var(--success-color);
-  color: var(--text-light);
+  background: #4caf50;
+  color: white;
   padding: 10px 20px;
   border-radius: 5px;
   z-index: 9999;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
   font-family: sans-serif;
   animation: fadeIn 0.3s ease-in-out;
-  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .msg-box.erro {
-  background: var(--danger-color);
+  background: #f44336;
 }
 
 @keyframes fadeIn {

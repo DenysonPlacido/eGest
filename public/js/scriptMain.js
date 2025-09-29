@@ -25,26 +25,34 @@ function carregarHeader() {
       headerEl.innerHTML = html;
       console.log('✅ Header carregado com sucesso');
 
-      requestAnimationFrame(() => {
+      // Executa após o HTML ser inserido
+      requestAnimationFrame(async () => {
         const toggleBtn = document.getElementById('menu-toggle');
         const sidebar = document.querySelector('.sidebar');
 
-        if (!toggleBtn || !sidebar) {
-          console.warn('⚠️ Toggle do menu ou sidebar não encontrado');
-        } else {
-          initMenuToggle();
-        }
-
+        if (toggleBtn && sidebar) initMenuToggle();
         initLogout();
 
-        import('./scriptSession.js')
-          .then(() => console.log('✅ scriptSession.js carregado'))
-          .catch(err => console.error('❌ Erro ao carregar session.js:', err));
+        // Importa themeSwitcher.js e executa a função
+        try {
+          const themeModule = await import('./themeSwitcher.js');
+          themeModule.initThemeSwitcher();
+          console.log('✅ themeSwitcher.js inicializado');
+        } catch (err) {
+          console.error('❌ Erro ao carregar themeSwitcher.js:', err);
+        }
+
+        // Importa scriptSession.js
+        try {
+          await import('./scriptSession.js');
+          console.log('✅ scriptSession.js carregado');
+        } catch (err) {
+          console.error('❌ Erro ao carregar scriptSession.js:', err);
+        }
       });
     })
     .catch(err => console.error('❌ Falha ao carregar header:', err));
 }
-
 // ===========================
 // Carrega o menu.html
 // ===========================
