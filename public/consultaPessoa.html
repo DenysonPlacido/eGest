@@ -4,27 +4,37 @@
 <div class="cp-container">
   <h2 class="cp-title">Consulta de Pessoas</h2>
 
-  <form id="form-busca" class="cp-filtro">
-    <input type="text" id="busca-id" placeholder="🔍 ID da pessoa" />
-    <input type="text" id="busca-nome" placeholder="🔍 Nome da pessoa" />
-    <button type="submit">Buscar</button>
-    <button type="button" id="btn-exportar">Exportar para Excel</button>
-  </form>
+<form id="form-busca" class="cp-filtro">
+  <input type="text" id="busca-id" placeholder="🔍 ID da pessoa" />
+  <input type="text" id="busca-nome" placeholder="🔍 Nome da pessoa" />
+  <button type="submit">🔎 Buscar</button>
+  <button type="button" id="btn-exportar">📊 Exportar</button>
+</form>
+
 
   <table id="tabela-pessoas" class="cp-tabela">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>CPF/CNPJ</th>
-        <th>Email</th>
-        <th>Número</th>
-        <th>Complemento</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>CPF/CNPJ</th>
+      <th>Data Nasc.</th>
+      <th>Email</th>
+      <th>DDD</th>
+      <th>Telefone</th>
+      <th>CEP</th>
+      <th>Logradouro</th>
+      <th>Bairro</th>
+      <th>Número</th>
+      <th>Complemento</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- carregado via JS -->
+  </tbody>
+</table>
+
 
   <div class="cp-paginacao">
     <button id="btn-anterior">⬅️ Página anterior</button>
@@ -36,9 +46,15 @@
     <h3>Editar Pessoa</h3>
     <form id="form-edicao">
       <input type="hidden" name="pessoa_id" />
-      <input type="text" name="nome" placeholder="Nome" />
+      <input type="text" name="nome" placeholder="Nome completo" />
       <input type="text" name="cpf_cnpj" placeholder="CPF/CNPJ" disabled />
+      <input type="date" name="data_nascimento" placeholder="Data de nascimento" />
       <input type="email" name="email" placeholder="E-mail" />
+      <input type="text" name="ddd" placeholder="DDD" />
+      <input type="text" name="fone" placeholder="Telefone" />
+      <input type="text" name="cep" placeholder="CEP" />
+      <input type="text" name="logradouro" placeholder="Logradouro" />
+      <input type="text" name="bairro" placeholder="Bairro" />
       <input type="text" name="numero" placeholder="Número" />
       <input type="text" name="complemento" placeholder="Complemento" />
       <div class="cp-btn-group">
@@ -48,6 +64,7 @@
       </div>
     </form>
   </div>
+
 </div>
 
 <script type="module" src="js/scriptConsultaPessoa.js"></script>

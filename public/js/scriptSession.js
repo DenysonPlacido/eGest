@@ -73,7 +73,7 @@ setInterval(() => {
     if (tempoRestante <= TEMPO_ALERTA_CRITICO) sessaoEl.style.color = '#e74c3c';
     else if (tempoRestante <= TEMPO_ALERTA_2) sessaoEl.style.color = '#e67e22';
     else if (tempoRestante <= TEMPO_ALERTA_1) sessaoEl.style.color = '#f1c40f';
-    else sessaoEl.style.color = '#fff';
+    else sessaoEl.style.color = '#000000ff';
 
     // piscar dramático
     if (tempoRestante <= TEMPO_PISCAR_DRAMATICO) {

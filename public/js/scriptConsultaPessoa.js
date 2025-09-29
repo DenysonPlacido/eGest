@@ -36,16 +36,36 @@ btnProximo.addEventListener('click', async () => {
 btnExportar.addEventListener('click', () => {
   if (!resultados.length) return showAlert('⚠️ Nenhum dado para exportar', 'warning', 4000);
 
+  const cabecalho = [
+    'ID','Nome','CPF/CNPJ','Data Nasc.','Email',
+    'DDD','Telefone','CEP','Logradouro','Bairro','Número','Complemento'
+  ];
+  
   const linhas = resultados.map(p =>
-    `${p.pessoa_id};${p.nome};${p.cpf_cnpj};${p.email};${p.numero || ''};${p.complemento || ''}`
+    [
+      p.pessoa_id,
+      p.nome,
+      p.cpf_cnpj,
+      p.data_nascimento ? new Date(p.data_nascimento).toLocaleDateString() : '',
+      p.email || '',
+      p.ddd || '',
+      p.fone || '',
+      p.cep || '',
+      p.logradouro || '',
+      p.bairro || '',
+      p.numero || '',
+      p.complemento || ''
+    ].join(';')
   );
-  const csv = ['ID;Nome;CPF/CNPJ;Email;Número;Complemento', ...linhas].join('\n');
+
+  const csv = [cabecalho.join(';'), ...linhas].join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = 'pessoas_filtradas.csv';
   link.click();
 });
+
 
 async function buscarPessoas() {
   const nome = document.getElementById('busca-nome').value.trim();
@@ -98,9 +118,15 @@ function renderizarResultados(lista) {
       <td>${pessoa.pessoa_id}</td>
       <td>${pessoa.nome}</td>
       <td>${pessoa.cpf_cnpj}</td>
+      <td>${pessoa.data_nascimento ? new Date(pessoa.data_nascimento).toLocaleDateString() : '—'}</td>
       <td>${pessoa.email || '—'}</td>
-      <td>${pessoa.numero ?? '—'}</td>
-      <td>${pessoa.complemento ?? '—'}</td>
+      <td>${pessoa.ddd || '—'}</td>
+      <td>${pessoa.fone || '—'}</td>
+      <td>${pessoa.cep || '—'}</td>
+      <td>${pessoa.logradouro || '—'}</td>
+      <td>${pessoa.bairro || '—'}</td>
+      <td>${pessoa.numero || '—'}</td>
+      <td>${pessoa.complemento || '—'}</td>
       <td><button class="btn-visualizar" data-id="${pessoa.pessoa_id}">👁️ Visualizar</button></td>
     `;
     tbody.appendChild(tr);
@@ -114,12 +140,19 @@ function abrirFormularioEdicao(pessoa) {
   document.getElementById('form-edicao-container').style.display = 'block';
 
   form.pessoa_id.value = pessoa.pessoa_id;
-  form.nome.value = pessoa.nome;
-  form.cpf_cnpj.value = pessoa.cpf_cnpj;
+  form.nome.value = pessoa.nome || '';
+  form.cpf_cnpj.value = pessoa.cpf_cnpj || '';
+  form.data_nascimento.value = pessoa.data_nascimento ? pessoa.data_nascimento.split('T')[0] : '';
   form.email.value = pessoa.email || '';
+  form.ddd.value = pessoa.ddd || '';
+  form.fone.value = pessoa.fone || '';
+  form.cep.value = pessoa.cep || '';
+  form.logradouro.value = pessoa.logradouro || '';
+  form.bairro.value = pessoa.bairro || '';
   form.numero.value = pessoa.numero || '';
   form.complemento.value = pessoa.complemento || '';
 }
+
 
 document.getElementById('form-edicao').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -174,5 +207,11 @@ document.getElementById('btn-excluir-edicao').addEventListener('click', async ()
     showAlert(`❌ ${err.message}`, 'error', 4000);
   }
 });
+
+
+document.getElementById('btn-cancelar-edicao').addEventListener('click', () => {
+  document.getElementById('form-edicao-container').style.display = 'none';
+});
+
 
 document.get

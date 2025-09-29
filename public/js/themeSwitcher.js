@@ -6,12 +6,12 @@ export function initThemeSwitcher() {
   // Aplica o tema salvo ou padrão
   const savedTheme = localStorage.getItem("erp-theme");
   if (savedTheme) body.classList.add(savedTheme);
-  else body.classList.add("white-theme");
+  else body.classList.add("light-theme");
 
   themeButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       const theme = btn.dataset.theme;
-      body.classList.remove("white-theme", "black-theme", "moderne-theme");
+      body.classList.remove("light-theme", "dark-theme", "modern-theme");
       body.classList.add(theme);
       localStorage.setItem("erp-theme", theme);
     });

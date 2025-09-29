@@ -105,9 +105,9 @@ body.modern-theme .logo-modern { display: inline-block; }
 }
 
 /* Cores dos temas */
-.theme-btn[data-theme="white-theme"] { background-color: #f1f3f4; }
-.theme-btn[data-theme="black-theme"] { background-color: #222; }
-.theme-btn[data-theme="moderne-theme"] { background: linear-gradient(135deg, #444, #222); }
+.theme-btn[data-theme="light-theme"] { background-color: #f1f3f4; }
+.theme-btn[data-theme="dark-theme"] { background-color: #222; }
+.theme-btn[data-theme="modern-theme"] { background: linear-gradient(135deg, #444, #222); }
 
 .theme-btn:hover {
   transform: scale(1.2);

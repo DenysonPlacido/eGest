@@ -14,56 +14,59 @@ html, body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow-x: hidden;
 }
-
 /* ===========================
    TEMA PADRÃO E VARIÁVEIS
 =========================== */
 :root {
-  --bg-gradient: linear-gradient(135deg, #f1f3f4, #a7aeb2);
-  --text-color: #222;
-  --primary-color: #004d66;
-  --primary-hover: #006680;
-  --secondary-color: #f1f3f4;
-  --success-color: #5cb85c;
-  --danger-color: #d9534f;
-  --warning-color: #f0ad4e;
+  --bg-gradient: linear-gradient(135deg, #f9fafb, #e5e7eb);
+  --text-color: #1e293b;
+  --primary-color: #2563eb;       /* Azul corporativo */
+  --primary-hover: #1d4ed8;
+  --secondary-color: #f3f4f6;     /* Cinza claro */
+  --success-color: #16a34a;       /* Verde elegante */
+  --danger-color: #dc2626;        /* Vermelho forte */
+  --warning-color: #f59e0b;       /* Amarelo alaranjado */
 }
 
 /* ----- LIGHT THEME ----- */
 body.light-theme {
-  --bg-gradient: linear-gradient(135deg, #f1f3f4, #a7aeb2);
-  --text-color: #222;
-  --primary-color: #004d66;
-  --primary-hover: #006680;
-  --secondary-color: #a7aeb2;
-  --success-color: #5cb85c;
-  --danger-color: #d9534f;
-  --warning-color: #f0ad4e;
+  --bg-gradient: linear-gradient(135deg, #f9fafb, #dbeafe); 
+  --text-color: #1e293b;
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary-color: #e5e7eb;
+  --success-color: #16a34a;
+  --danger-color: #dc2626;
+  --warning-color: #f59e0b;
 }
 
 /* ----- DARK THEME ----- */
 body.dark-theme {
-  --bg-gradient: linear-gradient(135deg, #1f1c2c, #928dab);
-  --text-color: #e0e0e0;
-  --primary-color: #1f1c2c;
-  --primary-hover: #3a3750;
-  --secondary-color: #2e2b3c;
-  --success-color: #5cb85c;
-  --danger-color: #d9534f;
-  --warning-color: #f0ad4e;
+  --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b);
+  --text-color: #f1f5f9;
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --secondary-color: #334155;
+  --success-color: #22c55e;
+  --danger-color: #ef4444;
+  --warning-color: #facc15;
 }
 
 /* ----- MODERN THEME ----- */
 body.modern-theme {
-  --bg-gradient: linear-gradient(135deg, #2b2b2b, #1a1a1a);
-  --text-color: #e0e0e0;
-  --primary-color: #3a3a3a;
-  --primary-hover: #505050;
-  --secondary-color: #2e2e2e;
-  --success-color: #5cb85c;
-  --danger-color: #d9534f;
-  --warning-color: #f0ad4e;
+  --bg-gradient: linear-gradient(135deg, #1e293b, #111827);
+  --text-color: #f9fafb;
+  --primary-color: #14b8a6;       /* Verde água sofisticado */
+  --primary-hover: #0d9488;
+  --secondary-color: #374151;
+  --success-color: #22c55e;
+  --danger-color: #ef4444;
+  --warning-color: #eab308;
 }
+
+
+
+
 
 /* ===========================
    TRANSIÇÕES SUAVES

@@ -1,91 +1,176 @@
-/* /workspaces/eGest/public/css/styleConsultaPessoa.css */
 /* ===========================
-   CONTEÚDO CONSULTA PESSOA
+   CONSULTA PESSOA (ERP STYLE)
 =========================== */
 .cp-container {
   padding: 20px;
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-  border-radius: 8px;
-  transition: background 0.3s ease, color 0.3s ease;
+  background-color: var(--background, #f9fafc);
+  color: var(--text-color, #333);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow-x: auto; /* garante que nada quebre */
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto; /* Permite que as colunas se ajustem ao conteúdo */
+  min-width: max-content; /* Garante que não quebre os dados */
 }
 
 .cp-title {
-  font-size: 24px;
+  font-size: 1.6rem;
   margin-bottom: 20px;
-  color: var(--text-color);
+  font-weight: 600;
+  color: var(--primary-color, #0056b3);
+  border-left: 5px solid var(--primary-color, #0056b3);
+  padding-left: 10px;
 }
 
+/* Filtros */
 .cp-filtro {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
 .cp-filtro input {
   flex: 1;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid var(--secondary-color);
-  border-radius: 4px;
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  min-width: 180px;
+  padding: 10px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
 }
 
-.cp-filtro input:disabled {
-  background-color: #555;
-  color: #aaa;
-  cursor: not-allowed;
+.cp-filtro input:focus {
+  border-color: var(--primary-color, #0056b3);
+  outline: none;
 }
 
 .cp-filtro button {
-  padding: 8px 12px;
-  background-color: var(--success-color);
-  color: var(--text-light);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.cp-filtro button:hover {
-  background-color: #218838; /* tom mais escuro do sucesso */
-}
-
-.cp-pessoas-lista {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.95rem;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  cursor: pointer;
 }
 
-.cp-form-pessoa {
-  border: 1px solid var(--secondary-color);
-  padding: 15px;
+.cp-filtro button[type="submit"] {
+  background-color: var(--primary-color, #0056b3);
+  color: #fff;
+}
+.cp-filtro button#btn-exportar {
+  background-color: var(--success-color, #28a745);
+  color: #fff;
+}
+.cp-filtro button:hover {
+  opacity: 0.9;
+}
+
+/* Tabela */
+.table-container {
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.05);
-  transition: background 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  margin-top: 10px;
 }
 
-.cp-form-pessoa input {
-  display: block;
-  margin-bottom: 10px;
+.cp-tabela {
   width: 100%;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid var(--secondary-color);
-  border-radius: 4px;
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 900px; /* garante espaço para todas as colunas */
 }
 
-.cp-form-pessoa input:disabled {
-  background-color: #333;
-  color: #aaa;
-  cursor: not-allowed;
+.cp-tabela th {
+  background: var(--primary-color, #0056b3);
+  color: #fff;
+  padding: 12px 8px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  white-space: nowrap;
 }
 
+.cp-tabela td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.cp-tabela tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.cp-tabela tr:hover {
+  background: #eef6ff;
+}
+
+/* Paginação */
+.cp-paginacao {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.cp-paginacao button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cp-paginacao button:hover {
+  background: var(--primary-color, #0056b3);
+  color: #fff;
+}
+
+#pagina-atual {
+  font-weight: 500;
+  color: var(--primary-color, #0056b3);
+}
+
+/* Form Edição (em Card) */
+.cp-form-edicao {
+  margin-top: 25px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.cp-form-edicao h3 {
+  margin-bottom: 15px;
+  color: var(--primary-color, #0056b3);
+}
+
+/* Inputs do form edição ocupam largura total */
+.cp-form-edicao input {
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
+.cp-form-edicao input:focus {
+  border-color: var(--primary-color, #0056b3);
+  outline: none;
+}
+
+/* Botões do form edição */
 .cp-btn-group {
   display: flex;
   gap: 10px;
@@ -93,38 +178,35 @@
 }
 
 .cp-btn-group button {
-  padding: 6px 12px;
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.95rem;
   border: none;
-  border-radius: 4px;
-  background-color: var(--primary-color);
-  color: var(--text-light);
   cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s ease, color 0.3s ease;
 }
 
-.cp-btn-group button:hover {
-  background-color: var(--primary-hover);
+.cp-btn-group button[type="submit"] {
+  background: var(--success-color, #28a745);
+  color: #fff;
 }
 
-.cp-btn-group button:disabled {
-  background-color: #555;
-  cursor: not-allowed;
+#btn-cancelar-edicao {
+  background: #6c757d;
+  color: #fff;
 }
 
-.cp-msg-box {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: var(--success-color);
-  color: var(--text-light);
-  padding: 10px 15px;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  z-index: 9999;
-  transition: background 0.3s ease, color 0.3s ease;
+#btn-excluir-edicao {
+  background: var(--danger-color, #dc3545);
+  color: #fff;
 }
 
-.cp-msg-box.erro {
-  background-color: var(--danger-color);
+/* Responsividade extra */
+@media (max-width: 768px) {
+  .cp-filtro {
+    flex-direction: column;
+  }
+  .cp-tabela {
+    font-size: 0.85rem;
+  }
 }
