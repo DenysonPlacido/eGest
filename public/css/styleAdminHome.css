@@ -1,3 +1,43 @@
 /* /workspaces/eGest/public/css/styleAdminHome.css */
+.welcome-box {
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  margin: 60px auto;
+  max-width: 600px;
+  animation: fadeIn 1s ease-in-out;
+}
 
+.welcome-box h1 {
+  font-size: 2.5rem;
+  color: #00796b;
+  margin-bottom: 20px;
+}
 
+.welcome-box p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .welcome-box {
+    padding: 20px;
+    margin: 30px 15px;
+  }
+
+  .welcome-box h1 {
+    font-size: 2rem;
+  }
+
+  .welcome-box p {
+    font-size: 1rem;
+  }
+}
