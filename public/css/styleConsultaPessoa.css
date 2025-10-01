@@ -63,7 +63,7 @@
   color: #fff;
 }
 .cp-filtro button#btn-exportar {
-  background-color: var(--success-color, #28a745);
+  background-color: var(--primary-color, #28a745);
   color: #fff;
 }
 .cp-filtro button:hover {
@@ -97,6 +97,7 @@
 }
 
 .cp-tabela td {
+  color: rgb(3, 3, 3);
   padding: 10px 8px;
   border-bottom: 1px solid #eee;
   vertical-align: middle;

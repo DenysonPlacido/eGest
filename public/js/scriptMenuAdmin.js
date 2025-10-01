@@ -144,7 +144,9 @@ function loadContent(target) {
   const pages = {
     dashboard: 'adminHome.html',
     menu_cadastro_do_sistema_pessoas_acao_novo: 'cadastroPessoa.html',
-    menu_cadastro_do_sistema_pessoas_acao_consulta: 'consultaPessoa.html'
+    menu_cadastro_do_sistema_pessoas_acao_consulta: 'consultaPessoa.html',
+    menu_cadastro_do_sistema_usuarios_acao_consulta: 'consultaUsuario.html',
+    menu_cadastro_do_sistema_usuarios_acao_novo: 'cadastroUsuario.html',
   };
 
   const page = pages[target];

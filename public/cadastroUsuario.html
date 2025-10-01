@@ -1,0 +1,39 @@
+<!-- /workspaces/eGest/public/cadastroUsuario.html -->
+
+<link rel="stylesheet" href="css/styleCadastroPessoa.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Cadastro de Usuário</h2>
+
+  <form id="cu-form-usuario" class="cp-form">
+
+    <!-- 🔹 Seleção da Pessoa -->
+    <fieldset>
+      <legend>Pessoa Vinculada</legend>
+      <label for="pessoa_id">Pessoa:</label>
+      <select class="cp-input" name="pessoa_id" id="pessoa_id" required>
+        <option value="">Selecione uma pessoa...</option>
+      </select>
+    </fieldset>
+
+    <!-- 🔹 Dados do Usuário -->
+    <fieldset>
+      <legend>Dados do Usuário</legend>
+      <input class="cp-input" type="text" name="login" placeholder="Login" required />
+      <input class="cp-input" type="password" name="senha" placeholder="Senha" required />
+      <input class="cp-input" type="password" name="confirma_senha" placeholder="Confirme a senha" required />
+
+      <label for="status_usuario">Status:</label>
+      <select class="cp-input" name="status_usuario" id="status_usuario" required>
+        <option value="1">Ativo</option>
+        <option value="0">Inativo</option>
+      </select>
+    </fieldset>
+
+    <input type="hidden" name="tipo_usuario" value="1" />
+
+    <button type="submit" class="cp-btn">Salvar</button>
+  </form>
+</div>
+
+<script type="module" src="js/scriptCadastroUsuario.js"></script>

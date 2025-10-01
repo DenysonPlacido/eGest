@@ -52,7 +52,7 @@
 /* Esconde todas inicialmente */
 .logo-header {
   display: none;
-  height: 50px;
+  height: 100px;
   width: auto;
 }
 
