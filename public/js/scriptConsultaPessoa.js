@@ -154,6 +154,8 @@ function abrirFormularioEdicao(pessoa) {
 }
 
 
+
+// ✏️ Atualização de Usuario
 document.getElementById('form-edicao').addEventListener('submit', async (e) => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(e.target).entries());
@@ -181,6 +183,9 @@ document.getElementById('form-edicao').addEventListener('submit', async (e) => {
     showAlert(`❌ ${err.message}`, 'error', 4000);
   }
 });
+
+
+
 
 document.getElementById('btn-excluir-edicao').addEventListener('click', async () => {
   const id = document.querySelector('#form-edicao [name="pessoa_id"]').value;
