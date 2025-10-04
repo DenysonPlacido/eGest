@@ -38,7 +38,7 @@ btnExportar.addEventListener('click', () => {
 
   const cabecalho = [
     'ID','Nome','CPF/CNPJ','Data Nasc.','Email',
-    'DDD','Telefone','CEP','Logradouro','Bairro','Número','Complemento'
+    'DDD','Telefone','CEP','Logradouro','Número','Complemento'
   ];
   
   const linhas = resultados.map(p =>
@@ -52,7 +52,6 @@ btnExportar.addEventListener('click', () => {
       p.fone || '',
       p.cep || '',
       p.logradouro || '',
-      p.bairro || '',
       p.numero || '',
       p.complemento || ''
     ].join(';')
