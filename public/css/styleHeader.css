@@ -117,12 +117,16 @@ body.modern-theme .logo-modern { display: inline-block; }
 /* ===========================
    RESPONSIVIDADE
 =========================== */
+
+
 @media (max-width: 768px) {
   .header {
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
     height: auto;
-    padding: 10px;
+    padding: 10px 8px;
     font-size: 13px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
   }
 
   .header-left,
@@ -131,11 +135,82 @@ body.modern-theme .logo-modern { display: inline-block; }
     flex: 1 1 100%;
     justify-content: center;
     margin: 5px 0;
+    gap: 8px;
+  }
+
+  .header-center {
+    order: 2;
+  }
+  .header-left {
+    order: 1;
+    justify-content: flex-start;
+  }
+  .header-right {
+    order: 3;
+    justify-content: flex-end;
   }
 
   .menu-toggle {
     position: absolute;
     left: 10px;
     top: 10px;
+    z-index: 101;
   }
+
+  #usuario-logado {
+    display: none !important;
+
+}
+
+  #hora-sistema {
+    display: none !important;
+
+}
+
+  #tempo-sessao {
+    display: none !important;
+
+}
+
+  /* .logo-header {
+    height: 60px;
+    max-width: 120px;
+  } */
+
+    .logo-header {
+ display: none !important;
+  }
+
+  .theme-switcher {
+    margin-left: 0;
+    justify-content: center;
+    gap: 6px;
+  }
+}
+
+/* Melhor responsividade para telas muito pequenas */
+@media (max-width: 480px) {
+  .header {
+    padding: 6px 4px;
+    font-size: 12px;
+  }
+  .logo-header {
+    height: 40px;
+    max-width: 80px;
+  }
+  .theme-btn {
+    width: 16px;
+    height: 16px;
+  }
+  .icon-btn {
+    font-size: 14px;
+  }
+  
+  .mobile-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 200; /* maior que o header */
+}
 }

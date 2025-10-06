@@ -167,3 +167,75 @@ body.modern-theme .logo-modern { display: inline-block; }
 .logout:hover { color: #ff6b6b; }
 
 
+
+
+
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 60px 15px 20px 15px;
+  }
+
+  #menu-container {
+    position: static;
+    width: 100%;
+  }
+
+  .welcome-box {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .header-left,
+  .header-center,
+  .header-right {
+    flex: 1 1 100%;
+    justify-content: center;
+    margin: 5px 0;
+  }
+
+  .logo-header {
+    height: 40px;
+  }
+
+  .icon-btn {
+    font-size: 18px;
+    margin: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-box h1 {
+    font-size: 1.6rem;
+  }
+
+  .welcome-box p {
+    font-size: 0.95rem;
+  }
+
+  .header-center {
+    display: none;
+  }
+
+  .theme-switcher {
+    display: none;
+  }
+
+  .icon-btn {
+    font-size: 16px;
+  }
+}
+
+
