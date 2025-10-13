@@ -9,42 +9,35 @@
 
   <!-- Logo e nome do sistema -->
   <div class="header-left">
+    <a href="adminHome.html" class="logo-link" title="Ir para a Home">
       <img src="img/img/eGest_White_theme.png" alt="Logo eGest" class="logo-header logo-light" />
       <img src="img/img/eGest_Dark_theme.png" alt="Logo eGest" class="logo-header logo-dark" />
-      <img src="img/img/eGest_Modern_theme.png" alt="Logo eGest" class="logo-header logo-modern" />
+    </a>
   </div>
 
   <!-- Informações da sessão -->
   <div class="header-center" role="status" aria-live="polite">
-    <span id="usuario-logado" class="session-info">Bem Vindo: </span>
+    <span id="usuario-logado" class="session-info">Bem-vindo: </span>
     <span id="hora-sistema" class="session-info">00:00</span>
     <span id="tempo-sessao" class="session-info">00:00:00</span>
   </div>
 
-  <!-- Botões de ação e troca de tema -->
+  <!-- Ações e tema -->
   <div class="header-right">
-    <!-- Botões de ações -->
+    <!-- Alternar tema -->
+    <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema" title="Alternar tema">
+      <i class="fas fa-moon" id="theme-icon" aria-hidden="true"></i>
+    </button>
+
+    <!-- Notificações -->
     <button class="icon-btn" aria-label="Notificações" title="Notificações">
       <i class="fas fa-bell" aria-hidden="true"></i>
     </button>
-    <button class="icon-btn" aria-label="Mensagens" title="Mensagens">
-      <i class="fas fa-envelope" aria-hidden="true"></i>
-    </button>
-    <button class="icon-btn" aria-label="Configurações" title="Configurações">
-      <i class="fas fa-cog" aria-hidden="true"></i>
-    </button>
+
+    <!-- Sair -->
     <button id="btn-sair" class="icon-btn logout" aria-label="Sair" title="Sair">
       <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
     </button>
-
-    <!-- Botões de tema -->
-    <div class="theme-switcher" aria-label="Trocar tema">
-      <button class="theme-btn" data-theme="light-theme"></button>
-      <button class="theme-btn" data-theme="dark-theme"></button>
-      <button class="theme-btn" data-theme="modern-theme"></button>
-
-
-    </div>
   </div>
 </header>
 

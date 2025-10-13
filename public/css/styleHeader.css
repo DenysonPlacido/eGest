@@ -20,6 +20,7 @@
   color: var(--text-light);
   font-size: 14px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 /* ===========================
@@ -59,7 +60,7 @@
 /* Mostra apenas a do tema ativo */
 body.light-theme .logo-light { display: inline-block; }
 body.dark-theme .logo-dark { display: inline-block; }
-body.modern-theme .logo-modern { display: inline-block; }
+/* body.modern-theme .logo-modern { display: inline-block; } */
 
 /* ===========================
    BOTÕES DE AÇÃO
@@ -70,11 +71,12 @@ body.modern-theme .logo-modern { display: inline-block; }
   color: var(--text-light);
   font-size: 16px;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .icon-btn:hover {
   color: var(--primary-hover);
+  transform: scale(1.1);
 }
 
 .logout {
@@ -86,39 +88,25 @@ body.modern-theme .logo-modern { display: inline-block; }
 }
 
 /* ===========================
-   BOTÕES DE TROCA DE TEMA
+   BOTÃO DE TROCA DE TEMA
 =========================== */
-.theme-switcher {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-left: 10px;
+#theme-toggle {
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.theme-btn {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid var(--text-light);
-  cursor: pointer;
-  transition: transform 0.2s ease, border 0.2s ease;
+#theme-toggle:hover {
+  transform: rotate(15deg);
+  color: var(--primary-hover);
 }
 
-/* Cores dos temas */
-.theme-btn[data-theme="light-theme"] { background-color: #f1f3f4; }
-.theme-btn[data-theme="dark-theme"] { background-color: #222; }
-.theme-btn[data-theme="modern-theme"] { background: linear-gradient(135deg, #444, #222); }
-
-.theme-btn:hover {
-  transform: scale(1.2);
-  border-color: var(--primary-hover);
+/* Animação de transição suave entre temas */
+body {
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* ===========================
    RESPONSIVIDADE
 =========================== */
-
-
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
@@ -141,10 +129,12 @@ body.modern-theme .logo-modern { display: inline-block; }
   .header-center {
     order: 2;
   }
+
   .header-left {
     order: 1;
     justify-content: flex-start;
   }
+
   .header-right {
     order: 3;
     justify-content: flex-end;
@@ -157,34 +147,14 @@ body.modern-theme .logo-modern { display: inline-block; }
     z-index: 101;
   }
 
-  #usuario-logado {
-    display: none !important;
-
-}
-
-  #hora-sistema {
-    display: none !important;
-
-}
-
+  #usuario-logado,
+  #hora-sistema,
   #tempo-sessao {
     display: none !important;
-
-}
-
-  /* .logo-header {
-    height: 60px;
-    max-width: 120px;
-  } */
-
-    .logo-header {
- display: none !important;
   }
 
-  .theme-switcher {
-    margin-left: 0;
-    justify-content: center;
-    gap: 6px;
+  .logo-header {
+    display: none !important;
   }
 }
 
@@ -194,23 +164,21 @@ body.modern-theme .logo-modern { display: inline-block; }
     padding: 6px 4px;
     font-size: 12px;
   }
+
   .logo-header {
     height: 40px;
     max-width: 80px;
   }
-  .theme-btn {
-    width: 16px;
-    height: 16px;
-  }
+
   .icon-btn {
     font-size: 14px;
   }
-  
+
   .mobile-menu {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  z-index: 200; /* maior que o header */
-}
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 200; /* maior que o header */
+  }
 }
