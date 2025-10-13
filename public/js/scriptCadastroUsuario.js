@@ -16,7 +16,13 @@ async function carregarPessoas() {
     const token = localStorage.getItem('token');
     const empresaId = localStorage.getItem('empresaId');
 
-    const res = await fetch(`${API_PESSOAS}?limit=1000&offset=0`, {
+        const query = new URLSearchParams({
+        cpf_cnpj: cpf_cnpj || '',
+        limit: 1,
+        offset:0
+    }).toString();    
+
+    const res = await fetch(`${API_PESSOAS}?${query}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'x-empresa-id': empresaId
@@ -26,11 +32,11 @@ async function carregarPessoas() {
     if (!res.ok) throw new Error('Erro ao buscar pessoas');
 
     const pessoas = await res.json();
-    const selectPessoa = document.getElementById('pessoa_id');
+    const selectPessoa = document.getElementById('cpf_cnpj');
 
     pessoas.forEach(p => {
       const option = document.createElement('option');
-      option.value = p.pessoa_id;
+      option.value = p.cpf_cnpj;
       option.textContent = `${p.nome} - ${p.cpf_cnpj}`;
       selectPessoa.appendChild(option);
     });
