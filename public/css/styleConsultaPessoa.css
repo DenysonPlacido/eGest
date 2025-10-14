@@ -286,10 +286,14 @@
   font-size: 0.85rem;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .cp-filtro {
-    flex-direction: column;
+/* ===========================
+   Responsividade
+=========================== */
+
+/* Tablets (até 1024px) */
+@media (max-width: 1024px) {
+  .cp-container {
+    padding: 15px;
   }
 
   .cp-tabela {
@@ -297,7 +301,118 @@
     min-width: 100%;
   }
 
-  .cp-form-edicao input {
+  .cp-row {
+    flex-direction: column;
+  }
+}
+
+/* Celulares (até 768px) */
+@media (max-width: 768px) {
+  .cp-title {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .cp-filtro {
+    flex-direction: column;
+  }
+
+  .cp-filtro input,
+  .cp-filtro button {
     width: 100%;
+  }
+
+  .cp-tabela {
+    display: block;
+    overflow-x: auto;
+    min-width: 600px;
+  }
+
+  .cp-form-edicao {
+    padding: 15px;
+  }
+
+  .cp-row input {
+    width: 100%;
+  }
+
+  .cp-btn-group button {
+    flex: 1 1 100%;
+  }
+
+  .cp-modal-content {
+    width: 95%;
+  }
+}
+
+/* Celulares pequenos (até 480px) */
+@media (max-width: 480px) {
+  .cp-container {
+    padding: 10px;
+  }
+
+  .cp-filtro input,
+  .cp-filtro button {
+    font-size: 0.85rem;
+  }
+
+  .cp-tabela th,
+  .cp-tabela td {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .cp-form-edicao {
+    margin-top: 15px;
+  }
+
+  .cp-form-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+
+
+
+/* ===========================
+   Exibição simplificada no mobile
+=========================== */
+@media (max-width: 768px) {
+  /* Oculta todas as colunas exceto ID (1ª), Nome (2ª) e Ações (última) */
+  .cp-tabela th:nth-child(3),
+  .cp-tabela th:nth-child(4),
+  .cp-tabela th:nth-child(5),
+  .cp-tabela th:nth-child(6),
+  .cp-tabela th:nth-child(7),
+  .cp-tabela th:nth-child(8),
+  .cp-tabela th:nth-child(9),
+  .cp-tabela td:nth-child(3),
+  .cp-tabela td:nth-child(4),
+  .cp-tabela td:nth-child(5),
+  .cp-tabela td:nth-child(6),
+  .cp-tabela td:nth-child(7),
+  .cp-tabela td:nth-child(8),
+  .cp-tabela td:nth-child(9) {
+    display: none;
+  }
+
+  /* Ajusta a largura e tamanho da fonte no modo compacto */
+  .cp-tabela {
+    min-width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .cp-tabela th,
+  .cp-tabela td {
+    padding: 10px;
+    text-align: left;
+  }
+
+  /* Ajuste visual dos botões */
+  .cp-tabela button {
+    font-size: 0.85rem;
+    padding: 6px 8px;
   }
 }

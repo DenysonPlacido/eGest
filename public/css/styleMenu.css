@@ -294,3 +294,84 @@
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+
+/* ===========================
+   Overlay Mobile e Interações
+=========================== */
+@media (max-width: 768px) {
+  .menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1500;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .menu-overlay.active {
+    display: block;
+    opacity: 1;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/* Melhor uso de espaço em telas pequenas */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .menu a {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .submenu li a {
+    padding: 8px 14px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  #menu-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* não intercepta cliques quando menu fechado */
+  }
+
+  #menu-container .sidebar {
+    width: 230px;
+    height: 100vh;
+    background: var(--secondary-color);
+    position: absolute;
+  top: 50px; /* abaixo do header */
+  z-index: 2000;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    pointer-events: auto;
+    visibility: hidden;
+    box-shadow: 3px 0 8px rgba(0, 0, 0, 0.2);
+  }
+
+  #menu-container .sidebar.open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+}

@@ -1,7 +1,7 @@
 ﻿// /workspaces/eGest/public/js/scriptMenuAdmin.js
 import { showAlert } from './alerts.js';
 
-// Gera um ID seguro para HTML a partir de um caminho de menu
+// 🔠 Gera ID seguro e único para hierarquia de menus
 export function gerarTargetHierarquico(caminho) {
   return 'menu_' + caminho.map(p =>
     p.toLowerCase()
@@ -12,7 +12,7 @@ export function gerarTargetHierarquico(caminho) {
   ).join('_');
 }
 
-// Slugify simples para nomes únicos
+// 🧩 Slugify simples para nomes únicos
 export function slugify(text, prefix = '') {
   const base = text
     .toLowerCase()
@@ -23,7 +23,9 @@ export function slugify(text, prefix = '') {
   return prefix + base;
 }
 
-// Renderiza toda a estrutura de menus
+// ===========================
+// Renderização dos menus
+// ===========================
 export function renderizarMenus(menus) {
   const menuContainer = document.getElementById('menu-container');
   if (!menuContainer) return;
@@ -60,7 +62,9 @@ export function renderizarMenus(menus) {
   aplicarEventosMenu();
 }
 
-// Gera submenus recursivamente
+// ===========================
+// Submenus e Ações
+// ===========================
 function gerarSubmenu(submenus, caminhoPai = []) {
   return submenus.map(sub => {
     const caminhoAtual = [...caminhoPai, sub.nome];
@@ -84,7 +88,6 @@ function gerarSubmenu(submenus, caminhoPai = []) {
   }).join('');
 }
 
-// Gera ações dentro de menus/submenus
 function gerarAcoes(acoes, caminhoPai = []) {
   return acoes.map(acao => {
     const acaoId = gerarTargetHierarquico([...caminhoPai, 'acao', acao.nome]);
@@ -98,7 +101,9 @@ function gerarAcoes(acoes, caminhoPai = []) {
   }).join('');
 }
 
-// Aplica eventos de clique para abrir/fechar menus e carregar conteúdo
+// ===========================
+// Eventos do menu lateral
+// ===========================
 export function aplicarEventosMenu() {
   const menu = document.querySelector('.menu');
   if (!menu) return;
@@ -124,16 +129,18 @@ export function aplicarEventosMenu() {
       if (arrow) arrow.classList.toggle('rotate');
     }
 
-    // Marcar item ativo
+    // Marca item ativo
     document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
     item.classList.add('active');
 
-    // Carregar conteúdo se não houver submenu ou submenu vazio
+    // Carrega conteúdo se for ação final (sem submenu)
     if (!submenu || !submenu.querySelectorAll('li').length) loadContent(targetId);
   });
 }
 
-// Carrega conteúdo HTML no main-content
+// ===========================
+// Carrega conteúdo na área principal
+// ===========================
 function loadContent(target) {
   const content = document.getElementById('main-content');
   if (!content) {
@@ -160,13 +167,13 @@ function loadContent(target) {
     .then(html => {
       content.innerHTML = html;
 
-      // Carrega scripts externos
+      // Recarrega scripts externos
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = html;
       tempDiv.querySelectorAll('script[src]').forEach(script => {
         const newScript = document.createElement('script');
         newScript.src = script.src;
-        if (script.type) newScript.type = script.type; 
+        if (script.type) newScript.type = script.type;
         document.body.appendChild(newScript);
       });
     })
@@ -176,3 +183,21 @@ function loadContent(target) {
       content.innerHTML = `<div class="error-box">Erro ao carregar conteúdo.</div>`;
     });
 }
+
+// ===========================
+// Overlay Mobile (Sidebar)
+// ===========================
+
+// ⚠️ Este trecho precisa esperar o DOM estar pronto,
+// pois o menu pode ser carregado dinamicamente.
+document.addEventListener('DOMContentLoaded', () => {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.querySelector('#menu-overlay');
+
+  if (overlay && sidebar) {
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+  }
+});

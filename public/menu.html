@@ -1,13 +1,17 @@
-<!-- //workspaces/eGest/public/menu.html -->
+<!-- /workspaces/eGest/public/menu.html -->
+<link rel="stylesheet" href="css/styleMenu.css" />
 
-
-<link rel="stylesheet" href="css/styleMenu.css">
-
-<div class="sidebar" id="menu-container">
-  <div class="logo">Menu</div>
-  <ul class="menu" id="menu-dinamico">
-    <!-- Os itens do menu serão inseridos dinamicamente via JavaScript -->
-  </ul>
+<!-- container externo -->
+<div id="menu-container">
+  <div class="sidebar">
+    <div class="logo">Menu</div>
+    <ul class="menu" id="menu-dinamico">
+      <!-- preenchido via JS -->
+    </ul>
+  </div>
 </div>
+
+<!-- overlay (fundo escuro) -->
+<div class="menu-overlay" id="menu-overlay"></div>
 
 <script type="module" src="js/scriptMenu.js"></script>
