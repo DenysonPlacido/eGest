@@ -153,12 +153,13 @@ function loadContent(target) {
     menu_cadastro_do_sistema_pessoas_acao_novo: 'cadastroPessoa.html',
     menu_cadastro_do_sistema_pessoas_acao_consulta: 'consultaPessoa.html',
     menu_cadastro_do_sistema_usuarios_acao_consulta: 'consultaUsuario.html',
-    menu_cadastro_do_sistema_usuarios_acao_novo: 'cadastroUsuario.html',
+    menu_modulos_de_gestao_pedidos_acao_consulta_de_pedidos: '/public/pages/pedidos/pedidosConsulta.html',
+    menu_modulos_de_gestao_pedidos_acao_novo_pedido: '/public/pages/pedidos/pedidosNovo.html'
   };
 
   const page = pages[target];
   if (!page) {
-    content.innerHTML = `<div class="welcome-box"><h1>Bem-vindo ao eGest!</h1></div>`;
+    content.innerHTML = `<div class="welcome-box"><h1>🚧 Em desenvolvimento... estamos quase lá!</h1></div>`;
     return;
   }
 

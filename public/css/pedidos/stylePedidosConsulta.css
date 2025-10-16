@@ -1,0 +1,40 @@
+/* ===========================
+   CONSULTA PEDIDOS (ERP STYLE)
+=========================== */
+@import url("/public/css/styleConsultaPessoa.css");
+
+.cp-title::before {
+  content: "🧾 ";
+}
+
+/* Campos extras */
+.cp-form-edicao textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+  font-size: 0.95rem;
+}
+
+/* Itens */
+#tabela-itens th {
+  background: #2e7d32;
+}
+#tabela-itens td {
+  border-bottom: 1px solid #eee;
+}
+
+/* Ajuste responsivo adicional */
+@media (max-width: 768px) {
+  .cp-tabela th:nth-child(2),
+  .cp-tabela th:nth-child(3),
+  .cp-tabela th:nth-child(4),
+  .cp-tabela th:nth-child(5),
+  .cp-tabela td:nth-child(2),
+  .cp-tabela td:nth-child(3),
+  .cp-tabela td:nth-child(4),
+  .cp-tabela td:nth-child(5) {
+    display: none;
+  }
+}

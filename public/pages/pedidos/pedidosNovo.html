@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="/public/css/pedidos/stylePedidosNovo.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Novo Pedido</h2>
+
+  <form id="form-novo-pedido" class="cp-filtro">
+    <label>Tipo de Pedido</label>
+    <select name="tipo_pedido" required>
+      <option value="">Selecione...</option>
+      <option value="COMPRA">Compra</option>
+      <option value="VENDA">Venda</option>
+      <option value="MISTO">Misto</option>
+    </select>
+
+    <label>Cliente / Fornecedor</label>
+    <input type="text" name="pessoa" id="busca-pessoa" placeholder="Digite para buscar..." required />
+
+    <label>Observação</label>
+    <textarea name="observacao" rows="3" placeholder="Observações do pedido"></textarea>
+
+    <button type="button" id="btn-adicionar-produto">➕ Adicionar Produto</button>
+    <button type="submit" class="primary">💾 Salvar Pedido</button>
+  </form>
+
+  <h4>Itens do Pedido</h4>
+  <div class="table-container">
+    <table id="tabela-itens-pedido" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Quantidade</th>
+          <th>Valor Unitário</th>
+          <th>Subtotal</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- itens adicionados via JS -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal para adicionar produto -->
+<div id="modal-produto" class="cp-modal" style="display: none;">
+  <div class="cp-modal-content">
+    <h4>Adicionar Produto</h4>
+    <div class="cp-row">
+      <label>Produto</label>
+      <input type="text" id="produto-descricao" placeholder="Buscar produto..." />
+    </div>
+    <div class="cp-row">
+      <label>Quantidade</label>
+      <input type="number" id="produto-quantidade" min="0" step="0.001" />
+      <label>Valor Unitário</label>
+      <input type="number" id="produto-valor" min="0" step="0.01" />
+    </div>
+    <div class="cp-btn-group">
+      <button id="btn-salvar-item" class="primary">Adicionar</button>
+      <button id="btn-fechar-modal" type="button">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="/public/js/pedidos/scriptPedidosNovo.js"></script>

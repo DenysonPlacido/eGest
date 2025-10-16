@@ -1,0 +1,96 @@
+<!-- public\pages\pedidos\pedidosConsulta.html -->
+
+<link rel="stylesheet" href="/public/css/pedidos/stylePedidosConsulta.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Consulta de Pedidos</h2>
+
+  <form id="form-busca" class="cp-filtro">
+    <input type="text" id="busca-id" placeholder="🔍 ID do pedido" />
+    <input type="text" id="busca-tipo" placeholder="🔍 Tipo (Compra/Venda)" />
+    <input type="text" id="busca-status" placeholder="🔍 Status" />
+    <button type="submit">🔎 Buscar</button>
+    <button type="button" id="btn-exportar">📊 Exportar</button>
+  </form>
+
+  <div class="table-container">
+    <table id="tabela-pedidos" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Data</th>
+          <th>Tipo</th>
+          <th>Cliente/Fornecedor</th>
+          <th>Status</th>
+          <th>Valor Total</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- carregado via JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cp-paginacao">
+    <button id="btn-anterior">⬅️ Página anterior</button>
+    <span id="pagina-atual">Página 1</span>
+    <button id="btn-proximo">➡️ Próxima página</button>
+  </div>
+
+  <!-- Formulário de visualização/edição -->
+  <div id="form-edicao-container" class="cp-form-edicao" style="display: none;">
+    <div class="cp-form-header">
+      <h3 id="form-edicao-title">Visualizar Pedido</h3>
+      <div class="cp-form-actions">
+        <button id="btn-toggle-edit" title="Editar" class="icon-btn" type="button">✏️</button>
+        <button id="btn-close-form" title="Fechar" class="icon-btn" type="button">✖️</button>
+      </div>
+    </div>
+
+    <form id="form-edicao">
+      <input type="hidden" name="pedido_id" />
+
+      <div class="cp-row">
+        <label>Tipo</label>
+        <input type="text" name="tipo_pedido" disabled />
+        <label>Status</label>
+        <input type="text" name="status" disabled />
+      </div>
+
+      <div class="cp-row">
+        <label>Cliente/Fornecedor</label>
+        <input type="text" name="pessoa" disabled />
+        <label>Valor Total</label>
+        <input type="text" name="valor_total" disabled />
+      </div>
+
+      <div class="cp-row">
+        <label>Observação</label>
+        <textarea name="observacao" rows="3"></textarea>
+      </div>
+
+      <h4>Itens do Pedido</h4>
+      <table id="tabela-itens" class="cp-tabela">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- carregado via JS -->
+        </tbody>
+      </table>
+
+      <div class="cp-btn-group">
+        <button type="submit" id="btn-salvar" class="primary">Salvar</button>
+        <button type="button" id="btn-cancelar-edicao">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="/public/js/pedidos/scriptPedidosConsulta.js"></script>
