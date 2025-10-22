@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="/public/css/compras/styleCompras.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Consultar Compras</h2>
+
+  <form id="form-busca-compras" class="cp-filtro">
+    <input type="number" id="busca-id" placeholder="🔍 ID da Compra" />
+    <input type="number" id="busca-fornecedor" placeholder="🔍 Fornecedor (ID)" />
+    <input type="text" id="busca-status" placeholder="🔍 Status (ABERTA/FINALIZADA)" />
+    <button type="submit">🔎 Buscar</button>
+    <button type="button" id="btn-exportar-compras">📊 Exportar</button>
+  </form>
+
+  <div class="table-container">
+    <table id="tabela-compras" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fornecedor</th>
+          <th>Data</th>
+          <th>Status</th>
+          <th>Valor Total</th>
+          <th>Observação</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- carregado via JS -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script type="module" src="/public/js/compras/scriptComprasConsulta.js"></script>

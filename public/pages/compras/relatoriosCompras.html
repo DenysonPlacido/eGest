@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="/public/css/compras/styleCompras.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Relatórios de Compras</h2>
+
+  <form id="form-filtro-relatorios-compras" class="cp-filtro">
+    <input type="number" id="filtro-compra-id" placeholder="🔍 ID da Compra" />
+    <input type="number" id="filtro-fornecedor" placeholder="🔍 ID do Fornecedor" />
+    <input type="date" id="filtro-data-inicio" />
+    <input type="date" id="filtro-data-fim" />
+    <button type="submit">🔎 Gerar Relatório</button>
+  </form>
+
+  <div class="table-container">
+    <table id="tabela-relatorios-compras" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>ID Compra</th>
+          <th>Fornecedor</th>
+          <th>Data</th>
+          <th>Status</th>
+          <th>Valor Total</th>
+          <th>Observações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="msg-relatorios-compras"></div>
+</div>
+
+<script type="module" src="/public/js/compras/scriptRelatoriosCompras.js"></script>

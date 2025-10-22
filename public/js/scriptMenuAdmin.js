@@ -149,10 +149,26 @@ function loadContent(target) {
   }
 
   const pages = {
+    // ===============================
+    // Dashboard
+    // ===============================
     dashboard: 'adminHome.html',
+    
+    // ===============================
+    // Cadastro de Pessoas
+    // ===============================
     menu_cadastro_do_sistema_pessoas_acao_novo: 'cadastroPessoa.html',
     menu_cadastro_do_sistema_pessoas_acao_consulta: 'consultaPessoa.html',
+
+     // ===============================
+    // Cadastro de Usuários
+    // ===============================
     menu_cadastro_do_sistema_usuarios_acao_consulta: 'consultaUsuario.html',
+    menu_cadastro_do_sistema_usuarios_acao_novo: 'cadastroUsuario.html',
+
+    // ===============================
+    // Módulo Pedido
+    // ===============================
     menu_modulos_de_gestao_pedidos_acao_consulta_de_pedidos: '/public/pages/pedidos/pedidosConsulta.html',
     menu_modulos_de_gestao_pedidos_acao_novo_pedido: '/public/pages/pedidos/pedidosNovo.html',
 
@@ -165,7 +181,20 @@ function loadContent(target) {
     menu_modulos_de_gestao_estoque_acao_consulta_de_itens: '/public/pages/estoque/itemConsulta.html',
     menu_modulos_de_gestao_estoque_acao_movimentar_estoque: '/public/pages/estoque/movimentarEstoque.html',
     menu_modulos_de_gestao_estoque_acao_inventario_de_estoque: '/public/pages/estoque/inventarioEstoque.html',
-    menu_modulos_de_gestao_estoque_acao_relatorios_de_estoque: '/public/pages/estoque/relatoriosEstoque.html'
+    menu_modulos_de_gestao_estoque_acao_relatorios_de_estoque: '/public/pages/estoque/relatoriosEstoque.html',
+
+    // ===============================
+    // Módulo Compras
+    // ===============================
+    menu_modulos_de_gestao_compras_acao_criar_compra: '/public/pages/compras/comprasCadastrar.html',
+    menu_modulos_de_gestao_compras_acao_consultar_compras: '/public/pages/compras/comprasConsulta.html',
+    menu_modulos_de_gestao_compras_acao_itens_de_compra: '/public/pages/compras/compraItensConsulta.html',
+    menu_modulos_de_gestao_compras_acao_finalizar_compra: '/public/pages/compras/comprasFinalizar.html',
+    menu_modulos_de_gestao_compras_acao_cancelar_compra: '/public/pages/compras/comprasCancelar.html',
+    menu_modulos_de_gestao_compras_acao_cotacao_de_precos: '/public/pages/compras/cotacaoPrecos.html',
+    menu_modulos_de_gestao_compras_acao_cadastro_de_fornecedores: '/public/pages/compras/fornecedoresCadastrar.html',
+    menu_modulos_de_gestao_compras_acao_relatorios_de_compras: '/public/pages/compras/relatoriosCompras.html'
+
   };
 
 

@@ -1,0 +1,146 @@
+/* ===========================
+   COMPRAS - ESTILO PRINCIPAL
+=========================== */
+
+@import url("/public/css/styleConsultaPessoa.css");
+
+/* ===========================
+   TITULO
+=========================== */
+.cp-title::before {
+  content: "🛒 ";
+  font-size: 1.2rem;
+}
+
+/* ===========================
+   FORMULÁRIOS
+=========================== */
+.cp-form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.cp-form input,
+.cp-form select,
+.cp-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.cp-btn-group {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.cp-btn-group button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cp-btn-group button.primary {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.cp-btn-group button:hover {
+  opacity: 0.9;
+}
+
+/* ===========================
+   TABELAS
+=========================== */
+.cp-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.cp-tabela th,
+.cp-tabela td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.cp-tabela th {
+  background-color: #1976d2;
+  color: white;
+  font-weight: 600;
+}
+
+.cp-tabela tr:hover {
+  background-color: rgba(25, 118, 210, 0.1);
+}
+
+.cp-tabela button {
+  padding: 3px 8px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ===========================
+   PAGINAÇÃO
+=========================== */
+.cp-paginacao {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===========================
+   FORMULÁRIO DE EDIÇÃO / MODAL
+=========================== */
+.cp-form-edicao {
+  background: rgba(0,0,0,0.05);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.cp-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cp-form-header h3 {
+  margin: 0;
+}
+
+.cp-form-actions button.icon-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* ===========================
+   RESPONSIVO
+=========================== */
+@media (max-width: 768px) {
+  .cp-tabela th:nth-child(3),
+  .cp-tabela th:nth-child(4),
+  .cp-tabela th:nth-child(5),
+  .cp-tabela th:nth-child(6),
+  .cp-tabela td:nth-child(3),
+  .cp-tabela td:nth-child(4),
+  .cp-tabela td:nth-child(5),
+  .cp-tabela td:nth-child(6) {
+    display: none;
+  }
+}

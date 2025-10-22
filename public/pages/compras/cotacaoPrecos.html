@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/public/css/compras/styleCompras.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Cotação de Preços</h2>
+
+  <form id="form-cotacao" class="cp-filtro">
+    <input type="text" id="busca-fornecedor" placeholder="🔍 Fornecedor" />
+    <input type="text" id="busca-produto" placeholder="🔍 Produto" />
+    <button type="submit">🔎 Consultar</button>
+  </form>
+
+  <div class="table-container">
+    <table id="tabela-cotacoes" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>ID Cotação</th>
+          <th>Fornecedor</th>
+          <th>Produto</th>
+          <th>Preço Unitário</th>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script type="module" src="/public/js/compras/scriptCotacaoPrecos.js"></script>
+

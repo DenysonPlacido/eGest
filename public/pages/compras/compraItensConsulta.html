@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/public/css/compras/styleCompras.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Itens de Compra</h2>
+
+  <form id="form-busca-itens-compra" class="cp-filtro">
+    <input type="number" id="busca-compra-id" placeholder="🔍 ID da Compra" />
+    <input type="text" id="busca-descricao" placeholder="🔍 Descrição do Item" />
+    <button type="submit">🔎 Buscar</button>
+    <button type="button" id="btn-exportar-itens">📊 Exportar</button>
+  </form>
+
+  <div class="table-container">
+    <table id="tabela-itens-compra" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>ID Item</th>
+          <th>ID Compra</th>
+          <th>Produto/Item</th>
+          <th>Quantidade</th>
+          <th>Preço Unitário</th>
+          <th>Preço Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- carregado via JS -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script type="module" src="/public/js/compras/scriptCompraItensConsulta.js"></script>

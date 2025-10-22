@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="/public/css/compras/styleCompras.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Finalizar Compra</h2>
+
+  <form id="form-finalizar-compra" class="cp-form">
+    <label for="compra_id">ID da Compra</label>
+    <input type="number" id="compra_id" required />
+
+    <label for="observacao_finalizar">Observação</label>
+    <textarea id="observacao_finalizar" rows="3"></textarea>
+
+    <div class="cp-btn-group">
+      <button type="submit" class="primary">Finalizar Compra</button>
+    </div>
+  </form>
+
+  <div id="msg-finalizar"></div>
+</div>
+
+<script type="module" src="/public/js/compras/scriptComprasFinalizar.js"></script>
