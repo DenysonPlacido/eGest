@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/public/css/estoque/styleEstoque.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Cadastrar Item</h2>
+
+  <form id="form-cadastrar-item" class="cp-form">
+    <label for="estoque_id">Estoque ID:</label>
+    <input type="number" id="estoque_id" required />
+
+    <label for="descricao_item">Descrição:</label>
+    <input type="text" id="descricao_item" required />
+
+    <label for="tipo_medicao">Tipo de Medição:</label>
+    <input type="text" id="tipo_medicao" />
+
+    <label for="peso_unitario">Peso Unitário:</label>
+    <input type="number" id="peso_unitario" step="0.01" />
+
+    <label for="estoque_unidade">Qtd. Unidade:</label>
+    <input type="number" id="estoque_unidade" value="0" />
+
+    <label for="estoque_peso">Qtd. Peso:</label>
+    <input type="number" id="estoque_peso" step="0.01" value="0" />
+
+    <label for="custo_unitario">Custo Unitário:</label>
+    <input type="number" id="custo_unitario" step="0.01" />
+
+    <label for="valor_venda">Valor de Venda:</label>
+    <input type="number" id="valor_venda" step="0.01" />
+
+    <div class="cp-btn-group">
+      <button type="submit" class="primary">Cadastrar Item</button>
+      <button type="reset">Limpar</button>
+    </div>
+  </form>
+
+  <div id="msg-cadastro-item"></div>
+</div>
+
+<script type="module" src="/public/js/estoque/scriptItemCadastrar.js"></script>

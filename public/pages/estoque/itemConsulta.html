@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="/public/css/estoque/styleEstoque.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Consulta de Itens</h2>
+
+  <form id="form-busca-itens" class="cp-filtro">
+    <input type="number" id="busca-estoque" placeholder="🔍 ID do Estoque" />
+    <input type="text" id="busca-descricao" placeholder="🔍 Descrição do Item" />
+    <button type="submit">🔎 Buscar</button>
+    <button type="button" id="btn-exportar-itens">📊 Exportar</button>
+  </form>
+
+  <div class="table-container">
+    <table id="tabela-itens" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Estoque</th>
+          <th>Descrição</th>
+          <th>Tipo</th>
+          <th>Qtd. Unidade</th>
+          <th>Qtd. Peso</th>
+          <th>Custo Unit.</th>
+          <th>Valor Venda</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- carregado via JS -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script type="module" src="/public/js/estoque/scriptItemConsulta.js"></script>

@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="/public/css/estoque/styleEstoque.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Inventário de Estoque</h2>
+
+  <form id="form-busca-inventario" class="cp-filtro">
+    <input type="number" id="busca-estoque" placeholder="🔍 ID do Estoque" />
+    <input type="text" id="busca-descricao" placeholder="🔍 Descrição do Item" />
+    <button type="submit">🔎 Buscar</button>
+    <button type="button" id="btn-exportar-inventario">📊 Exportar</button>
+  </form>
+
+  <div class="table-container">
+    <table id="tabela-inventario" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Estoque</th>
+          <th>Descrição</th>
+          <th>Qtd. Atual</th>
+          <th>Qtd. Contada</th>
+          <th>Diferença</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- carregado via JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cp-btn-group">
+    <button id="btn-salvar-inventario" class="primary">Salvar Ajustes</button>
+  </div>
+
+  <div id="msg-inventario"></div>
+</div>
+
+<script type="module" src="/public/js/estoque/scriptInventario.js"></script>

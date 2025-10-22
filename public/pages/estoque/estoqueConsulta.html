@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/public/css/estoque/styleEstoque.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Consulta de Estoques</h2>
+
+  <form id="form-busca" class="cp-filtro">
+    <input type="text" id="busca-id" placeholder="🔍 ID" />
+    <input type="text" id="busca-localizacao" placeholder="🔍 Localização" />
+    <button type="submit">🔎 Buscar</button>
+    <button type="button" id="btn-exportar">📊 Exportar</button>
+  </form>
+
+  <div class="table-container">
+    <table id="tabela-estoques" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Localização</th>
+          <th>Responsável</th>
+          <th>Data Inclusão</th>
+          <th>Ativo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script type="module" src="/public/js/estoque/scriptEstoqueConsulta.js"></script>

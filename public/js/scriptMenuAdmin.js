@@ -5,10 +5,10 @@ import { showAlert } from './alerts.js';
 export function gerarTargetHierarquico(caminho) {
   return 'menu_' + caminho.map(p =>
     p.toLowerCase()
-     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-     .replace(/\s+/g, '_')
-     .replace(/[^\w\-]/g, '')
-     .replace(/\_+/g, '_')
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, '_')
+      .replace(/[^\w\-]/g, '')
+      .replace(/\_+/g, '_')
   ).join('_');
 }
 
@@ -154,8 +154,20 @@ function loadContent(target) {
     menu_cadastro_do_sistema_pessoas_acao_consulta: 'consultaPessoa.html',
     menu_cadastro_do_sistema_usuarios_acao_consulta: 'consultaUsuario.html',
     menu_modulos_de_gestao_pedidos_acao_consulta_de_pedidos: '/public/pages/pedidos/pedidosConsulta.html',
-    menu_modulos_de_gestao_pedidos_acao_novo_pedido: '/public/pages/pedidos/pedidosNovo.html'
+    menu_modulos_de_gestao_pedidos_acao_novo_pedido: '/public/pages/pedidos/pedidosNovo.html',
+
+    // ===============================
+    // Módulo Estoque
+    // ===============================
+    menu_modulos_de_gestao_estoque_acao_cadastrar_estoque: '/public/pages/estoque/estoqueCadastrar.html',
+    menu_modulos_de_gestao_estoque_acao_consulta_de_estoques: '/public/pages/estoque/estoqueConsulta.html',
+    menu_modulos_de_gestao_estoque_acao_cadastrar_item: '/public/pages/estoque/itemCadastrar.html',
+    menu_modulos_de_gestao_estoque_acao_consulta_de_itens: '/public/pages/estoque/itemConsulta.html',
+    menu_modulos_de_gestao_estoque_acao_movimentar_estoque: '/public/pages/estoque/movimentarEstoque.html',
+    menu_modulos_de_gestao_estoque_acao_inventario_de_estoque: '/public/pages/estoque/inventarioEstoque.html',
+    menu_modulos_de_gestao_estoque_acao_relatorios_de_estoque: '/public/pages/estoque/relatoriosEstoque.html'
   };
+
 
   const page = pages[target];
   if (!page) {

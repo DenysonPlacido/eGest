@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="/public/css/estoque/styleEstoque.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Relatórios de Estoque</h2>
+
+  <form id="form-filtro-relatorios" class="cp-filtro">
+    <input type="number" id="filtro-estoque" placeholder="🔍 ID do Estoque" />
+    <input type="text" id="filtro-descricao" placeholder="🔍 Descrição do Item" />
+    <input type="date" id="filtro-data-inicio" />
+    <input type="date" id="filtro-data-fim" />
+    <button type="submit">🔎 Gerar Relatório</button>
+  </form>
+
+  <div class="table-container">
+    <table id="tabela-relatorios" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>ID Item</th>
+          <th>Descrição</th>
+          <th>Estoque Atual</th>
+          <th>Giro (Qtd. Vendida)</th>
+          <th>Valorização</th>
+          <th>Estoque Mínimo</th>
+          <th>Observações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- carregado via JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <div id="msg-relatorios"></div>
+</div>
+
+<script type="module" src="/public/js/estoque/scriptRelatorios.js"></script>

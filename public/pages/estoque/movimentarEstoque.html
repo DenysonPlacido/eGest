@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="/public/css/estoque/styleEstoque.css" />
+
+<div class="cp-container">
+  <h2 class="cp-title">Movimentar Estoque</h2>
+
+  <form id="form-movimentar" class="cp-form">
+    <label for="item_id">Item ID</label>
+    <input type="number" id="item_id" required />
+
+    <label for="tipo_movimento">Tipo de Movimento</label>
+    <select id="tipo_movimento">
+      <option value="ENTRADA">Entrada</option>
+      <option value="SAIDA">Saída</option>
+    </select>
+
+    <label for="quantidade_unidade">Quantidade (Unidade)</label>
+    <input type="number" id="quantidade_unidade" value="0" min="0" />
+
+    <label for="quantidade_peso">Quantidade (Peso)</label>
+    <input type="number" id="quantidade_peso" value="0" step="0.01" min="0" />
+
+    <div class="cp-btn-group">
+      <button type="submit" class="primary">Registrar Movimento</button>
+      <button type="reset">Limpar</button>
+    </div>
+  </form>
+
+  <div id="msg-movimento"></div>
+</div>
+
+<script type="module" src="/public/js/estoque/scriptMovimentar.js"></script>
