@@ -1,3 +1,6 @@
+//public\js\compras\scriptComprasCadastrar.js
+
+
 const form = document.getElementById('form-cadastrar-compra');
 const msg = document.getElementById('msg-cadastro-compra');
 
