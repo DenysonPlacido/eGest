@@ -5,9 +5,11 @@
 
   <form id="form-busca-itens" class="cp-filtro">
     <input type="number" id="busca-estoque" placeholder="🔍 ID do Estoque" />
+    <input type="number" id="busca-item-id" placeholder="🔍 ID do Item" />
     <input type="text" id="busca-descricao" placeholder="🔍 Descrição do Item" />
     <button type="submit">🔎 Buscar</button>
     <button type="button" id="btn-exportar-itens">📊 Exportar</button>
+    <button type="button" id="btn-novo-item">➕ Novo</button>
   </form>
 
   <div class="table-container">
@@ -29,6 +31,71 @@
         <!-- carregado via JS -->
       </tbody>
     </table>
+  </div>
+
+  <div class="paginacao">
+    <button type="button" id="btn-anterior-itens">← Anterior</button>
+    <span id="pagina-atual-itens">Página 1</span>
+    <button type="button" id="btn-proximo-itens">Próximo →</button>
+  </div>
+</div>
+
+<!-- Formulário modal de edição / visualização (mesmo padrão do scriptConsultaPessoa) -->
+<div id="form-edicao-item-container" class="modal" style="display:none;">
+  <div class="modal-content">
+    <header class="modal-header">
+      <h3 id="form-edicao-item-title">Visualizar Item</h3>
+      <div class="modal-actions">
+        <button id="btn-toggle-edit-item" class="icon-btn" title="Editar">✏️</button>
+        <button id="btn-close-form-item" class="icon-btn" title="Fechar">✖️</button>
+      </div>
+    </header>
+
+    <form id="form-edicao-item" class="form-edicao">
+      <!-- campos usados pelo script -->
+      <input type="hidden" name="item_id" />
+
+      <label>
+        Estoque ID
+        <input name="estoque_id" type="number" />
+      </label>
+
+      <label>
+        Descrição
+        <input name="descricao_item" type="text" />
+      </label>
+
+      <label>
+        Tipo Medição
+        <input name="tipo_medicao" type="text" />
+      </label>
+
+      <label>
+        Unidade
+        <input name="estoque_unidade" type="text" />
+      </label>
+
+      <label>
+        Peso
+        <input name="estoque_peso" type="text" />
+      </label>
+
+      <label>
+        Custo Unit.
+        <input name="custo_unitario" type="text" />
+      </label>
+
+      <label>
+        Valor Venda
+        <input name="valor_venda" type="text" />
+      </label>
+
+      <footer class="modal-footer">
+        <button type="submit" id="btn-salvar-item" class="btn-primary" style="display:none;">Salvar</button>
+        <button type="button" id="btn-cancelar-edicao-item" style="display:none;">Cancelar</button>
+        <button type="button" id="btn-excluir-item" class="btn-danger" style="display:none;">Excluir</button>
+      </footer>
+    </form>
   </div>
 </div>
 

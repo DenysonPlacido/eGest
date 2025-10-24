@@ -3,117 +3,42 @@
 <div class="cp-container">
   <h2 class="cp-title">Consulta de Pessoas</h2>
 
-  <form id="form-busca" class="cp-filtro">
-    <input type="text" id="busca-id" placeholder="🔍 ID da pessoa" />
-    <input type="text" id="busca-nome" placeholder="🔍 Nome da pessoa" />
-    <button type="submit">🔎 Buscar</button>
-    <button type="button" id="btn-exportar">📊 Exportar</button>
-  </form>
+<form id="form-busca" class="cp-filtro">
+  <input type="text" id="busca-id" placeholder="🔍 ID da pessoa" />
+  <input type="text" id="busca-nome" placeholder="🔍 Nome da pessoa" />
+  <button type="submit">🔎 Buscar</button>
+  <button type="button" id="btn-exportar">📊 Exportar</button>
+  <button type="button" id="btn-novo" class="primary">➕ Novo</button>
+</form>
 
-  <table id="tabela-pessoas" class="cp-tabela">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>CPF/CNPJ</th>
-        <th>Data Nasc.</th>
-        <th>Email</th>
-        <th>Telefone</th>
-        <th>Logradouro</th>
-        <th>Cidade / UF</th>
-        <th>País</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- carregado via JS -->
-    </tbody>
-  </table>
+
+
+  <div class="table-container">
+    <table id="tabela-pessoas" class="cp-tabela">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CPF/CNPJ</th>
+          <th>Data Nasc.</th>
+          <th>Email</th>
+          <th>Telefone</th>
+          <th>Logradouro</th>
+          <th>Cidade / UF</th>
+          <th>País</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- carregado via JS -->
+      </tbody>
+    </table>
+  </div>
 
   <div class="cp-paginacao">
     <button id="btn-anterior">⬅️ Página anterior</button>
     <span id="pagina-atual">Página 1</span>
     <button id="btn-proximo">➡️ Próxima página</button>
-  </div>
-
-  <!-- Formulário de visualização/edição (container único, controla modos) -->
-  <div id="form-edicao-container" class="cp-form-edicao" style="display: none;">
-    <div class="cp-form-header">
-      <h3 id="form-edicao-title">Visualizar Pessoa</h3>
-      <div class="cp-form-actions">
-        <button id="btn-toggle-edit" title="Editar" class="icon-btn" type="button">✏️</button>
-        <button id="btn-close-form" title="Fechar" class="icon-btn" type="button">✖️</button>
-      </div>
-    </div>
-
-    <form id="form-edicao">
-      <input type="hidden" name="pessoa_id" />
-
-      <div class="cp-row">
-        <label>Nome</label>
-        <input type="text" name="nome" placeholder="Nome completo" />
-      </div>
-
-      <div class="cp-row">
-        <label>CPF/CNPJ</label>
-        <input type="text" name="cpf_cnpj" placeholder="CPF/CNPJ" disabled />
-      </div>
-
-      <div class="cp-row">
-        <label>Data de Nascimento</label>
-        <input type="date" name="data_nascimento" />
-      </div>
-
-      <div class="cp-row">
-        <label>Email</label>
-        <input type="email" name="email" />
-      </div>
-
-      <div class="cp-row">
-        <label>DDD</label>
-        <input type="text" name="ddd" maxlength="4" />
-        <label>Telefone</label>
-        <input type="text" name="fone" maxlength="15" />
-      </div>
-
-      <!-- Endereço -->
-      <div class="cp-row">
-        <label>CEP</label>
-        <input type="text" name="cep" maxlength="9" />
-        <label>Logradouro</label>
-        <input type="text" name="logradouro" />
-        <button type="button" id="btn-buscar-endereco" class="small">🔍</button>
-      </div>
-
-      <div class="cp-row">
-        <label>Bairro</label>
-        <input type="text" name="bairro" />
-        <label>Número</label>
-        <input type="text" name="numero" />
-        <label>Complemento</label>
-        <input type="text" name="complemento" />
-      </div>
-
-      <div class="cp-row">
-        <label>Cidade</label>
-        <input type="text" name="nome_cidade" disabled />
-        <label>UF</label>
-        <input type="text" name="codigo_uf" disabled />
-        <label>País</label>
-        <input type="text" name="nome_pais" disabled />
-      </div>
-
-      <!-- campos técnicos não visíveis -->
-      <input type="hidden" name="cod_logradouro" />
-      <input type="hidden" name="cod_cidade" />
-      <input type="hidden" name="id_pais" />
-
-      <div class="cp-btn-group">
-        <button type="submit" id="btn-salvar" class="primary">Salvar</button>
-        <button type="button" id="btn-cancelar-edicao">Cancelar</button>
-        <button type="button" id="btn-excluir-edicao" class="danger">Excluir</button>
-      </div>
-    </form>
   </div>
 
   <!-- Modal: Busca de Endereços -->
@@ -135,6 +60,115 @@
     </div>
   </div>
 
+</div>
+
+<!-- Modal único de visualização/edição (mantém os IDs usados pelo script) -->
+<div id="form-edicao-container" class="modal" style="display:none;">
+  <div class="modal-content">
+    <header class="modal-header grid-header">
+      <div>
+        <h3 id="form-edicao-title">Visualizar Pessoa</h3>
+        <p class="muted" id="form-edicao-subtitle">Dados cadastrais e contato</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="btn-toggle-edit" class="icon-btn" title="Editar" aria-label="Editar">✏️</button>
+        <button type="button" id="btn-close-form" class="icon-btn" title="Fechar" aria-label="Fechar" data-close>✖️</button>
+      </div>
+    </header>
+
+    <form id="form-edicao" class="form-edicao">
+      <input type="hidden" name="pessoa_id" />
+
+      <div class="form-grid">
+        <div class="field full">
+          <label class="label">Nome / Razão</label>
+          <input class="input" name="nome" type="text" placeholder="Nome completo" />
+        </div>
+
+        <div class="field">
+          <label class="label">CPF / CNPJ</label>
+          <input class="input" name="cpf_cnpj" type="text" placeholder="000.000.000-00 / 00.000.000/0000-00" disabled />
+        </div>
+
+        <div class="field">
+          <label class="label">Data Nasc.</label>
+          <input class="input" name="data_nascimento" type="date" />
+        </div>
+
+        <div class="field">
+          <label class="label">Email</label>
+          <input class="input" name="email" type="email" />
+        </div>
+
+        <div class="field">
+          <label class="label">Telefone</label>
+          <div class="inline-row">
+            <input class="input small" name="ddd" type="text" maxlength="4" placeholder="DDD" />
+            <input class="input" name="fone" type="text" maxlength="15" placeholder="(00) 00000-0000" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">CEP</label>
+          <div class="inline-row">
+            <input class="input small cep" name="cep" type="text" maxlength="9" />
+            <button type="button" id="btn-buscar-endereco" class="btn small">Buscar</button>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label class="label">Logradouro</label>
+          <input class="input" name="logradouro" type="text" />
+        </div>
+
+        <div class="field">
+          <label class="label">Número</label>
+          <input class="input" name="numero" type="text" />
+        </div>
+
+        <div class="field">
+          <label class="label">Complemento</label>
+          <input class="input" name="complemento" type="text" />
+        </div>
+
+        <div class="field">
+          <label class="label">Bairro</label>
+          <input class="input" name="bairro" type="text" />
+        </div>
+
+        <div class="field">
+          <label class="label">Cidade</label>
+          <input class="input" name="nome_cidade" type="text" disabled />
+        </div>
+
+        <div class="field">
+          <label class="label">UF</label>
+          <input class="input" name="codigo_uf" type="text" disabled />
+        </div>
+
+        <div class="field">
+          <label class="label">País</label>
+          <input class="input" name="nome_pais" type="text" disabled />
+        </div>
+      </div>
+
+      <!-- campos técnicos -->
+      <input type="hidden" name="cod_logradouro" />
+      <input type="hidden" name="cod_cidade" />
+      <input type="hidden" name="id_pais" />
+
+      <footer class="modal-footer">
+        <div class="left-actions">
+          <button type="button" id="btn-excluir-edicao" class="btn danger" style="display:none;">Excluir</button>
+        </div>
+        <div class="right-actions">
+          <button type="button" id="btn-cancelar-edicao" class="btn" style="display:none;" data-close>Cancelar</button>
+          <button type="submit" id="btn-salvar" class="btn primary" style="display:none;">Salvar</button>
+        </div>
+      </footer>
+    </form>
+  
+    </div>
 </div>
 
 <script type="module" src="js/scriptConsultaPessoa.js"></script>

@@ -12,6 +12,8 @@ const btnExportar = document.getElementById('btn-exportar');
 const btnAnterior = document.getElementById('btn-anterior');
 const btnProximo = document.getElementById('btn-proximo');
 const paginaLabel = document.getElementById('pagina-atual');
+const btnNovo = document.getElementById('btn-novo');
+
 
 const formEdicaoContainer = document.getElementById('form-edicao-container');
 const formEdicao = document.getElementById('form-edicao');
@@ -28,7 +30,27 @@ const btnPesquisarEndereco = document.getElementById('btn-pesquisar-endereco');
 const btnFecharModalEndereco = document.getElementById('btn-fechar-modal-endereco');
 const resultadoEnderecos = document.getElementById('resultado-enderecos');
 
-let editMode = false; // false = somente visualização; true = edição
+let editMode = false; // false = somente visualizacao; true = edicao
+
+if (btnCloseForm) {
+  btnCloseForm.addEventListener('click', () => {
+    formEdicaoContainer.style.display = 'none';
+  });
+}
+
+if (btnCancelarEdicao) {
+  btnCancelarEdicao.addEventListener('click', () => {
+    formEdicaoContainer.style.display = 'none';
+  });
+}
+
+if (btnToggleEdit) {
+  btnToggleEdit.addEventListener('click', () => {
+    editMode = true;
+    setFormMode('edit');
+    formEdicaoTitle.textContent = `Editar Pessoa — ${formEdicao.pessoa_id.value}`;
+  });
+}
 
 // ---------- Mask helpers ----------
 function onlyDigits(str){ return str.replace(/\D/g,''); }
@@ -210,9 +232,27 @@ function renderizarResultados(lista) {
   });
 }
 
+
+btnNovo && btnNovo.addEventListener('click', () => {
+  if (!formEdicaoContainer || !formEdicao) {
+    window.location.href = 'cadastroPessoa.html';
+    return;
+  }
+
+  formEdicao.reset();
+  formEdicaoTitle.textContent = 'Nova Pessoa';
+
+  editMode = true;
+  setFormMode('edit');
+  formEdicaoContainer.style.display = 'flex';
+  attachMasks();
+});
+
+
+
 // abre formulário — se modoEdit = false: só leitura (visualizar); se true: abrir já em edição
 function abrirFormulario(pessoa, modoEdit = false) {
-  formEdicaoContainer.style.display = 'block';
+  formEdicaoContainer.style.display = 'flex';
   editMode = modoEdit;
 
   formEdicaoTitle.textContent = modoEdit ? `Editar Pessoa — ${pessoa.pessoa_id}` : `Visualizar Pessoa — ${pessoa.pessoa_id}`;
@@ -360,7 +400,7 @@ formEdicao.addEventListener('submit', async (e) => {
 // ---------- BUSCA DE ENDEREÇO (modal) ----------
 btnBuscarEndereco.addEventListener('click', () => {
   // abre modal
-  modalEndereco.style.display = 'block';
+  modalEndereco.style.display = 'flex';
   resultadoEnderecos.innerHTML = '';
   // clear modal inputs
   document.getElementById('busca-cep').value = formEdicao.cep.value || '';
@@ -466,9 +506,49 @@ function preencherEnderecoNoFormulario(item) {
   buscarPessoas();
   attachMasks();
 
-  // click outside modal to close (UX)
+  // click outside modal to close (UX) — trata modal de endereço e modal de edição
   window.addEventListener('click', (ev) => {
-    if(ev.target === modalEndereco) modalEndereco.style.display = 'none';
+    if (ev.target === modalEndereco) modalEndereco.style.display = 'none';
+    if (ev.target === formEdicaoContainer) {
+      formEdicaoContainer.style.display = 'none';
+      editMode = false;
+      if (formEdicao) formEdicao.reset();
+    }
+  });
+
+  // fechar com ESC
+  window.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') {
+      if (modalEndereco && modalEndereco.style.display !== 'none') modalEndereco.style.display = 'none';
+      if (formEdicaoContainer && formEdicaoContainer.style.display !== 'none') {
+        formEdicaoContainer.style.display = 'none';
+        editMode = false;
+        if (formEdicao) formEdicao.reset();
+      }
+    }
   });
 
 })();
+
+function adjustModalSizing() {
+  const modal = document.getElementById('form-edicao-container');
+  const content = modal?.querySelector('.modal-content');
+  if (!modal || !content) return;
+
+  // força o maxHeight conforme viewport (CSS já tem, só garante via JS em casos extremos)
+  const maxH = Math.max(window.innerHeight - 80, 200);
+  content.style.maxHeight = `${maxH}px`;
+
+  // se o conteúdo excede 90% da altura da viewport, alinhar ao topo para melhor usabilidade
+  const contentScroll = content.scrollHeight;
+  if (contentScroll > window.innerHeight * 0.9) {
+    modal.classList.add('align-top');
+  } else {
+    modal.classList.remove('align-top');
+  }
+}
+
+// chamar adjustModalSizing sempre que abrir o modal ou quando redimensionar a janela
+window.addEventListener('resize', () => requestAnimationFrame(adjustModalSizing));
+
+

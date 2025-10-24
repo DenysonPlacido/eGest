@@ -129,6 +129,114 @@
   cursor: pointer;
 }
 
+.cp-filtro { /* formulário de busca (mapeia cp-form) */
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.cp-filtro input[type="text"],
+.cp-filtro input[type="number"],
+.cp-filtro button {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Mapear paginação */
+.paginacao, .cp-paginacao {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Mapear form de edição (HTML usa form-edicao) */
+.form-edicao,
+.cp-form-edicao {
+  background: rgba(0,0,0,0.03);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* Container da tabela: permitir scroll horizontal em telas pequenas */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Modal básico usado em itemConsulta.html */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  z-index: 500; /* acima do header (header z-index = 100) */
+  padding: 12px;
+}
+.modal[style*="display:none"] { /* manter oculto quando inline style usado */
+  display: none;
+}
+.modal-content {
+  background: var(--card-bg, #fff);
+  width: 720px;
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  overflow: auto;
+  max-height: 90vh;
+  padding: 12px;
+}
+
+/* Ações do header do modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Botões do modal */
+.modal-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+/* Responsividade: ajuste para telas pequenas */
+@media (max-width: 768px) {
+  .cp-filtro { gap: 6px; padding: 4px 0; }
+  .cp-filtro input { flex: 1 1 40%; min-width: 120px; }
+  .cp-filtro button { flex: 0 0 auto; }
+
+  /* Tabela: ocultar colunas pesadas (mantendo ações e principais) */
+  .cp-tabela th:nth-child(4),
+  .cp-tabela th:nth-child(5),
+  .cp-tabela td:nth-child(4),
+  .cp-tabela td:nth-child(5) {
+    display: none;
+  }
+
+  /* Modal em full-screen para melhor usabilidade mobile */
+  .modal-content {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    max-height: 100vh;
+  }
+
+  /* Garantir que header não cubra conteúdos quando fixo */
+  body { padding-top: 50px; } /* se header fixed com 50px, ajuste conforme necessário */
+}
+
+/* Pequenas melhorias visuais */
+.cp-tabela td > button { margin-right: 6px; }
+
 /* ===========================
    RESPONSIVO
 =========================== */
@@ -144,3 +252,5 @@
     display: none;
   }
 }
+
+

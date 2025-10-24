@@ -286,6 +286,126 @@
   font-size: 0.85rem;
 }
 
+
+
+/* Regras para centralizar modais usados pelo script (form-edicao-container e modal-endereco) */
+#form-edicao-container,
+#modal-endereco {
+  display: none;                 /* padrão oculto */
+  position: fixed;
+  inset: 0;                      /* top:0; right:0; bottom:0; left:0; */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  z-index: 500;                  /* acima do header (header z-index ~100) */
+  padding: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Conteúdo do modal */
+#form-edicao-container .modal-content,
+#modal-endereco .modal-content,
+.cp-modal-content,
+.modal-content {
+  width: 720px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: 10px;
+  background: var(--card-bg, #fff);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  padding: 12px;
+}
+
+/* Forçar centralização quando inline style="display:block" ou display:flex for aplicado pelo JS */
+#form-edicao-container[style*="display:block"],
+#form-edicao-container[style*="display:flex"],
+#modal-endereco[style*="display:block"],
+#modal-endereco[style*="display:flex"] {
+  display: flex !important;
+}
+
+/* Modal - layout profissional e responsivo */
+.modal .modal-content {
+  width: 820px;
+  max-width: calc(100% - 32px);
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  background: var(--card-bg, #fff);
+}
+
+/* Header */
+.grid-header { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px; }
+.grid-header h3 { margin:0; font-size:1.15rem; }
+.muted { color:var(--muted,#666); font-size:0.9rem; margin-top:4px; }
+
+/* Form grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+.field { display:flex; flex-direction:column; }
+.field.full { grid-column: 1 / -1; }
+.label { font-size:0.85rem; color:var(--muted,#555); margin-bottom:6px; font-weight:600; }
+.input {
+  padding: 8px 10px;
+  border:1px solid #d0d7de;
+  border-radius:6px;
+  font-size:0.95rem;
+  background: var(--input-bg, #fff);
+  color: var(--text, #222);
+}
+.input[disabled] { background:#f5f7fa; color:#555; }
+
+/* inline small inputs / grouped */
+.inline-row { display:flex; gap:8px; align-items:center; }
+.input.small { width:72px; padding:6px 8px; }
+
+/* Campo CEP um pouco maior que outros "small" */
+.input.cep {
+  width: 120px;       /* largura confortável para 00000-000 */
+  min-width: 100px;
+}
+
+/* Mobile: ocupa largura total em telas pequenas */
+@media (max-width: 520px) {
+  .input.cep {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+/* Footer buttons */
+.modal-footer {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:14px;
+  gap:12px;
+}
+.btn { padding:8px 12px; border-radius:6px; border:1px solid #cfd8e3; background:#fff; cursor:pointer; }
+.btn.primary { background: linear-gradient(180deg,#2b7cff,#1e5fd6); color:#fff; border: none; }
+.btn.danger { background: linear-gradient(180deg,#ff6b6b,#e04b4b); color:#fff; border:none; }
+
+/* actions alignment */
+.left-actions { display:flex; gap:8px; }
+.right-actions { display:flex; gap:8px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .form-grid { grid-template-columns: repeat(2, 1fr); }
+  .modal .modal-content { width: 720px; }
+}
+@media (max-width: 520px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .grid-header { align-items:center; }
+  .modal .modal-content { width:100%; height:100%; border-radius:0; padding:14px; }
+  .inline-row { flex-wrap:nowrap; }
+}
+
 /* ===========================
    Responsividade
 =========================== */
@@ -345,6 +465,18 @@
   }
 }
 
+/* Mobile: modal full-screen para melhor UX */
+@media (max-width: 768px) {
+  #form-edicao-container .modal-content,
+  #modal-endereco .modal-content {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    padding: 10px;
+  }
+}
+
 /* Celulares pequenos (até 480px) */
 @media (max-width: 480px) {
   .cp-container {
@@ -372,9 +504,6 @@
     gap: 8px;
   }
 }
-
-
-
 
 /* ===========================
    Exibição simplificada no mobile
@@ -415,4 +544,43 @@
     font-size: 0.85rem;
     padding: 6px 8px;
   }
+}
+
+/* Forçar centralização se JS aplicar style="display:block" */
+#form-edicao-container[style*="display:block"],
+#form-edicao-container[style*="display:flex"] {
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,0.36);
+  z-index: 900;
+  padding:12px;
+}
+
+/* Modal dinâmico: acompanha conteúdo, mas respeita viewport */
+.modal .modal-content,
+#form-edicao-container .modal-content {
+  width: min(1100px, calc(100% - 48px)); /* cresce até 1100px ou margem nas laterais */
+  min-width: 320px;
+  max-width: 100%;
+  height: auto;                         /* deixa altura definida pelo conteúdo */
+  max-height: calc(100vh - 80px);       /* não ultrapassa a viewport */
+  overflow: auto;                       /* scroll interno se necessário */
+  box-sizing: border-box;
+  padding: 18px;
+  transition: max-height 200ms ease, width 200ms ease;
+}
+
+/* Quando o conteúdo for muito alto, alinhar ao topo para melhor UX mobile */
+#form-edicao-container.align-top {
+  align-items: flex-start;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+/* Pequeno ajuste visual quando alinhado ao topo */
+#form-edicao-container.align-top .modal-content {
+  border-radius: 8px;
 }
