@@ -1,8 +1,6 @@
+import { showAlert } from '../alerts.js';
 
-import { showAlert } from './alerts.js';
-
-
-const API_BASE = 'https://e-gest-back-end.vercel.app/estoque';
+const API_BASE = 'https://e-gest-back-end.vercel.app/api/estoque'; 
 
 const tabela = document.querySelector('#tabela-estoques tbody');
 const formBusca = document.getElementById('form-busca');
@@ -37,7 +35,7 @@ async function carregarEstoques(filtro = {}) {
 
     if (!dados.length) {
       tabela.innerHTML = `<tr><td colspan="6">Nenhum estoque encontrado.</td></tr>`;
-      return;
+      return showAlert('⚠️ Nenhum estoque encontrado', 'warning', 4000);
     }
 
     dados.forEach(e => {
@@ -52,7 +50,7 @@ async function carregarEstoques(filtro = {}) {
     });
   } catch (err) {
     console.error('❌ Erro ao carregar estoques:', err);
-    alert(`Erro: ${err.message}`);
+    showAlert(`❌ ${err.message}`, 'error', 4000);
   }
 }
 
