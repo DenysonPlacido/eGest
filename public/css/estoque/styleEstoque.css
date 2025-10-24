@@ -95,11 +95,32 @@
    PAGINAÇÃO
 =========================== */
 .cp-paginacao {
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
+
+.cp-paginacao button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cp-paginacao button:hover {
+  background: var(--primary-color, #0056b3);
+  color: #fff;
+}
+
+#pagina-atual {
+  font-weight: 500;
+  color: var(--primary-color, #0056b3);
+}
+
 
 /* ===========================
    FORMULÁRIO DE EDIÇÃO / MODAL
@@ -182,14 +203,16 @@
   display: none;
 }
 .modal-content {
-  background: var(--card-bg, #fff);
-  width: 720px;
+  width: min(1000px, calc(100% - 48px));
   max-width: 100%;
+  box-sizing: border-box;
+  padding: 18px;
   border-radius: 10px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  background: var(--card-bg, #fff);
+  box-shadow: 0 12px 40px rgba(22, 28, 37, 0.18);
+  max-height: calc(100vh - 80px);
   overflow: auto;
-  max-height: 90vh;
-  padding: 12px;
+  transition: width 180ms ease, max-height 180ms ease;
 }
 
 /* Ações do header do modal */
@@ -206,6 +229,9 @@
   gap: 8px;
   justify-content: flex-end;
   margin-top: 12px;
+  align-items: center;
+  margin-top: 16px;
+  gap: 12px;
 }
 
 /* Responsividade: ajuste para telas pequenas */
@@ -233,6 +259,18 @@
   /* Garantir que header não cubra conteúdos quando fixo */
   body { padding-top: 50px; } /* se header fixed com 50px, ajuste conforme necessário */
 }
+@media (max-width: 920px) {
+  .form-grid { grid-template-columns: repeat(2, 1fr); }
+  .modal .modal-content { width: min(900px, calc(100% - 32px)); }
+}
+@media (max-width: 520px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .modal .modal-content { width: 100%; height: 100%; border-radius: 0; max-height: 100vh; padding:14px; }
+  .inline-row { gap:8px; }
+}
+
+/* alinhamento top quando conteúdo excede viewport */
+.modal.align-top { align-items: flex-start; padding-top: 18px; padding-bottom: 18px; }
 
 /* Pequenas melhorias visuais */
 .cp-tabela td > button { margin-right: 6px; }

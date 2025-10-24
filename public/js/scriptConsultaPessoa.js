@@ -233,6 +233,9 @@ function renderizarResultados(lista) {
 }
 
 
+
+
+
 btnNovo && btnNovo.addEventListener('click', () => {
   if (!formEdicaoContainer || !formEdicao) {
     window.location.href = 'cadastroPessoa.html';

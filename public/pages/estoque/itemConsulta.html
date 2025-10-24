@@ -33,67 +33,80 @@
     </table>
   </div>
 
-  <div class="paginacao">
-    <button type="button" id="btn-anterior-itens">← Anterior</button>
-    <span id="pagina-atual-itens">Página 1</span>
-    <button type="button" id="btn-proximo-itens">Próximo →</button>
+  <div class="cp-paginacao">
+    <button id="btn-anterior">⬅️ Página anterior</button>
+    <span id="pagina-atual">Página 1</span>
+    <button id="btn-proximo">➡️ Próxima página</button>
   </div>
 </div>
 
 <!-- Formulário modal de edição / visualização (mesmo padrão do scriptConsultaPessoa) -->
 <div id="form-edicao-item-container" class="modal" style="display:none;">
   <div class="modal-content">
-    <header class="modal-header">
-      <h3 id="form-edicao-item-title">Visualizar Item</h3>
+    <header class="modal-header grid-header">
+      <div>
+        <h3 id="form-edicao-item-title">Visualizar Item</h3>
+        <p class="muted" id="form-edicao-item-subtitle">Informações do estoque e valores</p>
+      </div>
       <div class="modal-actions">
-        <button id="btn-toggle-edit-item" class="icon-btn" title="Editar">✏️</button>
-        <button id="btn-close-form-item" class="icon-btn" title="Fechar">✖️</button>
+        <button type="button" id="btn-toggle-edit-item" class="icon-btn" title="Editar" aria-label="Editar">✏️</button>
+        <button type="button" id="btn-close-form-item" class="icon-btn" title="Fechar" aria-label="Fechar" data-close>✖️</button>
       </div>
     </header>
 
     <form id="form-edicao-item" class="form-edicao">
-      <!-- campos usados pelo script -->
       <input type="hidden" name="item_id" />
 
-      <label>
-        Estoque ID
-        <input name="estoque_id" type="number" />
-      </label>
+      <div class="form-grid">
+        <div class="field full">
+          <label class="label">Descrição</label>
+          <input class="input" name="descricao_item" type="text" />
+        </div>
 
-      <label>
-        Descrição
-        <input name="descricao_item" type="text" />
-      </label>
+        <div class="field">
+          <label class="label">Item ID</label>
+          <input class="input" name="item_id_display" type="text" disabled />
+        </div>
 
-      <label>
-        Tipo Medição
-        <input name="tipo_medicao" type="text" />
-      </label>
+        <div class="field">
+          <label class="label">Estoque ID</label>
+          <input class="input" name="estoque_id" type="number" />
+        </div>
 
-      <label>
-        Unidade
-        <input name="estoque_unidade" type="text" />
-      </label>
+        <div class="field">
+          <label class="label">Tipo Medição</label>
+          <input class="input" name="tipo_medicao" type="text" />
+        </div>
 
-      <label>
-        Peso
-        <input name="estoque_peso" type="text" />
-      </label>
+        <div class="field">
+          <label class="label">Unidade</label>
+          <input class="input" name="estoque_unidade" type="text" />
+        </div>
 
-      <label>
-        Custo Unit.
-        <input name="custo_unitario" type="text" />
-      </label>
+        <div class="field">
+          <label class="label">Peso</label>
+          <input class="input" name="estoque_peso" type="text" />
+        </div>
 
-      <label>
-        Valor Venda
-        <input name="valor_venda" type="text" />
-      </label>
+        <div class="field">
+          <label class="label">Custo Unit.</label>
+          <input class="input" name="custo_unitario" type="text" />
+        </div>
+
+        <div class="field">
+          <label class="label">Valor Venda</label>
+          <input class="input" name="valor_venda" type="text" />
+        </div>
+      </div>
 
       <footer class="modal-footer">
-        <button type="submit" id="btn-salvar-item" class="btn-primary" style="display:none;">Salvar</button>
-        <button type="button" id="btn-cancelar-edicao-item" style="display:none;">Cancelar</button>
-        <button type="button" id="btn-excluir-item" class="btn-danger" style="display:none;">Excluir</button>
+        <div class="left-actions">
+          <button type="button" id="btn-excluir-item" class="btn danger" style="display:none;">Excluir</button>
+        </div>
+        <div class="right-actions">
+          <button type="button" id="btn-cancelar-edicao-item" class="btn" style="display:none;" data-close>Cancelar</button>
+          <button type="submit" id="btn-salvar-item" class="btn primary" style="display:none;">Salvar</button>
+        </div>
       </footer>
     </form>
   </div>

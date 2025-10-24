@@ -4,7 +4,7 @@ import { showAlert } from '../alerts.js';
 const API_BASE = 'https://e-gest-back-end.vercel.app/api/estoque/itemestoque';
 
 let paginaAtual = 1;
-const limitePorPagina = 20;
+const limitePorPagina = 10;
 let resultados = [];
 
 const formBusca = document.getElementById('form-busca-itens');
@@ -26,7 +26,7 @@ const btnExcluir = document.getElementById('btn-excluir-item');
 let editMode = false;
 
 // ---------- helpers ----------
-function onlyDigits(str){ return (str || '').toString().replace(/\D/g,''); }
+function onlyDigits(str) { return (str || '').toString().replace(/\D/g, ''); }
 
 function attachMasks() {
   if (!formEdicao) return;
@@ -35,13 +35,40 @@ function attachMasks() {
   const valor = formEdicao.querySelector('[name="valor_venda"]');
 
   const moneyMask = (e) => {
-    const v = (e.target.value || '').replace(/[^\d.,]/g,'').replace(',', '.');
+    const v = (e.target.value || '').replace(/[^\d.,]/g, '').replace(',', '.');
     e.target.value = v;
   };
 
-  if(peso) peso.addEventListener('input', moneyMask);
-  if(custo) custo.addEventListener('input', moneyMask);
-  if(valor) valor.addEventListener('input', moneyMask);
+  if (peso) peso.addEventListener('input', moneyMask);
+  if (custo) custo.addEventListener('input', moneyMask);
+  if (valor) valor.addEventListener('input', moneyMask);
+}
+
+// adiciona logo após attachMasks — define comportamento visual do formulário
+function setFormMode(mode) {
+  if (!formEdicao) return;
+  const inputs = formEdicao.querySelectorAll('input, textarea, select');
+  const idDisplay = formEdicao.querySelector('[name="item_id_display"]'); // movido para topo
+
+  if (mode === 'view') {
+    inputs.forEach(i => i.disabled = true);
+    if (formEdicao.item_id) formEdicao.item_id.disabled = true;
+    if (idDisplay) idDisplay.disabled = true;
+
+    btnSalvar && (btnSalvar.style.display = 'none');
+    btnExcluir && (btnExcluir.style.display = 'none');
+    btnCancelarEdicao && (btnCancelarEdicao.style.display = 'none');
+    btnToggleEdit && (btnToggleEdit.style.display = 'inline-block');
+  } else { // 'edit'
+    inputs.forEach(i => i.disabled = false);
+    if (formEdicao.item_id) formEdicao.item_id.disabled = true; // proteger chave
+    if (idDisplay) idDisplay.disabled = true;
+
+    btnSalvar && (btnSalvar.style.display = 'inline-block');
+    btnExcluir && (btnExcluir.style.display = 'inline-block');
+    btnCancelarEdicao && (btnCancelarEdicao.style.display = 'inline-block');
+    btnToggleEdit && (btnToggleEdit.style.display = 'none');
+  }
 }
 
 // ---------- eventos UI ----------
@@ -66,7 +93,7 @@ btnProximo && btnProximo.addEventListener('click', async () => {
 btnExportar && btnExportar.addEventListener('click', () => {
   if (!resultados.length) return showAlert('⚠️ Nenhum dado para exportar', 'warning', 4000);
 
-  const cabecalho = ['Item ID','Estoque ID','Descrição','Tipo Medição','Unidade','Peso','Custo Unit.','Valor Venda'];
+  const cabecalho = ['Item ID', 'Estoque ID', 'Descrição', 'Tipo Medição', 'Unidade', 'Peso', 'Custo Unit.', 'Valor Venda'];
   const linhas = resultados.map(i => [
     i.item_id,
     i.estoque_id,
@@ -86,21 +113,57 @@ btnExportar && btnExportar.addEventListener('click', () => {
   link.click();
 });
 
+
+
+
 btnNovo && btnNovo.addEventListener('click', () => {
   if (!formEdicaoContainer || !formEdicao) {
-    // fallback: redireciona para página de novo item se existir
     window.location.href = 'itemNew.html';
     return;
   }
 
-  // limpar formulário e abrir em modo criação
   formEdicao.reset();
   formEdicaoTitle.textContent = 'Novo Item';
+  
   editMode = true;
   setFormMode('edit');
   formEdicaoContainer.style.display = 'flex';
   attachMasks();
 });
+
+
+function abrirFormulario(item, modoEdit = false) {
+  if (!formEdicaoContainer || !formEdicao) {
+    const url = modoEdit ? `itemEdit.html?id=${encodeURIComponent(item.item_id)}` : `itemView.html?id=${encodeURIComponent(item.item_id)}`;
+    window.location.href = url;
+    return;
+  }
+
+  // abrir com helper
+  openFormItem();
+  editMode = modoEdit;
+  formEdicaoTitle.textContent = modoEdit ? `Editar Item — ${item.item_id}` : `Visualizar Item — ${item.item_id}`;
+
+  // preencher campos se existirem
+  const setIf = (name, value) => { if (formEdicao[name]) formEdicao[name].value = value ?? ''; };
+
+  setIf('item_id', item.item_id);
+  setIf('estoque_id', item.estoque_id);
+  setIf('descricao_item', item.descricao_item || '');
+  setIf('tipo_medicao', item.tipo_medicao || '');
+  setIf('estoque_unidade', item.estoque_unidade || '');
+  setIf('estoque_peso', item.estoque_peso ?? '');
+  setIf('custo_unitario', item.custo_unitario != null ? item.custo_unitario : '');
+  setIf('valor_venda', item.valor_venda != null ? item.valor_venda : '');
+
+  setFormMode(modoEdit ? 'edit' : 'view');
+  attachMasks();
+
+  // ajustar tamanho do modal de acordo com conteúdo
+  requestAnimationFrame(adjustModalSizing);
+}
+
+
 
 // fechar formulário
 btnCloseForm && btnCloseForm.addEventListener('click', () => {
@@ -139,7 +202,7 @@ btnExcluir && btnExcluir.addEventListener('click', async () => {
     });
 
     if (!res.ok) {
-      const e = await res.json().catch(()=>null);
+      const e = await res.json().catch(() => null);
       throw new Error(e?.error || e?.mensagem || 'Erro ao excluir item');
     }
 
@@ -181,7 +244,7 @@ formEdicao && formEdicao.addEventListener('submit', async (e) => {
     });
 
     if (!res.ok) {
-      const e = await res.json().catch(()=>null);
+      const e = await res.json().catch(() => null);
       throw new Error(e?.error || e?.mensagem || 'Erro ao salvar item');
     }
 
@@ -219,7 +282,7 @@ async function buscarItens() {
     });
 
     if (!res.ok) {
-      const errBody = await res.json().catch(()=>null);
+      const errBody = await res.json().catch(() => null);
       throw new Error(errBody?.error || errBody?.mensagem || 'Erro ao buscar itens');
     }
 
@@ -270,58 +333,83 @@ function renderizarResultados(lista) {
 }
 
 // abre formulário de edição/visualização (mesmo padrão do scriptConsultaPessoa)
-function abrirFormulario(item, modoEdit = false) {
-  if (!formEdicaoContainer || !formEdicao) {
-    // fallback para páginas separadas
-    const url = modoEdit ? `itemEdit.html?id=${encodeURIComponent(item.item_id)}` : `itemView.html?id=${encodeURIComponent(item.item_id)}`;
-    window.location.href = url;
-    return;
-  }
+function closeFormItem() {
+  if (!formEdicaoContainer) return;
+  formEdicaoContainer.style.display = 'none';
+  editMode = false;
+  try { setFormMode('view'); } catch (e) { }
+  if (formEdicao) formEdicao.reset();
+}
 
+function openFormItem() {
+  if (!formEdicaoContainer) return;
   formEdicaoContainer.style.display = 'flex';
-  editMode = modoEdit;
-  formEdicaoTitle.textContent = modoEdit ? `Editar Item — ${item.item_id}` : `Visualizar Item — ${item.item_id}`;
-
-  // preencher campos se existirem
-  const setIf = (name, value) => { if (formEdicao[name]) formEdicao[name].value = value ?? ''; };
-
-  setIf('item_id', item.item_id);
-  setIf('estoque_id', item.estoque_id);
-  setIf('descricao_item', item.descricao_item || '');
-  setIf('tipo_medicao', item.tipo_medicao || '');
-  setIf('estoque_unidade', item.estoque_unidade || '');
-  setIf('estoque_peso', item.estoque_peso ?? '');
-  setIf('custo_unitario', item.custo_unitario != null ? item.custo_unitario : '');
-  setIf('valor_venda', item.valor_venda != null ? item.valor_venda : '');
-
-  setFormMode(modoEdit ? 'edit' : 'view');
-  attachMasks();
+  formEdicaoContainer.style.alignItems = 'center';
+  formEdicaoContainer.style.justifyContent = 'center';
+  requestAnimationFrame(adjustModalSizing);
 }
 
-function setFormMode(mode) {
-  if (!formEdicao) return;
-  const inputs = formEdicao.querySelectorAll('input, textarea, select');
-  if (mode === 'view') {
-    inputs.forEach(i => i.disabled = true);
-    btnSalvar && (btnSalvar.style.display = 'none');
-    btnExcluir && (btnExcluir.style.display = 'none');
-    btnCancelarEdicao && (btnCancelarEdicao.style.display = 'inline-block');
-    btnToggleEdit && (btnToggleEdit.style.display = 'inline-block');
+function adjustModalSizing() {
+  const modal = formEdicaoContainer;
+  const content = modal?.querySelector('.modal-content');
+  if (!modal || !content) return;
+  const maxH = Math.max(window.innerHeight - 80, 200);
+  content.style.maxHeight = `${maxH}px`;
+  if (content.scrollHeight > window.innerHeight * 0.9) {
+    modal.classList.add('align-top');
   } else {
-    inputs.forEach(i => i.disabled = false);
-    // item_id geralmente não deve ser alterado
-    if (formEdicao.item_id) formEdicao.item_id.disabled = true;
-    btnSalvar && (btnSalvar.style.display = 'inline-block');
-    btnExcluir && (btnExcluir.style.display = 'inline-block');
-    btnCancelarEdicao && (btnCancelarEdicao.style.display = 'inline-block');
-    btnToggleEdit && (btnToggleEdit.style.display = 'none');
+    modal.classList.remove('align-top');
   }
 }
+
+// assegurar bindings após DOM carregado (evita problemas se modal for injetado)
+document.addEventListener('DOMContentLoaded', () => {
+  // re-obter elementos por segurança
+  const btnClose = document.getElementById('btn-close-form-item');
+  const btnCancel = document.getElementById('btn-cancelar-edicao-item');
+  const btnToggle = document.getElementById('btn-toggle-edit-item');
+
+  // garantir type="button"
+  [btnClose, btnCancel, btnToggle].forEach(b => {
+    if (b && b.getAttribute('type') !== 'button') b.setAttribute('type', 'button');
+  });
+
+  btnClose?.addEventListener('click', (e) => { e.preventDefault(); closeFormItem(); });
+  btnCancel?.addEventListener('click', (e) => { e.preventDefault(); closeFormItem(); });
+  btnToggle?.addEventListener('click', (e) => {
+    e.preventDefault();
+    editMode = true;
+    try { setFormMode('edit'); } catch (err) { }
+    openFormItem();
+  });
+
+  // clicar fora fecha
+  window.addEventListener('click', (ev) => {
+    if (ev.target === formEdicaoContainer) closeFormItem();
+  });
+
+  // ESC fecha
+  window.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') closeFormItem();
+  });
+
+  // delegação: elementos com data-close dentro do modal fecham-no
+  formEdicaoContainer?.addEventListener('click', (ev) => {
+    if (ev.target.closest('[data-close]')) closeFormItem();
+  });
+
+  // redimensionamento ajusta o modal
+  window.addEventListener('resize', () => requestAnimationFrame(adjustModalSizing));
+});
+
+
 
 // inicialização
-(function init(){
+(function init() {
   buscarItens();
   attachMasks();
+  // garantir estado inicial de visualização
+  setFormMode('view');
 
   // clique fora para fechar formulários modais (UX)
   window.addEventListener('click', (ev) => {
